@@ -1,2 +1,3 @@
 EnvPython/*
 my.cnf
+secret_key.txt
