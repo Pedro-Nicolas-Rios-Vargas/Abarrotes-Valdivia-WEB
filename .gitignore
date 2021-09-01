@@ -1,3 +1,5 @@
 EnvPython/*
 my.cnf
 secret_key.txt
+Pipfile
+Pipfile.lock
