@@ -1,5 +1,6 @@
 EnvPython/*
 my.cnf
 secret_key.txt
-Pipfile
 Pipfile.lock
+package-lock.json
+**/node_modules/*
