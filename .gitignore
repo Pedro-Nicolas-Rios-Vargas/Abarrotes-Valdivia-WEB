@@ -4,3 +4,4 @@ secret_key.txt
 Pipfile.lock
 package-lock.json
 **/node_modules/*
+**/__pycache__/*
