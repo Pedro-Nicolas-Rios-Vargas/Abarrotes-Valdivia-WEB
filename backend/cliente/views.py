@@ -53,11 +53,9 @@ def update(request, pk=None):
     client = Cliente.objects.filter(clientId=pk).first()
     if request.method == 'GET':
         client_serializer = ClienteSerializer(client)
-        #print(client_serializer.data)
         return Response(client_serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         client_serializer = ClienteSerializer(data=request.data)
-        print(client_serializer)
         if client_serializer.is_valid():
             client_serializer.save()
             return Response(client_serializer.data, status=status.HTTP_200_OK)
