@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
+import Cliente from "./Cliente";
 
 export default class App extends Component {
     constructor(props) {
@@ -7,7 +8,11 @@ export default class App extends Component {
     }
 
     render() {
-        return <h1> Chinga a tu madre AMLO </h1>;
+        return (
+        <div>
+            <Cliente />
+        </div>
+        );
     }
 }
 
