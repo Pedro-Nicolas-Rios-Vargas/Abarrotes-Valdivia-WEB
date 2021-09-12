@@ -41,7 +41,12 @@ INSTALLED_APPS = [
     'cliente.apps.ClienteConfig',
     'proveedor.apps.ProveedorConfig',
     'rest_framework',
-    'frontend.apps.FrontendConfig'
+    'frontend.apps.FrontendConfig',
+    'producto.apps.ProductoConfig',
+    'buyRecord.apps.BuyrecordConfig',
+    'BuyLog.apps.BuylogConfig',
+    'sellRecord.apps.SellrecordConfig',
+    'sellLog.apps.SelllogConfig',
 ]
 
 MIDDLEWARE = [

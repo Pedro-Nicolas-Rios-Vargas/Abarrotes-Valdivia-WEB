@@ -8,6 +8,8 @@ class ProveedorSerializer(serializers.ModelSerializer):
         model = Proveedor
         fields = ('provrId', 'provName', 'provEmail', 'provPhoneNum')
 
-class CreateClientSerializer(serializers.ModelSerializer):
-    model = Proveedor
-    fields = ('provName', 'provEmail', 'provPhoneNum')
+class CreateProveedorSerializer(serializers.ModelSerializer):
+    class Meta:
+        
+        model = Proveedor
+        fields = ('provName', 'provEmail', 'provPhoneNum')
