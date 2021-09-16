@@ -6,10 +6,10 @@ class ProveedorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Proveedor
-        fields = ('provrId', 'provName', 'provEmail', 'provPhoneNum')
+        fields = ('provrId', 'provName', 'provPhoneNum')
 
 class CreateProveedorSerializer(serializers.ModelSerializer):
     class Meta:
         
         model = Proveedor
-        fields = ('provName', 'provEmail', 'provPhoneNum')
+        fields = ('provName', 'provPhoneNum')

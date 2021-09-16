@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class ClientGet extends Component {
+export default class ClienteDelete extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -92,9 +92,9 @@ export default class ClientGet extends Component {
         fetch('/cliente/update-cliente/' + clientId)
         .then(response => response.json())
         .then((data) => {
-            //console.log(data)
+            //console.log(clientId)
             this.setState({
-                clientId: data.clientId,
+                clientId: clientId,
                 clientName: data.clientName,
                 clientSecondName: data.clientSecondName,
                 clientEmail: data.clientEmail,
@@ -118,10 +118,8 @@ export default class ClientGet extends Component {
                 balance: this.state.balance
             }),
         };
-        console.log(clientId);
         fetch("/cliente/update-cliente/"+ clientId, requiestClient)
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((response) => response.json());
         { this.setState({ show: false }) }
     }
 
@@ -135,8 +133,8 @@ export default class ClientGet extends Component {
                 <td>{clien.clientPhoneNum}</td>
                 <td>{clien.balance}</td>
                 <td>
-                    {/* <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button>
-                    <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
+                    <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button>
+                    {/* <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
                 </td>
             </tr>
         );
@@ -151,6 +149,7 @@ export default class ClientGet extends Component {
                             <th className="head">Correo Electronico</th>
                             <th className="head">Telefono</th>
                             <th className="head">Saldo</th>
+                            <th className="head">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>

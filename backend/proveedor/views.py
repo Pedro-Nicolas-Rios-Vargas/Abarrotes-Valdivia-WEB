@@ -16,17 +16,17 @@ class CreateProveedorView(APIView):
     serializer_class = CreateProveedorSerializer
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
-        print(serializer)
         if serializer.is_valid():
+            print(serializer.data)
             provName = serializer.data.get('provName')
-            provEmail = serializer.data.get('provEmail')
             provPhoneNum = serializer.data.get('provPhoneNum')
             provrId = serializer.data.get('provrId')
 
             proveedor = Proveedor(provrId=provrId, provName=provName,
-            provEmail=provEmail, provPhoneNum=provPhoneNum)
+            provPhoneNum=provPhoneNum)
             proveedor.save()
             return Response(ProveedorSerializer(proveedor).data, status=status.HTTP_200_OK)
+        print(serializer.data)
         return Response({'Bad Resquest': 'Invalid data'}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'DELETE'])

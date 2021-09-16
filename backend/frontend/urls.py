@@ -3,7 +3,8 @@ from .views import index
 
 urlpatterns = [
     path('', index),
-    path('Add', index),
-    path('Modi', index),
-    path('consult', index)
+    path('cliente/add', index),
+    path('cliente/consultar', index),
+    path('cliente/modificar', index),
+    path('cliente/eliminar', index),
 ]
