@@ -19,6 +19,9 @@ from django.urls.conf import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cliente.urls')),
-    path('', include("frontend.urls"))
+    path('cliente/', include('cliente.urls')),
+    path('', include("frontend.urls")),#Chance y tenemos que cambiar esta madre por home o una pendejadota asi
+    path('proveedor/', include('proveedor.urls')),
+    path('producto/', include('producto.urls')),
+    path('buyRecord/', include('buyRecord.urls'))
 ]
