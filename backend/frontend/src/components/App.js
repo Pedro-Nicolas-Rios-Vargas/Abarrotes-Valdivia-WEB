@@ -7,6 +7,12 @@ import ClientModi from "./ClientModi";
 import ClienteDelete from "./ClienteDelete";
 import ProvAdd from "./ProvAdd"
 import ProvConsult from "./ProvConsult"
+import ProvModi from "./ProvModi"
+import ProvDelete from "./ProvDelete"
+import ProductoAdd from "./producto/ProductoAdd";
+import ProductoConsult from "./producto/ProductoGet"
+import ProductoModi from "./producto/ProductoModi";
+import ProductoDelete from "./producto/ProductoDelete";
 import {
     BrowserRouter as Router,
     Switch,
@@ -32,6 +38,12 @@ export default class App extends Component {
                         <Route path="/cliente/eliminar" component={ClienteDelete} />
                         <Route path="/proveedor/agregar" component={ProvAdd} />
                         <Route path="/proveedor/consultar" component={ProvConsult} />
+                        <Route path="/proveedor/modificar" component={ProvModi} />
+                        <Route path="/proveedor/eliminar" component={ProvDelete} />
+                        <Route path="/producto/agregar" component={ProductoAdd} />
+                        <Route path="/producto/consultar" component={ProductoConsult} />
+                        <Route path="/producto/modificar" component={ProductoModi} />
+                        <Route path="/producto/eliminar" component={ProductoDelete} />
                     </Switch>
                 </div>
             </Router>

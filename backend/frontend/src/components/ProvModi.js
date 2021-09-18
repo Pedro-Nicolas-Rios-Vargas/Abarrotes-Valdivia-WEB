@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class ProvGet extends Component {
+export default class ProvModi extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -101,7 +101,7 @@ export default class ProvGet extends Component {
                 <td>{prov.provPhoneNum}</td>
                 <td>
                     {/* <button onClick={() => this.deleteData(clien.provrId)} className="btn btn-delete" >Eliminar</button> */}
-                    {/* <button onClick={() => this.modiData(prov.provrId)} className="btn btn-modifi">Modificar</button> */}
+                    <button onClick={() => this.modiData(prov.provrId)} className="btn btn-modifi">Modificar</button>
                 </td>
             </tr>
         );
@@ -113,6 +113,7 @@ export default class ProvGet extends Component {
                         <tr>
                             <th className="head">Nombres</th>
                             <th className="head">Telefono</th>
+                            <th className="head">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>

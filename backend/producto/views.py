@@ -53,7 +53,7 @@ def update(request, pk=None):
         productos_serializer = ProductoSerializer(productos)
         return Response(productos_serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
-        productos_serializer = ProductoSerializer(data=request.data)
+        productos_serializer = ProductoSerializer(productos, data=request.data)
         if productos_serializer.is_valid():
             productos_serializer.save()
             return Response(productos_serializer.data, status=status.HTTP_200_OK)
