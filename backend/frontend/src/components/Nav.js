@@ -61,8 +61,8 @@ export default class Nav extends Component {
                                     <li><a className="link_name" href="#">Proveedores</a></li>
                                     <Link to="/proveedor/agregar"><li>Agregar</li></Link>
                                     <Link to="/proveedor/consultar"><li>Buscar</li></Link>
-                                    <li><a href="#">Modificar</a></li>
-                                    <li><a href="#">Eliminar</a></li>
+                                    <Link to="/proveedor/modificar"><li>Modificar</li></Link>
+                                    <Link to="/proveedor/eliminar"><li>Eliminar</li></Link>
                                 </ul>
                             </li>
 
@@ -105,10 +105,10 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Productos</a></li>
-                                    <li><a href="#">Agregar</a></li>
-                                    <li><a href="#">Buscar</a></li>
-                                    <li><a href="#">Modificar</a></li>
-                                    <li><a href="#">Eliminar</a></li>
+                                    <Link to="/producto/agregar"><li>Agregar</li></Link>
+                                    <Link to="/producto/consultar"><li>Buscar</li></Link>
+                                    <Link to="/producto/modificar"><li>Modificar</li></Link>
+                                    <Link to="/producto/eliminar"><li>Eliminar</li></Link>
                                 </ul>
                             </li>
 

@@ -7,7 +7,7 @@ class ProductoSerializer(serializers.ModelSerializer):
         model = Producto
         fields = ('prodId', 'prodName', 'buyPrice', 'sellPrice', 'stock', 'presentacion')
 
-# class CreatePorductoSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Producto
-#         field
+class CreatePorductoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Producto
+        fields = ('prodName', 'buyPrice', 'sellPrice', 'stock', 'presentacion')
