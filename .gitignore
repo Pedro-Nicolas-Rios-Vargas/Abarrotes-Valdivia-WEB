@@ -5,3 +5,4 @@ Pipfile.lock
 package-lock.json
 **/node_modules/*
 **/__pycache__/*
+backend/frontend/static/frontend/main.js
