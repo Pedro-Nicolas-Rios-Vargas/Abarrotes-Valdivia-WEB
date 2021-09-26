@@ -6,3 +6,4 @@ package-lock.json
 **/node_modules/*
 **/__pycache__/*
 backend/frontend/static/frontend/main.js
+**/main.js.LICENSE.txt

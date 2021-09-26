@@ -5,12 +5,12 @@ import ClienteAdd from "./ClienteAdd";
 import ClienteConsult from "./ClientGet"
 import ClientModi from "./ClientModi";
 import ClienteDelete from "./ClienteDelete";
-import ProvAdd from "./ProvAdd"
-import ProvConsult from "./ProvConsult"
-import ProvModi from "./ProvModi"
-import ProvDelete from "./ProvDelete"
+import ProvAdd from "./ProvAdd";
+import ProvConsult from "./ProvConsult";
+import ProvModi from "./ProvModi";
+import ProvDelete from "./ProvDelete";
 import ProductoAdd from "./producto/ProductoAdd";
-import ProductoConsult from "./producto/ProductoGet"
+import ProductoConsult from "./producto/ProductoGet";
 import ProductoModi from "./producto/ProductoModi";
 import ProductoDelete from "./producto/ProductoDelete";
 import {
@@ -58,5 +58,5 @@ const Home = (
     </div>
 );
 
-const appDiv = document.getElementById("app")
+const appDiv = document.getElementById("app");
 render(<App />, appDiv);
