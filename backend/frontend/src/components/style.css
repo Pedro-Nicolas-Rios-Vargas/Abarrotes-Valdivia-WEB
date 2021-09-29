@@ -6,6 +6,10 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+main{
+    margin-left: 78px;
+    margin-top: 6vh;
+}
 .sidebar{
   position: fixed;
   top: 0;
