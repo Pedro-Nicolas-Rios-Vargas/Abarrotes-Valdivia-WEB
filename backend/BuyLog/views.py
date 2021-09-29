@@ -23,13 +23,12 @@ class CreateBuyLogView(APIView):
             buyId = serializer.data.get('buyId')
             prodId = serializer.data.get('prodId')
             quantityBought = serializer.data.get('quantityBought')
-            pppBought = serializer.data.get('pppBought')
 
             producto = Producto.objects.filter(prodId=prodId).first()
             buyRecord = BuyRecord.objects.filter(buyId=buyId).first()
 
             buyLog = BuyLog(buyId=buyRecord, prodId=producto,
-            quantityBought=quantityBought, pppBought=pppBought)
+            quantityBought=quantityBought)
             buyLog.save()
             return Response(BuyLogSerializer(buyLog).data, status=status.HTTP_201_CREATED)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)

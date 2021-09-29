@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import Nav from "./Nav";
-import ClienteAdd from "./ClienteAdd";
-import ClienteConsult from "./ClientGet"
-import ClientModi from "./ClientModi";
-import ClienteDelete from "./ClienteDelete";
-import ProvAdd from "./ProvAdd"
-import ProvConsult from "./ProvConsult"
-import ProvModi from "./ProvModi"
-import ProvDelete from "./ProvDelete"
+import ClienteAdd from "./cliente/ClienteAdd";
+import ClienteConsult from "./cliente/ClientGet"
+import ClientModi from "./cliente/ClientModi";
+import ClienteDelete from "./cliente/ClienteDelete";
+import ProvAdd from "./proveedor/ProvAdd"
+import ProvConsult from "./proveedor/ProvConsult"
+import ProvModi from "./proveedor/ProvModi"
+import ProvDelete from "./proveedor/ProvDelete"
 import ProductoAdd from "./producto/ProductoAdd";
 import ProductoConsult from "./producto/ProductoGet"
 import ProductoModi from "./producto/ProductoModi";
 import ProductoDelete from "./producto/ProductoDelete";
+import SellAdd from "./venta/SellAdd";
 import {
     BrowserRouter as Router,
     Switch,
@@ -44,6 +45,7 @@ export default class App extends Component {
                         <Route path="/producto/consultar" component={ProductoConsult} />
                         <Route path="/producto/modificar" component={ProductoModi} />
                         <Route path="/producto/eliminar" component={ProductoDelete} />
+                        <Route path="/venta/agregar" component={SellAdd} />
                     </Switch>
                 </div>
             </Router>

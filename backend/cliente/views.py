@@ -19,17 +19,13 @@ class CreateClienteView(APIView):
         serializer = self.serializer_class(data=request.data)
         #print(serializer)
         if serializer.is_valid():
-            clientName = serializer.data.get('clientName')
-            clientSecondName = serializer.data.get('clientSecondName')
-            clientEmail = serializer.data.get('clientEmail')
-            clientPhoneNum = serializer.data.get('clientPhoneNum')
+            nombre_C = serializer.data.get('nombre_C')
             balance = serializer.data.get('balance')
             clientId = serializer.data.get('clientId')
             #print('estupido de mierda no te pierdas es aqui:', clientId)
             #print('~~~~~~~~~~~~~~~~~~~~~', clientId)
-            cliente = Cliente(clientId=clientId, clientName=clientName, 
-            clientSecondName=clientSecondName, clientEmail=clientEmail,
-            clientPhoneNum= clientPhoneNum, balance=balance)
+            cliente = Cliente(clientId=clientId, nombre_C=nombre_C, 
+            balance=balance)
             #print(cliente.clientId)
             cliente.save()
             return Response(ClienteSerializer(cliente).data, status=status.HTTP_201_CREATED)

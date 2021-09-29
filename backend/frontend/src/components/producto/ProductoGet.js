@@ -8,7 +8,7 @@ export default class ProductoGet extends Component {
             show: false,
             prodId: "",
             prodName: "",
-            buyPrice: 0.0,
+            existencia: 0,
             sellPrice: 0.0,
             stock: 0,
             presentacion: 0,
@@ -20,7 +20,7 @@ export default class ProductoGet extends Component {
 
         this.getprodId = this.getprodId.bind(this)
         this.getprodName = this.getprodName.bind(this)
-        this.getbuyPrice = this.getbuyPrice.bind(this)
+        this.getExistencia = this.getExistencia.bind(this)
         this.getsellPrice = this.getsellPrice.bind(this)
         this.getstock = this.getstock.bind(this)
         this.getpresentacion = this.getpresentacion.bind(this)
@@ -38,9 +38,9 @@ export default class ProductoGet extends Component {
        });
     }
 
-    getbuyPrice(value) {
+    getExistencia(value) {
         this.setState({
-            buyPrice: value
+            existencia: value
        });
     }
 
@@ -96,10 +96,10 @@ export default class ProductoGet extends Component {
             this.setState({
                 prodId: data.prodId,
                 prodName: data.prodName,
-                buyPrice: data.buyPrice,
                 sellPrice: data.sellPrice,
                 stock: data.stock,
-                presentacion: data.presentacion
+                presentacion: data.presentacion,
+                existencia: data.existencia,
             });
         });
         { this.setState({ show: true }) }
@@ -112,10 +112,10 @@ export default class ProductoGet extends Component {
             body: JSON.stringify({
                 prodId: this.state.prodId,
                 prodName: this.state.prodName,
-                buyPrice: this.state.buyPrice,
                 sellPrice: this.state.sellPrice,
                 stock: this.state.stock,
-                presentacion: this.state.presentacion
+                presentacion: this.state.presentacion,
+                existencia: this.state.existencia,
             }),
         };
         console.log(prodId);
@@ -130,7 +130,7 @@ export default class ProductoGet extends Component {
         const rows = clienData.map((clien) =>
             <tr key={clien.prodId}>
                 <td>{clien.prodName}</td>
-                <td>{clien.buyPrice}</td>
+                <td>{clien.existencia}</td>
                 <td>{clien.sellPrice}</td>
                 <td>{clien.stock}</td>
                 <td>{clien.presentacion}</td>
@@ -147,7 +147,7 @@ export default class ProductoGet extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nomrbe</th>
-                            <th className="head">Precio de compra</th>
+                            <th className="head">Existencia</th>
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
                             <th className="head">Presentacion</th>
@@ -166,7 +166,7 @@ export default class ProductoGet extends Component {
                                         <div className="textBox">
                                             <input id='prodId' value={this.state.prodId} onChange={e => this.getprodId(e.target.value)} type="text" placeholder="ID" disabled></input>
                                             <input id='prodName' value={this.state.prodName} onChange={e => this.getprodName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='buyPrice' value={this.state.buyPrice} onChange={e => this.getbuyPrice(e.target.value)} type="text" placeholder="Perez Guerra"></input>
+                                            <input id='existencia' value={this.state.existencia} onChange={e => this.getExistencia(e.target.value)} type="text" placeholder="Perez Guerra"></input>
                                             <input id='sellPrice' value={this.state.sellPrice} onChange={e => this.getsellPrice(e.target.value)} type="text" placeholder="example@example.com"></input>
                                             <input id='stock' value={this.state.stock} onChange={e => this.getstock(e.target.value)} type="text" placeholder="5555555555"></input>
                                             <input id='presentacion' value={this.state.presentacion} onChange={e => this.getpresentacion(e.target.value)} type="text" placeholder="43.13"></input>

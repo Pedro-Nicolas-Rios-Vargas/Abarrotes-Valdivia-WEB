@@ -5,9 +5,9 @@ class ProductoSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Producto
-        fields = ('prodId', 'prodName', 'buyPrice', 'sellPrice', 'stock', 'presentacion')
+        fields = ('prodId', 'prodName', 'sellPrice', 'existencia', 'stock', 'presentacion')
 
 class CreatePorductoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producto
-        fields = ('prodName', 'buyPrice', 'sellPrice', 'stock', 'presentacion')
+        fields = ('prodName', 'sellPrice',  'existencia', 'stock', 'presentacion')

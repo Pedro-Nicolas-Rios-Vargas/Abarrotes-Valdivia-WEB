@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 
-export default class ClientGet extends Component {
+export default class ClienteDelete extends Component {
     constructor(props) {
         super(props);
         this.state = {
             data: [],
             show: false,
             clientId: 0,
-            clientName: "",
-            clientSecondName: "",
-            clientEmail: "",
-            clientPhoneNum: "",
+            nombre_C: "",
             balance: 0.0
         };
         this.getClientData = this.getClientData.bind(this);
@@ -19,10 +16,7 @@ export default class ClientGet extends Component {
         this.applyChanges = this.applyChanges.bind(this);
 
         this.getclientId = this.getclientId.bind(this)
-        this.getClientName = this.getClientName.bind(this)
-        this.getclientSecondName = this.getclientSecondName.bind(this)
-        this.getclientEmail = this.getclientEmail.bind(this)
-        this.getclientPhoneNum = this.getclientPhoneNum.bind(this)
+        this.getnombre_C = this.getnombre_C.bind(this)
         this.getbalance = this.getbalance.bind(this)
     }
 
@@ -32,27 +26,9 @@ export default class ClientGet extends Component {
        });
     }
 
-    getClientName(value) {
+    getnombre_C(value) {
         this.setState({
-            clientName: value
-       });
-    }
-
-    getclientSecondName(value) {
-        this.setState({
-            clientSecondName: value
-       });
-    }
-
-    getclientEmail(value) {
-        this.setState({
-            clientEmail: value
-       });
-    }
-
-    getclientPhoneNum(value) {
-        this.setState({
-            clientPhoneNum: value
+            nombre_C: value
        });
     }
 
@@ -92,13 +68,10 @@ export default class ClientGet extends Component {
         fetch('/cliente/update-cliente/' + clientId)
         .then(response => response.json())
         .then((data) => {
-            //console.log(data)
+            //console.log(clientId)
             this.setState({
-                clientId: data.clientId,
-                clientName: data.clientName,
-                clientSecondName: data.clientSecondName,
-                clientEmail: data.clientEmail,
-                clientPhoneNum: data.clientPhoneNum,
+                clientId: clientId,
+                nombre_C: data.nombre_C,
                 balance: data.balance
             });
         });
@@ -111,17 +84,12 @@ export default class ClientGet extends Component {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 clientId: this.state.clientId,
-                clientName: this.state.clientName,
-                clientSecondName: this.state.clientSecondName,
-                clientEmail: this.state.clientEmail,
-                clientPhoneNum: this.state.clientPhoneNum,
+                nombre_C: this.state.nombre_C,
                 balance: this.state.balance
             }),
         };
-        console.log(clientId);
         fetch("/cliente/update-cliente/"+ clientId, requiestClient)
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+        .then((response) => response.json());
         { this.setState({ show: false }) }
     }
 
@@ -129,14 +97,11 @@ export default class ClientGet extends Component {
         const clienData = this.state.data;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td>{clien.clientName}</td>
-                <td>{clien.clientSecondName}</td>
-                <td>{clien.clientEmail}</td>
-                <td>{clien.clientPhoneNum}</td>
+                <td>{clien.nombre_C}</td>
                 <td>{clien.balance}</td>
                 <td>
-                    {/* <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button>
-                    <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
+                    <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button>
+                    {/* <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
                 </td>
             </tr>
         );
@@ -147,10 +112,8 @@ export default class ClientGet extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
-                            <th className="head">Apellides</th>
-                            <th className="head">Correo Electronico</th>
-                            <th className="head">Telefono</th>
                             <th className="head">Saldo</th>
+                            <th className="head">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -165,10 +128,7 @@ export default class ClientGet extends Component {
                                     <div>
                                         <div className="textBox">
                                             <input id='clientId' value={this.state.clientId} onChange={e => this.getclientId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='clientName' value={this.state.clientName} onChange={e => this.getClientName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='clientSecondName' value={this.state.clientSecondName} onChange={e => this.getclientSecondName(e.target.value)} type="text" placeholder="Perez Guerra"></input>
-                                            <input id='clientEmail' value={this.state.clientEmail} onChange={e => this.getclientEmail(e.target.value)} type="text" placeholder="example@example.com"></input>
-                                            <input id='clientPhoneNum' value={this.state.clientPhoneNum} onChange={e => this.getclientPhoneNum(e.target.value)} type="text" placeholder="5555555555"></input>
+                                            <input id='nombre_C' value={this.state.nombre_C} onChange={e => this.getnombre_C(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
                                             <input id='balance' value={this.state.balance} onChange={e => this.getbalance(e.target.value)} type="text" placeholder="43.13"></input>
                                         </div>
                                         <div>

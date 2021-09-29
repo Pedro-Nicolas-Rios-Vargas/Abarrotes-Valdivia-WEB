@@ -15,4 +15,5 @@ urlpatterns = [
     path('producto/consultar', index),
     path('producto/modificar', index),
     path('producto/eliminar', index),
+    path('venta/agregar', index),
 ]

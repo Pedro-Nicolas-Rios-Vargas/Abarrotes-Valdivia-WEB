@@ -18,7 +18,7 @@ export default class ProductoAdd extends Component {
         super(props);
         this.state = {
             prodName: this.defaultName,
-            buyPrice: this.defaultSecondName,
+            existencia: this.defaultSecondName,
             stock: this.defaultStock,
             presentacion: this.defaultpresentacion,
             sellPrice: this.defualtsellPrice,
@@ -27,7 +27,7 @@ export default class ProductoAdd extends Component {
 
         this.AddClient = this.AddClient.bind(this);
         this.getNameProducto = this.getNameProducto.bind(this);
-        this.getbuyPrice = this.getbuyPrice.bind(this);
+        this.getexistencia = this.getexistencia.bind(this);
         this.getstock = this.getstock.bind(this);
         this.getpresentacion = this.getpresentacion.bind(this)
         this.getsellPrice = this.getsellPrice.bind(this)
@@ -46,9 +46,9 @@ export default class ProductoAdd extends Component {
         });
     }
 
-    getbuyPrice(e) {
+    getexistencia(e) {
         this.setState({
-            buyPrice: e.target.value,
+            existencia: e.target.value,
         });
     }
 
@@ -78,7 +78,7 @@ export default class ProductoAdd extends Component {
             body: JSON.stringify({
                 prodId: this.state.prodId,
                 prodName: this.state.prodName,
-                buyPrice: this.state.buyPrice,
+                existencia: this.state.existencia,
                 stock: this.state.stock,
                 presentacion: this.state.presentacion,
                 sellPrice: this.state.sellPrice,
@@ -140,9 +140,9 @@ export default class ProductoAdd extends Component {
                             <FormControl>
                                 <TextField
                                     id="buytxt"
-                                    onChange={this.getbuyPrice}
-                                    label="Precio de compra"
-                                    placeholder="12.00"
+                                    onChange={this.getexistencia}
+                                    label="Existencia"
+                                    placeholder="12"
                                     multiline
                                     variant="outlined">
                                 </TextField>

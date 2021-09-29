@@ -5,4 +5,4 @@ from .models import SellLog
 class SellLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = SellLog
-        fields = ('sellId', 'prodId', 'quantityBought', 'pppSold')
+        fields = ('sellId', 'prodId', 'quantityBought')

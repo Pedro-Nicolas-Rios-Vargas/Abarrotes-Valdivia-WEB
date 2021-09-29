@@ -8,4 +8,3 @@ class BuyLog(models.Model):
     buyId = models.ForeignKey('buyRecord.buyRecord', on_delete=models.CASCADE)
     prodId = models.ForeignKey('producto.Producto', on_delete=models.CASCADE)
     quantityBought = models.IntegerField(default=0, null=False)
-    pppBought = models.DecimalField(max_digits=6, decimal_places=2, null=False)

@@ -19,7 +19,7 @@ class CreateProductoeView(APIView):
         #print(serializer)
         if serializer.is_valid():
             prodName = serializer.data.get('prodName')
-            buyPrice = serializer.data.get('buyPrice')
+            existencia = serializer.data.get('existencia')
             sellPrice = serializer.data.get('sellPrice')
             stock = serializer.data.get('stock')
             presentacion = serializer.data.get('presentacion')
@@ -27,7 +27,7 @@ class CreateProductoeView(APIView):
             #print('estupido de mierda no te pierdas es aqui:', clientId)
             #print('~~~~~~~~~~~~~~~~~~~~~', clientId)
             producto = Producto(prodId=prodId, prodName=prodName, 
-            buyPrice=buyPrice, sellPrice=sellPrice,
+            existencia=existencia, sellPrice=sellPrice,
             stock=stock, presentacion=presentacion)
             #print(producto.clientId)
             producto.save()
@@ -50,6 +50,7 @@ def otro(request, pk=None):
 def update(request, pk=None):
     productos = Producto.objects.filter(prodId=pk).first()
     if request.method == 'GET':
+        print("si esta entrando")
         productos_serializer = ProductoSerializer(productos)
         return Response(productos_serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
@@ -58,4 +59,13 @@ def update(request, pk=None):
             productos_serializer.save()
             return Response(productos_serializer.data, status=status.HTTP_200_OK)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'ERROR':'No existe ningun Producto con esos datos'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def getProducto(request, pk=None):
+    producto = Producto.objects.filter(prodId=pk).first()
+    if request.method == 'GET':
+        
+        producto_serializer = ProductoSerializer(producto)
+        return Response(producto_serializer.data, status=status.HTTP_200_OK)
     return Response({'ERROR':'No existe ningun Producto con esos datos'}, status=status.HTTP_404_NOT_FOUND)

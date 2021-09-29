@@ -22,13 +22,12 @@ class CreateSellLogView(APIView):
             sellId = serializer.data.get('sellId')
             prodId = serializer.data.get('prodId')
             quantityBought = serializer.data.get('quantityBought')
-            pppSold = serializer.data.get('pppSold')
 
             producto = Producto.objects.filter(prodId=prodId).first()
             sellRecord = SellRecord.objects.filter(sellId=sellId).filter()
 
             sellLog = SellLog(sellId=sellRecord, prodId=producto,
-            quantityBought=quantityBought, pppSold=pppSold)
+            quantityBought=quantityBought)
 
             sellLog.save()
             return Response(SellLogSerializer(sellLog).data, status=status.HTTP_201_CREATED)

@@ -8,7 +8,7 @@ export default class ProductoDelete extends Component {
             show: false,
             prodId: "",
             prodName: "",
-            buyPrice: 0.0,
+            existencia: 0,
             sellPrice: 0.0,
             stock: 0,
             presentacion: 0,
@@ -20,7 +20,7 @@ export default class ProductoDelete extends Component {
 
         this.getprodId = this.getprodId.bind(this)
         this.getprodName = this.getprodName.bind(this)
-        this.getbuyPrice = this.getbuyPrice.bind(this)
+        this.getexistencia = this.getexistencia.bind(this)
         this.getsellPrice = this.getsellPrice.bind(this)
         this.getstock = this.getstock.bind(this)
         this.getpresentacion = this.getpresentacion.bind(this)
@@ -38,9 +38,9 @@ export default class ProductoDelete extends Component {
        });
     }
 
-    getbuyPrice(value) {
+    getexistencia(value) {
         this.setState({
-            buyPrice: value
+            existencia: value
        });
     }
 
@@ -96,7 +96,7 @@ export default class ProductoDelete extends Component {
             this.setState({
                 prodId: data.prodId,
                 prodName: data.prodName,
-                buyPrice: data.buyPrice,
+                existencia: data.existencia,
                 sellPrice: data.sellPrice,
                 stock: data.stock,
                 presentacion: data.presentacion
@@ -112,7 +112,7 @@ export default class ProductoDelete extends Component {
             body: JSON.stringify({
                 prodId: this.state.prodId,
                 prodName: this.state.prodName,
-                buyPrice: this.state.buyPrice,
+                existencia: this.state.existencia,
                 sellPrice: this.state.sellPrice,
                 stock: this.state.stock,
                 presentacion: this.state.presentacion
@@ -130,7 +130,7 @@ export default class ProductoDelete extends Component {
         const rows = clienData.map((product) =>
             <tr key={product.prodId}>
                 <td>{product.prodName}</td>
-                <td>{product.buyPrice}</td>
+                <td>{product.existencia}</td>
                 <td>{product.sellPrice}</td>
                 <td>{product.stock}</td>
                 <td>{product.presentacion}</td>
@@ -147,7 +147,7 @@ export default class ProductoDelete extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nomrbe</th>
-                            <th className="head">Precio de compra</th>
+                            <th className="head">Existencia</th>
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
                             <th className="head">Presentacion</th>
@@ -167,7 +167,7 @@ export default class ProductoDelete extends Component {
                                         <div className="textBox">
                                             <input id='prodId' value={this.state.prodId} onChange={e => this.getprodId(e.target.value)} type="text" placeholder="ID" disabled></input>
                                             <input id='prodName' value={this.state.prodName} onChange={e => this.getprodName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='buyPrice' value={this.state.buyPrice} onChange={e => this.getbuyPrice(e.target.value)} type="text" placeholder="Perez Guerra"></input>
+                                            <input id='existencia' value={this.state.existencia} onChange={e => this.getexistencia(e.target.value)} type="text" placeholder="Perez Guerra"></input>
                                             <input id='sellPrice' value={this.state.sellPrice} onChange={e => this.getsellPrice(e.target.value)} type="text" placeholder="example@example.com"></input>
                                             <input id='stock' value={this.state.stock} onChange={e => this.getstock(e.target.value)} type="text" placeholder="5555555555"></input>
                                             <input id='presentacion' value={this.state.presentacion} onChange={e => this.getpresentacion(e.target.value)} type="text" placeholder="43.13"></input>

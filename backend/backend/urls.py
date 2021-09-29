@@ -23,5 +23,6 @@ urlpatterns = [
     path('', include("frontend.urls")),#Chance y tenemos que cambiar esta madre por home o una pendejadota asi
     path('proveedor/', include('proveedor.urls')),
     path('producto/', include('producto.urls')),
-    path('buyRecord/', include('buyRecord.urls'))
+    path('buyRecord/', include('buyRecord.urls')),
+    path('sellRecord/', include('sellRecord.urls')),
 ]

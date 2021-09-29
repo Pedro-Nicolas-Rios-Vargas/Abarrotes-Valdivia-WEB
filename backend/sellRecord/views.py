@@ -1,9 +1,8 @@
-from backend.buyRecord.models import BuyRecord
 from django.shortcuts import render
 from rest_framework import generics, request, serializers, status
 from .serializers import SellRecordSerializer
 from sellRecord.models import SellRecord
-from cliente.models import Client
+from cliente.models import Cliente
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -25,7 +24,7 @@ class CreateSellRecordView(APIView):
             sellDate = serializer.data.get('sellDate')
             total = serializer.data.get('total')
 
-            cliente = Client.objects.filter(clientId=clientId).first()
+            cliente = Cliente.objects.filter(clientId=clientId).first()
 
             buyLog = SellRecord(sellId=sellId, clientId=cliente,
             sellDate=sellDate, total=total)
