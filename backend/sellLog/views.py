@@ -1,5 +1,6 @@
-from backend.sellRecord.models import SellRecord
-from backend.producto.models import Producto
+from sellRecord.serializers import SellRecordSerializer
+from sellRecord.models import SellRecord
+from producto.models import Producto
 from django.shortcuts import render
 from rest_framework import generics, request, status
 from .serializers import SellLogSerializer
@@ -13,6 +14,12 @@ class SellLogView(generics.ListAPIView):
     queryset = SellLog.objects.all()
     serializer_class = SellLogSerializer
 
+@api_view(['GET'])
+def getLatest(request, pk=None):
+    sellRecord = SellRecord.objects.last()
+    if request.method == 'GET':
+        SellLog_serializer = SellRecordSerializer(sellRecord)
+        return Response(SellLog_serializer.data, status=status.HTTP_200_OK)
 class CreateSellLogView(APIView):
     serializer_class = SellLogSerializer
 
@@ -24,7 +31,7 @@ class CreateSellLogView(APIView):
             quantityBought = serializer.data.get('quantityBought')
 
             producto = Producto.objects.filter(prodId=prodId).first()
-            sellRecord = SellRecord.objects.filter(sellId=sellId).filter()
+            sellRecord = SellRecord.objects.last()
 
             sellLog = SellLog(sellId=sellRecord, prodId=producto,
             quantityBought=quantityBought)

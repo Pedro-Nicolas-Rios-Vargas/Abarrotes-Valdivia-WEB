@@ -1,12 +1,13 @@
-from backend.buyRecord.models import BuyRecord
-from django.shortcuts import render
-from rest_framework import generics, request, status
-from .serializers import BuyLogSerializer
+from buyRecord.models import BuyRecord
+from BuyLog.serializers import BuyLogSerializer
 from BuyLog.models import BuyLog
 from producto.models import Producto
+from django.shortcuts import render
+from rest_framework import generics, request, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+
 
 # Create your views here.
 

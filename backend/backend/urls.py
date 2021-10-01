@@ -20,9 +20,11 @@ from django.urls.conf import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cliente/', include('cliente.urls')),
-    path('', include("frontend.urls")),#Chance y tenemos que cambiar esta madre por home o una pendejadota asi
+    path('', include("frontend.urls")),
     path('proveedor/', include('proveedor.urls')),
     path('producto/', include('producto.urls')),
     path('buyRecord/', include('buyRecord.urls')),
     path('sellRecord/', include('sellRecord.urls')),
+    path('sellLog/', include('sellLog.urls')),
+    path('buyLog/', include('BuyLog.urls'))
 ]

@@ -38,6 +38,7 @@ function Switches(props) {
             <Route path="/producto/consultar" component={ProductoConsult} />
             <Route path="/producto/modificar" component={ProductoModi} />
             <Route path="/producto/eliminar" component={ProductoDelete} />
+            <Route path="/venta/agregar" component={SellAdd} />
         </Switch>
     );
 }

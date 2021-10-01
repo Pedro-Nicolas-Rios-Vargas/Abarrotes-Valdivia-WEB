@@ -19,14 +19,12 @@ class CreateBuyRecordView(APIView):
     def post(self, request, pk=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            #print('pinga de oso macho',serializer.data)
             buyDate = serializer.data.get('buyDate')
             total = serializer.data.get('total')
             buyId = serializer.data.get('buyId')
             provrId = serializer.data.get('provrId')
 
             proveedor = Proveedor.objects.filter(provrId=provrId).first()
-            #print('Maka joto',proveedor)
 
             buyRecord = BuyRecord(buyId=buyId, provrId=proveedor,
             buyDate=buyDate, total=total)
