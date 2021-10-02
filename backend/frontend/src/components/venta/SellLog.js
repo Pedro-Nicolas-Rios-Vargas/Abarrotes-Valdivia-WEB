@@ -91,7 +91,7 @@ export default class ProvGet extends Component {
                     encontrado = true; 
             } else {
                 if (encontrado) {
-                    //break;
+                    break;
                 }
             }
         }
