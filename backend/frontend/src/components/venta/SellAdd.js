@@ -398,12 +398,6 @@ export default class SellAdd extends Component {
             tabla.push(togetherAux);
         }
 
-        // const changeCantidad = event => {
-        //     const prodId = event.target.accessKey;
-        //     const rowSelected = together.find(together => together.prodId === prodId);
-        //     rowSelected.cantidad = parseInt(event.target.value);
-        //     this.actualizar();
-        // }
         const rows = tabla.map((product) =>
             <tr key={product.prodId}>
                 <td>{product.prodName}</td>
@@ -412,7 +406,6 @@ export default class SellAdd extends Component {
                     {product.cantidad}
                     <button id="upCantidad" onClick={() => this.upCanitdad(product.prodId)}>+</button>
                     <button id="downCantidad" onClick={() => this.downCanitdad(product.prodId)}>-</button>
-                    {/* <input type="number" id="spinnerCantidad" defaultValue={product.cantidad} accessKey={product.prodId} onChange={changeCantidad}/> */}
                 </td>
                 <td>{product.cliente}</td>
                 <td>

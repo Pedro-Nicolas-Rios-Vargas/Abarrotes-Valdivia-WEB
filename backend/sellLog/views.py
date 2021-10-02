@@ -63,4 +63,13 @@ def update(request, pk=None):
             SellLog_serializer.save()
             return Response(SellLog_serializer.data, status=status.HTTP_200_OK)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
-    return Response({'ERROR':'No existe ningun cliente con esos datos'}, status=status.HTTP_404_NOT_FOUND)
+    return Response({'ERROR':'No existe ningun registro con esos datos'}, status=status.HTTP_404_NOT_FOUND)
+
+# @api_view(['GET'])
+# def allId(request, pk=None):
+#     sellLog = SellLog.objects.all().prefetch_related(sellId=51)
+#     print(sellLog)
+#     if request.method == 'GET':
+#         SellLog_serializer = SellLogSerializer(sellLog)
+#         return Response(SellLog_serializer.data, status=status.HTTP_200_OK)
+#     return Response({'ERROR':'No existe ningun registro con esos datos'}, status=status.HTTP_404_NOT_FOUND)
