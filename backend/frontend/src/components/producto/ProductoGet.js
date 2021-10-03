@@ -146,7 +146,7 @@ export default class ProductoGet extends Component {
                 <table className="tablaClientes">
                     <thead>
                         <tr>
-                            <th className="head">Nomrbe</th>
+                            <th className="head">Nombre</th>
                             <th className="head">Existencia</th>
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>

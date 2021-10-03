@@ -148,7 +148,7 @@ export default class ProvGet extends Component {
         );
         return (
             <div>
-                <table className="tableSelRecord"  style={{ paddingLeft: 150 }}>
+                <table className="tableSelRecord" >
                     <thead>
                         <tr>
                             <th className="head-table">Cliente</th>

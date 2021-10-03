@@ -420,7 +420,7 @@ export default class SellAdd extends Component {
         }
 
         return (
-            <div className="SellAdd" style={{ paddingLeft: 150 }}>
+            <div className="SellAdd" >
                 <div className="BuscarInput">
                     <label>Buscar Producto </label>
                     <input type="text" className="txtInputBuscarProducto" name="prodId" placeholder="ID o Nombre" onChange={e => this.getprodId(e.target.value)} />
@@ -435,7 +435,7 @@ export default class SellAdd extends Component {
                     <table className="tablaproducttes">
                         <thead>
                             <tr>
-                                <th className="head">Nomrbe</th>
+                                <th className="head">Nombre</th>
                                 {/* <th className="head">Precio de compra</th> */}
                                 <th className="head">Precio de venta</th>
                                 <th className="head">Cantidad</th>

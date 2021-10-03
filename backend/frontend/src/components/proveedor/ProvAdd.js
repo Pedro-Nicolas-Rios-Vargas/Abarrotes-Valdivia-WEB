@@ -61,9 +61,7 @@ export default class ClienteAdd extends Component {
                     <Grid item xs={12} align="center">
                         <FormControl component="fieldset">
                             <FormHelperText>
-                                <div align='center'>
-                                    Datos del proveedor
-                                </div>
+                                Datos del proveedor
                             </FormHelperText>
                         </FormControl>
                     </Grid>
