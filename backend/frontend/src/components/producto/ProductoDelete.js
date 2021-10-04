@@ -135,15 +135,25 @@ export default class ProductoDelete extends Component {
                 <td>{product.stock}</td>
                 <td>{product.presentacion}</td>
                 <td>
-                    <button onClick={() => this.deleteData(product.prodId)} className="btn btn-delete" >Eliminar</button>
+                    <button onClick={() => this.deleteData(product.prodId)} className="btn btn_confirm" >Eliminar</button>
                     {/* <button onClick={() => this.modiData(clien.prodId)} className="btn btn-modifi">Modificar</button> */}
                 </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className={"container"}>
+                <h2>Eliminar Producto
+                </h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
                             <th className="head">Nomrbe</th>
@@ -158,28 +168,6 @@ export default class ProductoDelete extends Component {
                         {rows}
                     </tbody>
                 </table>
-                <div className="Modi">
-                    <header className="Modi-header">
-                        <div>
-                            {
-                                this.state.show ?
-                                    <div>
-                                        <div className="textBox">
-                                            <input id='prodId' value={this.state.prodId} onChange={e => this.getprodId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='prodName' value={this.state.prodName} onChange={e => this.getprodName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='existencia' value={this.state.existencia} onChange={e => this.getexistencia(e.target.value)} type="text" placeholder="Perez Guerra"></input>
-                                            <input id='sellPrice' value={this.state.sellPrice} onChange={e => this.getsellPrice(e.target.value)} type="text" placeholder="example@example.com"></input>
-                                            <input id='stock' value={this.state.stock} onChange={e => this.getstock(e.target.value)} type="text" placeholder="5555555555"></input>
-                                            <input id='presentacion' value={this.state.presentacion} onChange={e => this.getpresentacion(e.target.value)} type="text" placeholder="43.13"></input>
-                                        </div>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.prodId)} className="btn btn-applyChanges">Guardar Cambios</button>
-                                        </div>
-                                    </div> : null
-                            }
-                        </div>
-                    </header>
-                </div>
             </div>
         );
     }

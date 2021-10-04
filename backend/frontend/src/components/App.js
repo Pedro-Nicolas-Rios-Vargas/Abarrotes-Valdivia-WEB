@@ -15,6 +15,7 @@ import ProductoModi from "./producto/ProductoModi";
 import ProductoDelete from "./producto/ProductoDelete";
 import SellAdd from "./venta/SellAdd";
 import SellLog from "./venta/SellLog"
+import './App.css';
 import {
     BrowserRouter as Router,
     Switch,
@@ -58,7 +59,6 @@ export default class App extends Component {
                     <Switches />
                 </main>
             </div>
-
         );
     }
 }

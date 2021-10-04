@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import Button from "@material-ui/core/Button"
-import { FormControl, FormControlLabel, FormGroup, Grid } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-import { TextField } from '@material-ui/core';
-import { FormHelperText } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 
 
 export default class ClienteAdd extends Component {
     defaultName = "hola"
-    defaultSecondName = "Si"
-    defaultEmail = "si@si.si"
-    defaultPhoneNum = "5555555555"
     defualtBalance = -5.5
     constructor(props) {
         super(props);
@@ -39,6 +30,7 @@ export default class ClienteAdd extends Component {
 
     AddClient() {
         //console.log(this)
+        console.log(this.state.nombre_C)
         const requiestClient = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -54,73 +46,31 @@ export default class ClienteAdd extends Component {
 
     render() {
         return (
-            <div>
-                <Grid container spacing={5}>
-                    <Grid item xs={12} align="center">
-                        <Typography component="h4" variant="h4">
-                            Agregar Cliente
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} align="center">
-                        <FormControl component="fieldset">
-                            <FormHelperText>
-                                Datos del Cliente
-                            </FormHelperText>
-                        </FormControl>
-                    </Grid>
+            <div className="container">
+                <h2>Agregar Cliente
+                    <small>Datos del cliente</small>
+                </h2>
 
-                    <Grid container spacing={5} justifyContent="center" alignItems="center">
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="NameClienttxt"
-                                    onChange={this.getNameClient}
-                                    label="Nombres"
-                                    placeholder="Jesus Alonso"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
+                <form>
+                    <div className="group">
+                        <input type="text" required onChange={e => this.getNameClient(e)} />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
 
+                    <div className="group">
+                        <input type="text" required onChange={e => this.getbalance(e)} />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Saldo</label>
+                    </div>
 
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="BalanceClienttxt"
-                                    onChange={this.getbalance}
-                                    label="Saldo"
-                                    type="number"
-                                    placeholder="-89.50"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false}>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                onClick={this.AddClient}>
-                                Agregar Clinte
-                            </Button>
-                        </Grid>
-
-                        <Grid item xs={false}>
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                to="/"
-                                component={Link}>
-                                Regresar
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                </form>
+                <div className="footer">
+                    <button className="btn" onClick={() => this.AddClient()} >Agregar</button>
+                    <button className="btn back">Regresar</button>
+                </div>
             </div>
         );
     }

@@ -100,45 +100,36 @@ export default class ClienteDelete extends Component {
                 <td>{clien.nombre_C}</td>
                 <td>{clien.balance}</td>
                 <td>
-                    <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button>
+                    <button onClick={() => this.deleteData(clien.clientId)} className="btn btn_confirm" >Eliminar</button>
                     {/* <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
                 </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Eliminar Cliente
+                </h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
-                            <th className="head">Nombres</th>
+                            <th className="head">Nombre</th>
                             <th className="head">Saldo</th>
-                            <th className="head">Opciones</th>
+                            <th className="head">Accion</th>
                         </tr>
                     </thead>
                     <tbody>
                         {rows}
                     </tbody>
                 </table>
-                <div className="Modi">
-                    <header className="Modi-header">
-                        <div>
-                            {
-                                this.state.show ?
-                                    <div>
-                                        <div className="textBox">
-                                            <input id='clientId' value={this.state.clientId} onChange={e => this.getclientId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='nombre_C' value={this.state.nombre_C} onChange={e => this.getnombre_C(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='balance' value={this.state.balance} onChange={e => this.getbalance(e.target.value)} type="text" placeholder="43.13"></input>
-                                        </div>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.clientId)} className="btn btn-applyChanges">Guardar Cambios</button>
-                                        </div>
-                                    </div> : null
-                            }
-                        </div>
-                    </header>
-                </div>
             </div>
         );
     }
