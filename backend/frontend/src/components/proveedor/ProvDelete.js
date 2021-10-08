@@ -100,44 +100,35 @@ export default class ProvGet extends Component {
                 <td>{prov.provName}</td>
                 <td>{prov.provPhoneNum}</td>
                 <td>
-                    <button onClick={() => this.deleteData(prov.provrId)} className="btn btn-delete" >Eliminar</button>
+                    <button onClick={() => this.deleteData(prov.provrId)} className="btn btn_confirm" >Eliminar</button>
                     {/* <button onClick={() => this.modiData(prov.provrId)} className="btn btn-modifi">Modificar</button> */}
                 </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Eliminar Proveedor</h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
                             <th className="head">Telefono</th>
-                            <th className="head">Opciones</th>
+                            <th className="head">Accione</th>
                         </tr>
                     </thead>
                     <tbody>
                         {rows}
                     </tbody>
                 </table>
-                <div className="Modi">
-                    <header className="Modi-header">
-                        <div>
-                            {
-                                this.state.show ?
-                                    <div>
-                                        <div className="textBox">
-                                            <input id='provrId' value={this.state.provrId} onChange={e => this.getprovrId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='provName' value={this.state.provName} onChange={e => this.getprovName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='provPhoneNum' value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e.target.value)} type="text" placeholder="5555555555"></input>                                        </div>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.provrId)} className="btn btn-applyChanges">Guardar Cambios</button>
-                                        </div>
-                                    </div> : null
-                            }
-                        </div>
-                    </header>
-                </div>
             </div>
         );
     }

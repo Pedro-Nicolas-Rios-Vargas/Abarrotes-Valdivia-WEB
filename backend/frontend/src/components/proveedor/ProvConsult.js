@@ -23,19 +23,19 @@ export default class ProvGet extends Component {
     getprovrId(value) {
         this.setState({
             provrId: value
-       });
+        });
     }
 
     getprovName(value) {
         this.setState({
             provName: value
-       });
+        });
     }
 
     getprovPhoneNum(value) {
         this.setState({
             provPhoneNum: value
-       });
+        });
     }
 
     getProvData() {
@@ -66,15 +66,15 @@ export default class ProvGet extends Component {
 
     modiData(provrId) {
         fetch('/proveedor/update-proveedor/' + provrId)
-        .then(response => response.json())
-        .then((data) => {
-            //console.log(provrId)
-            this.setState({
-                provrId: provrId,
-                provName: data.provName,
-                provPhoneNum: data.provPhoneNum,
+            .then(response => response.json())
+            .then((data) => {
+                //console.log(provrId)
+                this.setState({
+                    provrId: provrId,
+                    provName: data.provName,
+                    provPhoneNum: data.provPhoneNum,
+                });
             });
-        });
         { this.setState({ show: true }) }
     }
 
@@ -88,8 +88,8 @@ export default class ProvGet extends Component {
                 provPhoneNum: this.state.provPhoneNum,
             }),
         };
-        fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
-        .then((response) => response.json());
+        fetch("/proveedor/update-proveedor/" + provrId, requiestClient)
+            .then((response) => response.json());
         { this.setState({ show: false }) }
     }
 
@@ -99,16 +99,21 @@ export default class ProvGet extends Component {
             <tr key={prov.provrId}>
                 <td>{prov.provName}</td>
                 <td>{prov.provPhoneNum}</td>
-                <td>
-                    {/* <button onClick={() => this.deleteData(clien.provrId)} className="btn btn-delete" >Eliminar</button> */}
-                    {/* <button onClick={() => this.modiData(prov.provrId)} className="btn btn-modifi">Modificar</button> */}
-                </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Consultar Proveedor</h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
@@ -119,24 +124,6 @@ export default class ProvGet extends Component {
                         {rows}
                     </tbody>
                 </table>
-                <div className="Modi">
-                    <header className="Modi-header">
-                        <div>
-                            {
-                                this.state.show ?
-                                    <div>
-                                        <div className="textBox">
-                                            <input id='provrId' value={this.state.provrId} onChange={e => this.getprovrId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='provName' value={this.state.provName} onChange={e => this.getprovName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='provPhoneNum' value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e.target.value)} type="text" placeholder="5555555555"></input>                                        </div>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.provrId)} className="btn btn-applyChanges">Guardar Cambios</button>
-                                        </div>
-                                    </div> : null
-                            }
-                        </div>
-                    </header>
-                </div>
             </div>
         );
     }

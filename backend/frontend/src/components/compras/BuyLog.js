@@ -1,5 +1,5 @@
 import React, { Component, useState } from "react";
-import Modal from './ModalSell'
+import Modal from './ModalBuy'
 
 export default class ProvGet extends Component {
     constructor(props) {
@@ -148,20 +148,20 @@ export default class ProvGet extends Component {
         );
         return (
             <div className="container">
-                <h2>Ventas
+                <h2>Compras
                 </h2>
                 <form>
                     <div className="group">
                         <input type="text" required />
                         <span className="highlight"></span>
                         <span className="bar"></span>
-                        <label>Nombre Cliente</label>
+                        <label>Nombre Proveedor</label>
                     </div>
                 </form>
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head-table">Cliente</th>
+                            <th className="head-table">Proveedor</th>
                             <th className="head-table">Fecha</th>
                             <th className="head-table">Total</th>
                             <th className="head-table">Accion</th>
@@ -171,7 +171,7 @@ export default class ProvGet extends Component {
                         {rows}
                     </tbody>
                 </table>
-                <Modal title="Ventas Detalladas" onClose={() => this.setShow(false)} show={this.state.show}>
+                <Modal title="Compras Detalladas" onClose={() => this.setShow(false)} show={this.state.show}>
                 <div >
                 <table className="table">
                     <thead>

@@ -82,7 +82,7 @@ main{
 }
 .sidebar .nav-links li i{
   height: 50px;
-  min-width: 68px;
+  min-width: 65px;
   text-align: center;
   line-height: 50px;
   color: #fff;
@@ -257,8 +257,17 @@ Este es el bloque de estilos para agregar
 * { box-sizing:border-box; }
 
 /* basic stylings ------------------------------------------ */
-.container 		{ 
+.container { 
   width:760px; 
+  margin:30px auto 0; 
+  display:block; 
+  background: #11101d;
+  padding:10px 50px 50px;
+  border-radius: 25px;
+}
+
+.login { 
+  width:560px; 
   margin:30px auto 0; 
   display:block; 
   background: #11101d;
@@ -295,8 +304,15 @@ h2 small {
 }
 
 .btn_confirm{
+    color: #11101D;
     width: 90px;
     height: 18px;
+}
+
+.btn_controller{
+  color: #11101D;
+  width: 15px;
+  height: 18px;
 }
 
 .btn:hover{
@@ -310,8 +326,13 @@ h2 small {
 }
 
 .btn_confirm:hover{
-    background: #5d6d7e;
+    background: #5d6d7e00;
     color: #fff;
+}
+
+.btn_controller:hover{
+  background: #5d6d7e00;
+  color: #fff;
 }
 
 
@@ -329,6 +350,9 @@ input {
   width:660px;
   border:none;
   border-bottom:1px solid #ffffff;
+}
+input .loginInput {
+  width:460px;
 }
 input:focus { 
     outline:none; 
@@ -354,6 +378,13 @@ input:focus ~ label, input:valid ~ label 		{
   font-size:14px;
   color:#ffffff;
 }
+
+input:disabled ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#ff0101;
+}
+
 
 /* BOTTOM BARS ================================= */
 .bar{ 
@@ -429,22 +460,22 @@ Bloque de estilos de las tablas
 
 .table td, .table tr {
     padding: 0;
-    color: #fff;
+    color: #11101D;
     text-align: center;
     font-size: 18px;
 }
 
 .table tr:nth-child(odd) {
-    background-color:  #af7ac5 ;
+    background-color: #E4E9F7;
 }
 
 .table tr:nth-child(even) {
-    background-color: #5dade2  ;
+    background-color: #e4e9f7;
 }
 
 .table th {
-    background-color: #E4E9F7;
-    color: rgb(0, 0, 0)
+    background-color: #7B849D;
+    color: #11101d
 }
 
 .table tr:hover {
@@ -452,3 +483,73 @@ Bloque de estilos de las tablas
  -webkit-box-shadow: 0 6px 6px -6px #0E1119;
              box-shadow: 0 6px 6px -6px #0E1119;
  }
+
+ .a {
+   position: inherit;
+  }
+  .b {
+    position: inherit;
+    padding-right:5px;
+ }
+
+ .divEspaciado {
+   padding-bottom: 30px;
+ }
+
+ /* Modal */
+
+ .modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+.modal.enter-done {
+  opacity: 1;
+  pointer-events: visible;
+}
+
+.modal.exit {
+  opacity: 0;
+}
+
+.modal-content {
+  width: 760px;
+  background: #11101d;
+  border-radius: 25px;
+  transition: all 0.3s ease-in-out;
+  transform: translateY(-200px);
+}
+
+.modal.enter-done .modal-content {
+  transform: translateY(0);
+}
+
+.modal.exit .modal-content {
+  transform: translateY(-200px);
+}
+
+.modal-footer {
+  padding-top: 0px;
+  padding-bottom: 15px;
+  padding-left: 39%;
+} 
+
+.modal-title {
+  padding-top: 10px;
+  color:#ffffff
+}
+
+.modal-body {
+  padding: 1px 50px 0px 50px;
+  margin-bottom: 10px;
+}

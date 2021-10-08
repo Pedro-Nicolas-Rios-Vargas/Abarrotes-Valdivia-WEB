@@ -136,14 +136,24 @@ export default class ProductoModi extends Component {
                 <td>{clien.presentacion}</td>
                 <td>
                     {/* <button onClick={() => this.deleteData(clien.prodId)} className="btn btn-delete" >Eliminar</button> */}
-                    <button onClick={() => this.modiData(clien.prodId)} className="btn btn-modifi">Modificar</button>
+                    <button onClick={() => this.modiData(clien.prodId)} className="btn btn_confirm">Modificar</button>
                 </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Modificar Producto
+                </h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
                             <th className="head">Nomrbe</th>
@@ -165,6 +175,7 @@ export default class ProductoModi extends Component {
                                 this.state.show ?
                                     <div>
                                         <div className="textBox">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
                                             <input id='prodId' value={this.state.prodId} onChange={e => this.getprodId(e.target.value)} type="text" placeholder="ID" disabled></input>
                                             <input id='prodName' value={this.state.prodName} onChange={e => this.getprodName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
                                             <input id='existencia' value={this.state.existencia} onChange={e => this.getexistencia(e.target.value)} type="text" placeholder="Perez Guerra"></input>

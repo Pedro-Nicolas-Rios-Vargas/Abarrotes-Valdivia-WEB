@@ -101,14 +101,23 @@ export default class ProvModi extends Component {
                 <td>{prov.provPhoneNum}</td>
                 <td>
                     {/* <button onClick={() => this.deleteData(clien.provrId)} className="btn btn-delete" >Eliminar</button> */}
-                    <button onClick={() => this.modiData(prov.provrId)} className="btn btn-modifi">Modificar</button>
+                    <button onClick={() => this.modiData(prov.provrId)} className="btn btn_confirm">Modificar</button>
                 </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Modificar Proveedor</h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>

@@ -421,7 +421,7 @@ export default class SellAdd extends Component {
 
         return (
             <div className="container">
-                <h2>Ventas</h2>
+                <h2>Compras</h2>
                 <from>
                     <div className="group">
                         <input type="text" required onChange={e => this.getprodId(e.target.value)} />
@@ -433,7 +433,7 @@ export default class SellAdd extends Component {
                         <input className="diabled" type="text" required onChange={e => this.getnombre_C(e.target.value)} disabled={this.state.inputCliente} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
-                        <label className="disable">Nombre del cliente</label>
+                        <label className="disable">Nombre del proveedor</label>
                     </div>
                 </from>
                 <button className="btn" onClick={() => this.agregar(this.state.nombre_C, this.state.prodId)}>Agregar</button>
@@ -444,9 +444,9 @@ export default class SellAdd extends Component {
                             <tr>
                                 <th className="head">Nomrbe</th>
                                 {/* <th className="head">Precio de compra</th> */}
-                                <th className="head">Precio de venta</th>
+                                <th className="head">Precio de compra</th>
                                 <th className="head">Cantidad</th>
-                                <th className="head">Cliente</th>
+                                <th className="head">Proveedor</th>
                                 <th className="head">Opciones</th>
                             </tr>
                         </thead>

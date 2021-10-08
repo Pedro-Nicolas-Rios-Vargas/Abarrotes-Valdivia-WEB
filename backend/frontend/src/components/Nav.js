@@ -97,8 +97,8 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Compras</a></li>
-                                    <li><a href="#">Agregar</a></li>
-                                    <li><a href="#">Buscar</a></li>
+                                    <Link to="/compras/agregar"><li onClick={() =>this.changeRotulo("Compras")}>Agregar</li></Link>
+                                    <Link to="/compras/consultar"><li onClick={() =>this.changeRotulo("Compras")}>Buscar</li></Link>
                                 </ul>
                             </li>
                             <li>
@@ -118,13 +118,28 @@ export default class Nav extends Component {
                                 </ul>
                             </li>
 
-                            <li>
+                            {/* <li>
                                 <a href="#">
                                     <i className='bx bx-line-chart' ></i>
                                     <span className="link_name">Reportes</span>
                                 </a>
                                 <ul className="sub-menu blank">
-                                    <li><a className="link_name" href="#">Reportes</a></li>
+                                    <li><a className="link_name" href="#">Reporte Ventas</a></li>
+                                    <li><a className="link_name" href="#">Reporte Productos</a></li>
+                                </ul>
+                            </li> */}
+                            <li>
+                                <div className="iocn-link">
+                                    <a href="#">
+                                        <i className='bx bx-line-chart'></i>
+                                        <span className="link_name">Reportes</span>
+                                    </a>
+                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                </div>
+                                <ul className="sub-menu">
+                                    <li><a className="link_name" href="#">Productos</a></li>
+                                    <Link to="/"><li onClick={() =>this.changeRotulo("Reportes")}>Ventas</li></Link>
+                                    <Link to="/"><li onClick={() =>this.changeRotulo("Reportes")}>Productos</li></Link>
                                 </ul>
                             </li>
 
