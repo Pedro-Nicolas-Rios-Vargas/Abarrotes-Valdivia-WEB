@@ -97,12 +97,8 @@ export default class ProvGet extends Component {
         const provData = this.state.data;
         const rows = provData.map((prov) =>
             <tr key={prov.provrId}>
-                <td>{prov.provName}</td>
-                <td>{prov.provPhoneNum}</td>
-                <td>
-                    <button onClick={() => this.deleteData(prov.provrId)} className="btn btn_confirm" >Eliminar</button>
-                    {/* <button onClick={() => this.modiData(prov.provrId)} className="btn btn-modifi">Modificar</button> */}
-                </td>
+                <td onClick={() => this.deleteData(prov.provrId)}>{prov.provName}</td>
+                <td onClick={() => this.deleteData(prov.provrId)}>{prov.provPhoneNum}</td>
             </tr>
         );
 
@@ -122,7 +118,6 @@ export default class ProvGet extends Component {
                         <tr>
                             <th className="head">Nombres</th>
                             <th className="head">Telefono</th>
-                            <th className="head">Accione</th>
                         </tr>
                     </thead>
                     <tbody>

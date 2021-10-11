@@ -129,15 +129,11 @@ export default class ProductoDelete extends Component {
         const clienData = this.state.data;
         const rows = clienData.map((product) =>
             <tr key={product.prodId}>
-                <td>{product.prodName}</td>
-                <td>{product.existencia}</td>
-                <td>{product.sellPrice}</td>
-                <td>{product.stock}</td>
-                <td>{product.presentacion}</td>
-                <td>
-                    <button onClick={() => this.deleteData(product.prodId)} className="btn btn_confirm" >Eliminar</button>
-                    {/* <button onClick={() => this.modiData(clien.prodId)} className="btn btn-modifi">Modificar</button> */}
-                </td>
+                <td onClick={() => this.deleteData(product.prodId)}>{product.prodName}</td>
+                <td onClick={() => this.deleteData(product.prodId)}>{product.existencia}</td>
+                <td onClick={() => this.deleteData(product.prodId)}>{product.sellPrice}</td>
+                <td onClick={() => this.deleteData(product.prodId)}>{product.stock}</td>
+                <td onClick={() => this.deleteData(product.prodId)}>{product.presentacion}</td>
             </tr>
         );
 
@@ -161,7 +157,6 @@ export default class ProductoDelete extends Component {
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
                             <th className="head">Presentacion</th>
-                            <th className="head">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>

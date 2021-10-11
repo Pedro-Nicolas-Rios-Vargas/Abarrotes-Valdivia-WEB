@@ -130,12 +130,9 @@ export default class ProvGet extends Component {
         }
         const rows = rowsData.map((element) =>
             <tr key={element.sellId}>
-                <td>{element.clientName}</td>
-                <td>{element.sellDate}</td>
-                <td>{element.total}</td>
-                <td>
-                    <button id="btnSellLog" className="btn btn_confirm" onClick={() => this.openModal(element.sellId)}>Detallas</button>
-                </td>
+                <td onClick={() => this.openModal(element.sellId)}>{element.clientName}</td>
+                <td onClick={() => this.openModal(element.sellId)}>{element.sellDate}</td>
+                <td onClick={() => this.openModal(element.sellId)}>{element.total}</td>
             </tr>
         );
         const detalles = this.state.tablaDetallada;
@@ -164,7 +161,6 @@ export default class ProvGet extends Component {
                             <th className="head-table">Proveedor</th>
                             <th className="head-table">Fecha</th>
                             <th className="head-table">Total</th>
-                            <th className="head-table">Accion</th>
                         </tr>
                     </thead>
                     <tbody>

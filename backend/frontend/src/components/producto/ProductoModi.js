@@ -129,15 +129,11 @@ export default class ProductoModi extends Component {
         const clienData = this.state.data;
         const rows = clienData.map((clien) =>
             <tr key={clien.prodId}>
-                <td>{clien.prodName}</td>
-                <td>{clien.existencia}</td>
-                <td>{clien.sellPrice}</td>
-                <td>{clien.stock}</td>
-                <td>{clien.presentacion}</td>
-                <td>
-                    {/* <button onClick={() => this.deleteData(clien.prodId)} className="btn btn-delete" >Eliminar</button> */}
-                    <button onClick={() => this.modiData(clien.prodId)} className="btn btn_confirm">Modificar</button>
-                </td>
+                <td onClick={() => this.modiData(clien.prodId)}>{clien.prodName}</td>
+                <td onClick={() => this.modiData(clien.prodId)}>{clien.existencia}</td>
+                <td onClick={() => this.modiData(clien.prodId)}>{clien.sellPrice}</td>
+                <td onClick={() => this.modiData(clien.prodId)}>{clien.stock}</td>
+                <td onClick={() => this.modiData(clien.prodId)}>{clien.presentacion}</td>
             </tr>
         );
 
@@ -161,7 +157,6 @@ export default class ProductoModi extends Component {
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
                             <th className="head">Presentacion</th>
-                            <th className="head">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -174,15 +169,57 @@ export default class ProductoModi extends Component {
                             {
                                 this.state.show ?
                                     <div>
-                                        <div className="textBox">
+                                        <from>
+                                        <div className="group">
                                             {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
-                                            <input id='prodId' value={this.state.prodId} onChange={e => this.getprodId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='prodName' value={this.state.prodName} onChange={e => this.getprodName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='existencia' value={this.state.existencia} onChange={e => this.getexistencia(e.target.value)} type="text" placeholder="Perez Guerra"></input>
-                                            <input id='sellPrice' value={this.state.sellPrice} onChange={e => this.getsellPrice(e.target.value)} type="text" placeholder="example@example.com"></input>
-                                            <input id='stock' value={this.state.stock} onChange={e => this.getstock(e.target.value)} type="text" placeholder="5555555555"></input>
-                                            <input id='presentacion' value={this.state.presentacion} onChange={e => this.getpresentacion(e.target.value)} type="text" placeholder="43.13"></input>
+                                            <input id='prodName' value={this.state.prodName}
+                                                    onChange={e => this.getprodName(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Nombre</label>
                                         </div>
+
+                                        <div className="group">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <input id='existencia' value={this.state.existencia}
+                                                    onChange={e => this.getexistencia(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Existencia</label>
+                                        </div>
+
+                                        <div className="group">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <input id='sellPrice' value={this.state.sellPrice}
+                                                    onChange={e => this.getsellPrice(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Precio</label>
+                                        </div>
+
+                                        <div className="group">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <input id='stock' value={this.state.stock}
+                                                    onChange={e => this.getstock(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Stock</label>
+                                        </div>
+
+                                        <div className="group">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <input id='presentacion' value={this.state.presentacion}
+                                                    onChange={e => this.getpresentacion(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Presentacion</label>
+                                        </div>
+                                        </from>
                                         <div>
                                             <button onClick={() => this.applyChanges(this.state.prodId)} className="btn btn-applyChanges">Guardar Cambios</button>
                                         </div>

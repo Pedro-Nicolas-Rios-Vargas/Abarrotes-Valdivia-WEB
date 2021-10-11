@@ -97,12 +97,8 @@ export default class ClienteDelete extends Component {
         const clienData = this.state.data;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td>{clien.nombre_C}</td>
-                <td>{clien.balance}</td>
-                <td>
-                    <button onClick={() => this.deleteData(clien.clientId)} className="btn btn_confirm" >Eliminar</button>
-                    {/* <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
-                </td>
+                <td onClick={() => this.deleteData(clien.clientId)} >{clien.nombre_C}</td>
+                <td onClick={() => this.deleteData(clien.clientId)} >{clien.balance}</td>
             </tr>
         );
 
@@ -123,7 +119,6 @@ export default class ClienteDelete extends Component {
                         <tr>
                             <th className="head">Nombre</th>
                             <th className="head">Saldo</th>
-                            <th className="head">Accion</th>
                         </tr>
                     </thead>
                     <tbody>
