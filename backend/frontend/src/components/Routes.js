@@ -26,7 +26,7 @@ function Switches() {
             <Switch>
                 {/* <Route path="" exact component={Home} /> */}
                 <Route exact path="/" component={Login} />
-                <Route exact path="/home" component={Home} />
+                <Route path="/home" component={Home} />
                 <Route path="home/cliente/add" component={ClienteAdd} />
                 <Route path="home/cliente/consultar" component={ClienteConsult} />
                 <Route path="home/cliente/modificar" component={ClientModi} />

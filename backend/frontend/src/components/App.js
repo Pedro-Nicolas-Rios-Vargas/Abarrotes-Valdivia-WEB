@@ -60,6 +60,7 @@ export default class App extends Component {
                 <Nav />
                 <main>
                     <Switches />
+
                 </main>
             </div>
         );
