@@ -91,6 +91,7 @@ export default class ProductoAdd extends Component {
 
     render() {
         return (
+<<<<<<< HEAD
             <div>
                 <Grid container spacing={5}>
                     <Grid item xs={12} align="center">
@@ -163,60 +164,182 @@ export default class ProductoAdd extends Component {
                         </Grid>
                     </Grid>
                     
+=======
+            <div className="container">
+            <h2>Agregar Producto
+                <small>Datos del Producto</small>
+            </h2>
 
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="Presentaciontxt"
-                                    onChange={this.getpresentacion}
-                                    label="Presentacion"
-                                    placeholder="Unidad de medida"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                        <p>Cambiar esta cosas por un spinner o algo asi</p>
-                        <p>Ya que solo esta Unidad y Kilogramo</p>
-                        <h3>Aparte de que se tiene que mandar 1 o 2 dependiendo de lo elegido</h3>
-                        <h3>O si no cambiar el modelo</h3>
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="sellPriceClienttxt"
-                                    onChange={this.getsellPrice}
-                                    label="Precio de venta"
-                                    type="number"
-                                    placeholder="-89.50"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false}>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                onClick={this.AddClient}>
-                                Agregar Producto
-                            </Button>
-                        </Grid>
+            <form>
+                <div className="group">
+                    <input type="text" required onChange={e => this.getNameProducto(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar"></span>
+                    <label>Nombre</label>
+                </div>
 
-                        <Grid item xs={false}>
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                to="/"
-                                component={Link}>
-                                Regresar
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                <div className="group">
+                    <input type="text" required onChange={e => this.getexistencia(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar"></span>
+                    <label>Existencia</label>
+                </div>
+>>>>>>> origin/VRVG
+
+                <div className="group">
+                    <input type="text" required onChange={e => this.getstock(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar"></span>
+                    <label>stock</label>
+                </div>
+
+                <div className="group">
+                    <input type="text" required onChange={e => this.getpresentacion(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar"></span>
+                    <label>presentacion</label>
+                </div>
+
+                <div className="group">
+                    <input type="text" required onChange={e => this.getsellPrice(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar"></span>
+                    <label>sellPrice</label>
+                </div>
+            </form>
+            <div className="footer">
+                <button className="btn" onClick={() => this.AddClient()} >Agregar</button>
+                <button className="btn back">Regresar</button>
             </div>
+        </div>
+            // <div>
+            //     <Grid container spacing={5}>
+            //         <Grid item xs={12} align="center">
+            //             <Typography component="h4" variant="h4">
+            //                 Agregar Producto
+            //             </Typography>
+            //         </Grid>
+            //         <Grid item xs={12} align="center">
+            //             <FormControl component="fieldset">
+            //                 <FormHelperText>
+            //                     <div align='center'>
+            //                         Datos del Producto
+            //                     </div>
+            //                 </FormHelperText>
+            //             </FormControl>
+            //         </Grid>
+
+            //         <Grid container spacing={1} justifyContent="center" align="center">
+            //             <Grid item xs={false} margin={12}>
+            //                 <FormControl>
+            //                     <TextField
+            //                         id="IDtxt"
+            //                         onChange={this.getprodId}
+            //                         label="Codigo de barras"
+            //                         placeholder="9786075487267"
+            //                         multiline
+            //                         variant="outlined">
+            //                     </TextField>
+            //                 </FormControl>
+            //             </Grid>
+            //         </Grid>
+
+            //         <Grid container spacing={5} justifyContent="center" alignItems="center">
+            //             <Grid item xs={false}>
+            //                 <FormControl>
+            //                     <TextField
+            //                         id="productNametxt"
+            //                         onChange={this.getNameProducto}
+            //                         label="Nombre"
+            //                         placeholder="Principes"
+            //                         multiline
+            //                         variant="outlined">
+            //                     </TextField>
+            //                 </FormControl>
+            //             </Grid>
+            //             <Grid item xs={false}>
+            //                 <FormControl>
+            //                     <TextField
+            //                         id="buytxt"
+            //                         onChange={this.getexistencia}
+            //                         label="Existencia"
+            //                         placeholder="12"
+            //                         multiline
+            //                         variant="outlined">
+            //                     </TextField>
+            //                 </FormControl>
+            //             </Grid>
+            //         </Grid>
+
+            //         <Grid container spacing={1} justifyContent="center" align="center">
+            //             <Grid item xs={false} margin={12}>
+            //                 <FormControl>
+            //                     <TextField
+            //                         id="stocktxt"
+            //                         onChange={this.getstock}
+            //                         label="Stock"
+            //                         placeholder="13"
+            //                         multiline
+            //                         variant="outlined">
+            //                     </TextField>
+            //                 </FormControl>
+            //             </Grid>
+            //         </Grid>
+                    
+
+            //         <Grid container spacing={1} justifyContent="center" align="center">
+            //             <Grid item xs={false}>
+            //                 <FormControl>
+            //                     <TextField
+            //                         id="Presentaciontxt"
+            //                         onChange={this.getpresentacion}
+            //                         label="Presentacion"
+            //                         placeholder="Unidad de medida"
+            //                         multiline
+            //                         variant="outlined">
+            //                     </TextField>
+            //                 </FormControl>
+            //             </Grid>
+            //             <p>Cambiar esta cosas por un spinner o algo asi</p>
+            //             <p>Ya que solo esta Unidad y Kilogramo</p>
+            //             <h3>Aparte de que se tiene que mandar 1 o 2 dependiendo de lo elegido</h3>
+            //             <h3>O si no cambiar el modelo</h3>
+            //             <Grid item xs={false}>
+            //                 <FormControl>
+            //                     <TextField
+            //                         id="sellPriceClienttxt"
+            //                         onChange={this.getsellPrice}
+            //                         label="Precio de venta"
+            //                         type="number"
+            //                         placeholder="-89.50"
+            //                         multiline
+            //                         variant="outlined">
+            //                     </TextField>
+            //                 </FormControl>
+            //             </Grid>
+            //         </Grid>
+            //         <Grid container spacing={1} justifyContent="center" align="center">
+            //             <Grid item xs={false}>
+            //                 <Button
+            //                     color="primary"
+            //                     variant="contained"
+            //                     onClick={this.AddClient}>
+            //                     Agregar Producto
+            //                 </Button>
+            //             </Grid>
+
+            //             <Grid item xs={false}>
+            //                 <Button
+            //                     color="secondary"
+            //                     variant="contained"
+            //                     to="/"
+            //                     component={Link}>
+            //                     Regresar
+            //                 </Button>
+            //             </Grid>
+            //         </Grid>
+            //     </Grid>
+            // </div>
         );
     }
 }

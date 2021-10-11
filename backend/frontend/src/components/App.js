@@ -14,7 +14,9 @@ import ProductoConsult from "./producto/ProductoGet";
 import ProductoModi from "./producto/ProductoModi";
 import ProductoDelete from "./producto/ProductoDelete";
 import SellAdd from "./venta/SellAdd";
-import SellLog from "./venta/SellLog"
+import SellLog from "./venta/SellLog";
+import BuyAdd from "./compras/BuyAdd";
+import BuyLog from "./compras/BuyLog";
 import {
     BrowserRouter as Router,
     Switch,
@@ -41,6 +43,8 @@ function Switches(props) {
             <Route path="/producto/eliminar" component={ProductoDelete} />
             <Route path="/venta/agregar" component={SellAdd} />
             <Route path="/venta/consultar" component={SellLog} />
+            <Route path="/compras/agregar" component={BuyAdd} />
+            <Route path="/compras/consultar" component={BuyLog} />
         </Switch>
     );
 }
@@ -58,16 +62,10 @@ export default class App extends Component {
                     <Switches />
                 </main>
             </div>
-
         );
     }
 }
 
-const Home = (
-    <div>
-        <h1>Pagina base</h1>
-    </div>
-);
 
 const appDiv = document.getElementById("app");
 render(

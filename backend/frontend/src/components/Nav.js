@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-require("../components/style.css")
 import {
     BrowserRouter as Router,
     Switch,
@@ -13,13 +12,20 @@ export default class Nav extends Component {
         super(props);
         this.state = {
             collapsed: false,
+            rotulo: 'Inicio',
         };
+        
     }
     toggleMenu = () => {
-        console.log("Si entro la pendejada")
         this.setState({
             collapsed: !this.state.collapsed,
         })
+    }
+
+    changeRotulo = (rotulo) => {
+        this.setState({
+            rotulo: rotulo,
+        });
     }
 
     render() {
@@ -42,11 +48,11 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name">Clientes</a></li>
-                                    <Link to="/cliente/add"><li>Agregar</li></Link>
+                                    <Link to="/cliente/add"><li onClick={() =>this.changeRotulo("Cliente")}>Agregar</li></Link>
                                     {/* <li><a href="#">Agregar</a></li> */}
-                                    <Link to="/cliente/consultar"><li>Buscar</li></Link>
-                                    <Link to="/cliente/modificar"><li>Modificar</li></Link>
-                                    <Link to="/cliente/eliminar"><li>Eliminar</li></Link>
+                                    <Link to="/cliente/consultar"><li onClick={() =>this.changeRotulo("Cliente")}>Buscar</li></Link>
+                                    <Link to="/cliente/modificar"><li onClick={() =>this.changeRotulo("Cliente")}>Modificar</li></Link>
+                                    <Link to="/cliente/eliminar"><li onClick={() =>this.changeRotulo("Cliente")}>Eliminar</li></Link>
                                 </ul>
                             </li>
                             <li>
@@ -59,10 +65,10 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Proveedores</a></li>
-                                    <Link to="/proveedor/agregar"><li>Agregar</li></Link>
-                                    <Link to="/proveedor/consultar"><li>Buscar</li></Link>
-                                    <Link to="/proveedor/modificar"><li>Modificar</li></Link>
-                                    <Link to="/proveedor/eliminar"><li>Eliminar</li></Link>
+                                    <Link to="/proveedor/agregar"><li onClick={() =>this.changeRotulo("Proveedores")}>Agregar</li></Link>
+                                    <Link to="/proveedor/consultar"><li onClick={() =>this.changeRotulo("Proveedores")}>Buscar</li></Link>
+                                    <Link to="/proveedor/modificar"><li onClick={() =>this.changeRotulo("Proveedores")}>Modificar</li></Link>
+                                    <Link to="/proveedor/eliminar"><li onClick={() =>this.changeRotulo("Proveedores")}>Eliminar</li></Link>
                                 </ul>
                             </li>
 
@@ -76,8 +82,8 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Ventas</a></li>
-                                    <Link to="/venta/agregar"><li>Agregar</li></Link>
-                                    <Link to="/venta/consultar"><li>Buscar</li></Link>
+                                    <Link to="/venta/agregar"><li onClick={() =>this.changeRotulo("Ventas")}>Agregar</li></Link>
+                                    <Link to="/venta/consultar"><li onClick={() =>this.changeRotulo("Ventas")}>Buscar</li></Link>
                                 </ul>
                             </li>
 
@@ -91,8 +97,8 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Compras</a></li>
-                                    <li><a href="#">Agregar</a></li>
-                                    <li><a href="#">Buscar</a></li>
+                                    <Link to="/compras/agregar"><li onClick={() =>this.changeRotulo("Compras")}>Agregar</li></Link>
+                                    <Link to="/compras/consultar"><li onClick={() =>this.changeRotulo("Compras")}>Buscar</li></Link>
                                 </ul>
                             </li>
                             <li>
@@ -105,20 +111,35 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Productos</a></li>
-                                    <Link to="/producto/agregar"><li>Agregar</li></Link>
-                                    <Link to="/producto/consultar"><li>Buscar</li></Link>
-                                    <Link to="/producto/modificar"><li>Modificar</li></Link>
-                                    <Link to="/producto/eliminar"><li>Eliminar</li></Link>
+                                    <Link to="/producto/agregar"><li onClick={() =>this.changeRotulo("Productos")}>Agregar</li></Link>
+                                    <Link to="/producto/consultar"><li onClick={() =>this.changeRotulo("Productos")}>Buscar</li></Link>
+                                    <Link to="/producto/modificar"><li onClick={() =>this.changeRotulo("Productos")}>Modificar</li></Link>
+                                    <Link to="/producto/eliminar"><li onClick={() =>this.changeRotulo("Productos")}>Eliminar</li></Link>
                                 </ul>
                             </li>
 
-                            <li>
+                            {/* <li>
                                 <a href="#">
                                     <i className='bx bx-line-chart' ></i>
                                     <span className="link_name">Reportes</span>
                                 </a>
                                 <ul className="sub-menu blank">
-                                    <li><a className="link_name" href="#">Reportes</a></li>
+                                    <li><a className="link_name" href="#">Reporte Ventas</a></li>
+                                    <li><a className="link_name" href="#">Reporte Productos</a></li>
+                                </ul>
+                            </li> */}
+                            <li>
+                                <div className="iocn-link">
+                                    <a href="#">
+                                        <i className='bx bx-line-chart'></i>
+                                        <span className="link_name">Reportes</span>
+                                    </a>
+                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                </div>
+                                <ul className="sub-menu">
+                                    <li><a className="link_name" href="#">Productos</a></li>
+                                    <Link to="/"><li onClick={() =>this.changeRotulo("Reportes")}>Ventas</li></Link>
+                                    <Link to="/"><li onClick={() =>this.changeRotulo("Reportes")}>Productos</li></Link>
                                 </ul>
                             </li>
 
@@ -154,7 +175,8 @@ export default class Nav extends Component {
                     <section className="home-section">
                         <div className="home-content">
                             <i className='bx bx-menu' onClick={() => this.toggleMenu()}></i>
-                            <span className="text">Inicio</span>
+                            <span className="text">{this.state.rotulo}</span>
+                            {/* Ver si se puede cambiar inicio dependiendo de donde este */}
                         </div>
                     </section>
                 </div>

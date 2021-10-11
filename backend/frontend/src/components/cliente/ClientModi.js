@@ -23,20 +23,20 @@ export default class ClientModi extends Component {
     getclientId(value) {
         this.setState({
             clientId: value
-       });
+        });
     }
 
     getnombre_C(value) {
         this.setState({
             nombre_C: value
-       });
+        });
     }
 
 
     getbalance(value) {
         this.setState({
             balance: value
-       });
+        });
     }
 
     getClientData() {
@@ -67,15 +67,15 @@ export default class ClientModi extends Component {
 
     modiData(clientId) {
         fetch('/cliente/update-cliente/' + clientId)
-        .then(response => response.json())
-        .then((data) => {
-            //console.log(clientId)
-            this.setState({
-                clientId: clientId,
-                nombre_C: data.nombre_C,
-                balance: data.balance
+            .then(response => response.json())
+            .then((data) => {
+                //console.log(clientId)
+                this.setState({
+                    clientId: clientId,
+                    nombre_C: data.nombre_C,
+                    balance: data.balance
+                });
             });
-        });
         { this.setState({ show: true }) }
     }
 
@@ -89,8 +89,8 @@ export default class ClientModi extends Component {
                 balance: this.state.balance
             }),
         };
-        fetch("/cliente/update-cliente/"+ clientId, requiestClient)
-        .then((response) => response.json());
+        fetch("/cliente/update-cliente/" + clientId, requiestClient)
+            .then((response) => response.json());
         { this.setState({ show: false }) }
     }
 
@@ -102,19 +102,29 @@ export default class ClientModi extends Component {
                 <td>{clien.balance}</td>
                 <td>
                     {/* <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button> */}
-                    <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button>
+                    <button onClick={() => this.modiData(clien.clientId)} className="btn btn_confirm">Modificar</button>
                 </td>
             </tr>
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Modificar Cliente
+                </h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+                <table className="table">
                     <thead>
                         <tr>
-                            <th className="head">Nombres</th>
+                            <th className="head">Nombre</th>
                             <th className="head">Saldo</th>
-                            <th className="head">Opciones</th>
+                            <th className="head">Accion</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -127,14 +137,30 @@ export default class ClientModi extends Component {
                             {
                                 this.state.show ?
                                     <div>
-                                        <div className="textBox">
-                                            <input id='clientId' value={this.state.clientId} onChange={e => this.getclientId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='nombre_C' value={this.state.nombre_C} onChange={e => this.getnombre_C(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='balance' value={this.state.balance} onChange={e => this.getbalance(e.target.value)} type="text" placeholder="43.13"></input>
-                                        </div>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.clientId)} className="btn btn-applyChanges">Guardar Cambios</button>
-                                        </div>
+                                        <form>
+                                            <div className="group">
+                                                {/* <input id='clientId' value={this.state.clientId} onChange={e => this.getclientId(e.target.value)} type="text" placeholder="ID" disabled></input> */}
+                                                <input id='nombre_C' value={this.state.nombre_C}
+                                                    onChange={e => this.getnombre_C(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Nombre</label>
+                                            </div>
+
+                                            <div className="group">
+                                                <input id='balance' value={this.state.balance}
+                                                    onChange={e => this.getbalance(e.target.value)}
+                                                    type="text" required></input>
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Saldo</label>
+                                            </div>
+                                            <div className="footer">
+                                                <button onClick={() => this.applyChanges(this.state.clientId)} className="btn">Guardar Cambios</button>
+                                            </div>
+
+                                        </form>
                                     </div> : null
                             }
                         </div>

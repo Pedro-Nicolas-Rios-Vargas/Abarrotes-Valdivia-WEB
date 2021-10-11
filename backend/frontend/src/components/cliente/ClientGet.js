@@ -23,20 +23,20 @@ export default class ClientGet extends Component {
     getclientId(value) {
         this.setState({
             clientId: value
-       });
+        });
     }
 
     getnombre_C(value) {
         this.setState({
             nombre_C: value
-       });
+        });
     }
 
 
     getbalance(value) {
         this.setState({
             balance: value
-       });
+        });
     }
 
     getClientData() {
@@ -67,15 +67,15 @@ export default class ClientGet extends Component {
 
     modiData(clientId) {
         fetch('/cliente/update-cliente/' + clientId)
-        .then(response => response.json())
-        .then((data) => {
-            //console.log(data)
-            this.setState({
-                clientId: data.clientId,
-                nombre_C: data.nombre_C,
-                balance: data.balance
+            .then(response => response.json())
+            .then((data) => {
+                //console.log(data)
+                this.setState({
+                    clientId: data.clientId,
+                    nombre_C: data.nombre_C,
+                    balance: data.balance
+                });
             });
-        });
         { this.setState({ show: true }) }
     }
 
@@ -90,9 +90,9 @@ export default class ClientGet extends Component {
             }),
         };
         console.log(clientId);
-        fetch("/cliente/update-cliente/"+ clientId, requiestClient)
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+        fetch("/cliente/update-cliente/" + clientId, requiestClient)
+            .then((response) => response.json())
+            .then((data) => console.log(data));
         { this.setState({ show: false }) }
     }
 
@@ -110,8 +110,19 @@ export default class ClientGet extends Component {
         );
 
         return (
-            <div>
-                <table className="tablaClientes">
+            <div className="container">
+                <h2>Buscar Cliente
+                </h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required/>
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+                </form>
+
+                <table className="table">
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
@@ -122,25 +133,6 @@ export default class ClientGet extends Component {
                         {rows}
                     </tbody>
                 </table>
-                <div className="Modi">
-                    <header className="Modi-header">
-                        <div>
-                            {
-                                this.state.show ?
-                                    <div>
-                                        <div className="textBox">
-                                            <input id='clientId' value={this.state.clientId} onChange={e => this.getclientId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='nombre_C' value={this.state.nombre_C} onChange={e => this.getnombre_C(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='balance' value={this.state.balance} onChange={e => this.getbalance(e.target.value)} type="text" placeholder="43.13"></input>
-                                        </div>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.clientId)} className="btn btn-applyChanges">Guardar Cambios</button>
-                                        </div>
-                                    </div> : null
-                            }
-                        </div>
-                    </header>
-                </div>
             </div>
         );
     }

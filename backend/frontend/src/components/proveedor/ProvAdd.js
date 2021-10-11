@@ -51,6 +51,7 @@ export default class ClienteAdd extends Component {
 
     render() {
         return (
+<<<<<<< HEAD
             <div>
                 <Grid container spacing={5}>
                     <Grid item xs={12} align="center">
@@ -65,57 +66,30 @@ export default class ClienteAdd extends Component {
                             </FormHelperText>
                         </FormControl>
                     </Grid>
+=======
+            <div className="container">
+                <h2>Agregar Proveedor
+                    <small>Datos del Proveedor</small>
+                </h2>
+                <form>
+                    <div className="group">
+                        <input type="text" required onChange={e => this.getNameProv(e)} />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Nombre</label>
+                    </div>
+>>>>>>> origin/VRVG
 
-                    <Grid container spacing={5} justifyContent="center" alignItems="center">
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="NameProvtxt"
-                                    onChange={this.getNameProv}
-                                    label="Nombres"
-                                    placeholder="Jesus Alonso"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="PhoneClienttxt"
-                                    onChange={this.getprovPhoneNum}
-                                    label="Telefono"
-                                    placeholder="5555555555"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false}>
-                            <Button
-                                color="primary"
-                                variant="contained"
-                                onClick={this.AddProv}>
-                                Agregar Proveedor
-                            </Button>
-                        </Grid>
-
-                        <Grid item xs={false}>
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                to="/"
-                                component={Link}>
-                                Regresar
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Grid>
+                    <div className="group">
+                        <input type="text" required onChange={e => this.getprovPhoneNum(e)} />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Telefono</label>
+                    </div>
+                </form>
+                <div className="footer">
+                    <button className="btn" onClick={() => this.AddClient()} >Agregar</button>
+                </div>
             </div>
         );
     }
