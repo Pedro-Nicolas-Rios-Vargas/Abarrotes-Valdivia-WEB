@@ -23,54 +23,233 @@ import {
     Route,
     Link,
     Redirect,
+    useLocation,
 } from "react-router-dom";
 
 function Switches(props) {
     return (
         <Switch>
             {/* <Route path="" exact component={Home} /> */}
-            <Route path="home/cliente/add" component={ClienteAdd} />
-            <Route path="home/cliente/consultar" component={ClienteConsult} />
-            <Route path="home/cliente/modificar" component={ClientModi} />
-            <Route path="home/cliente/eliminar" component={ClienteDelete} />
-            <Route path="home/proveedor/agregar" component={ProvAdd} />
-            <Route path="home/proveedor/consultar" component={ProvConsult} />
-            <Route path="home/proveedor/modificar" component={ProvModi} />
-            <Route path="home/proveedor/eliminar" component={ProvDelete} />
-            <Route path="home/producto/agregar" component={ProductoAdd} />
-            <Route path="home/producto/consultar" component={ProductoConsult} />
-            <Route path="home/producto/modificar" component={ProductoModi} />
-            <Route path="home/producto/eliminar" component={ProductoDelete} />
-            <Route path="home/venta/agregar" component={SellAdd} />
-            <Route path="home/venta/consultar" component={SellLog} />
-            <Route path="home/compras/agregar" component={BuyAdd} />
-            <Route path="home/compras/consultar" component={BuyLog} />
+            <Route exact path="/" component={Login} />
+            <Route path="/cliente/add" component={ClienteAdd} />
+            <Route path="/cliente/consultar" component={ClienteConsult} />
+            <Route path="/cliente/modificar" component={ClientModi} />
+            <Route path="/cliente/eliminar" component={ClienteDelete} />
+            <Route path="/proveedor/agregar" component={ProvAdd} />
+            <Route path="/proveedor/consultar" component={ProvConsult} />
+            <Route path="/proveedor/modificar" component={ProvModi} />
+            <Route path="/proveedor/eliminar" component={ProvDelete} />
+            <Route path="/producto/agregar" component={ProductoAdd} />
+            <Route path="/producto/consultar" component={ProductoConsult} />
+            <Route path="/producto/modificar" component={ProductoModi} />
+            <Route path="/producto/eliminar" component={ProductoDelete} />
+            <Route path="/venta/agregar" component={SellAdd} />
+            <Route path="/venta/consultar" component={SellLog} />
+            <Route path="/compras/agregar" component={BuyAdd} />
+            <Route path="/compras/consultar" component={BuyLog} />
         </Switch>
+    );
+}
+
+function Login() {
+    return (
+        <div className="container login">
+            <h2>Login
+            </h2>
+            <form>
+                <div className="group">
+                    <input type="text" required onChange={e => this.getNameProv(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar2"></span>
+                    <label>Nombre</label>
+                </div>
+
+                <div className="group">
+                    <input type="text" required onChange={e => this.getprovPhoneNum(e)} />
+                    <span className="highlight"></span>
+                    <span className="bar2"></span>
+                    <label>Contraseña</label>
+                </div>
+            </form>
+            <div className="footer">
+                <a className="abtn" href="/home">Confirmar</a>
+            </div>
+        </div>
+    );
+}
+
+function noMatch() {
+    let path = useLocation();
+    return (
+        <div>
+            <h3>No existe la ruta <code>{path.pathname}</code></h3>
+        </div>
     );
 }
 
 export default class App extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+        this.state = {
+            sw: false,
+        }
     }
 
     render() {
         return (
-            <div className="App">
-                <Nav />
-                <main>
-                    <Switches />
+            <div>
+                <Switch>
+                    {/* <Route path="" exact component={Home} /> */}
+                    <Route exact path="/" component={Login}>
+                    </Route>
+                    <Route exact path="/home" >
+                        <div className="App">
+                            <main>
+                                <Nav />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/cliente/add">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ClienteAdd />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/cliente/consultar" >
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ClienteConsult />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/cliente/modificar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ClientModi />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/cliente/eliminar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ClienteDelete />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/proveedor/agregar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProvAdd />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/proveedor/consultar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProvConsult />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/proveedor/modificar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProvModi />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/proveedor/eliminar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProvDelete />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/producto/agregar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProductoAdd />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/producto/consultar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProductoConsult />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/producto/modificar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProductoModi />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/producto/eliminar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ProductoDelete />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/venta/agregar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <SellAdd />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/venta/consultar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <SellLog />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/compras/agregar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <BuyAdd />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/compras/consultar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <BuyLog />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="*">
 
-                </main>
+                    </Route>
+                </Switch>
             </div>
         );
     }
 }
 
 
-// const appDiv = document.getElementById("app");
-// render(
-//     <Router>
-//         <App />
-//     </Router>
-//     , appDiv);
+const appDiv = document.getElementById("app");
+render(
+    <Router>
+        <App />
+    </Router>
+    , appDiv);

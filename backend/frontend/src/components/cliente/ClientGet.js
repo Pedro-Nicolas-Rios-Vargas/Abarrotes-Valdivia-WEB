@@ -5,6 +5,7 @@ export default class ClientGet extends Component {
         super(props);
         this.state = {
             data: [],
+            dataTable: [],
             show: false,
             clientId: 0,
             nombre_C: "",
@@ -18,6 +19,7 @@ export default class ClientGet extends Component {
         this.getclientId = this.getclientId.bind(this)
         this.getnombre_C = this.getnombre_C.bind(this)
         this.getbalance = this.getbalance.bind(this)
+        this.buscar = this.buscar.bind(this);
     }
 
     getclientId(value) {
@@ -44,7 +46,8 @@ export default class ClientGet extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({
-                    data: data
+                    data: data,
+                    dataTable: data,
                 });
             });
     }
@@ -96,8 +99,24 @@ export default class ClientGet extends Component {
         { this.setState({ show: false }) }
     }
 
+    buscar(e) {
+        const nombre = e.target.value.toLowerCase();
+        const auxData = []
+        console.log(this.state.data)
+        for (let i = 0; i < this.state.data.length; i++) {
+            const element = this.state.data[i];
+            const str = element.nombre_C.toLowerCase();
+            if (str.includes(nombre)) {
+                auxData.push(element);    
+            }
+        }
+        this.setState({
+            dataTable: auxData,
+        })
+    }
+
     render() {
-        const clienData = this.state.data;
+        const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
                 <td>{clien.nombre_C}</td>
@@ -115,7 +134,7 @@ export default class ClientGet extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required/>
+                        <input type="text" required onChange={e => this.buscar(e)}/>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>
