@@ -11,8 +11,10 @@
   font-family: 'Poppins', sans-serif;
 }
 main{
-    margin-left: 78px;
-    margin-top: 5vh;
+    /* margin-left: 78px;
+    margin-top: 5vh; */
+    margin-left: 0px;
+    margin-top: 0vh;
 }
 .sidebar{
   position: fixed;
@@ -351,7 +353,7 @@ input {
   border:none;
   border-bottom:1px solid #ffffff;
 }
-input, .loginInput {
+.loginInput {
   width:460px;
 }
 input:focus { 
@@ -413,6 +415,35 @@ input:disabled ~ label 		{
 
 /* active state */
 input:focus ~ .bar:before, input:focus ~ .bar:after {
+  width:50%;
+}
+
+.bar2{ 
+  position:relative; 
+  display:block; 
+  width:660px; 
+}
+
+.bar2:before, .bar2:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:0px; 
+  position:absolute;
+  background:#7a52ae; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar2:before {
+  left:50%;
+}
+.bar2:after {
+  right:50%; 
+}
+
+/* active state */
+input:focus ~ .bar2:before, input:focus ~ .bar2:after {
   width:50%;
 }
 
@@ -556,5 +587,26 @@ Bloque de estilos de las tablas
 
 .tableResponse:hover {
   background: #5d6d7e00;
+  color: #fff;
+}
+
+.abtn {
+  text-decoration: none;
+  background: #fff0;
+  outline: none;
+  width: 170px;
+  color: white;
+  display: inline-block;
+  height: 40px;
+  border: 0px;
+  border-radius: 15px;
+  transition: all .35s;
+  font-size: 18px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+a:hover {
+  background: #28b463;
   color: #fff;
 }
