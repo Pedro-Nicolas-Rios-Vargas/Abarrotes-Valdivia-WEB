@@ -51,22 +51,6 @@ export default class ClienteAdd extends Component {
 
     render() {
         return (
-<<<<<<< HEAD
-            <div>
-                <Grid container spacing={5}>
-                    <Grid item xs={12} align="center">
-                        <Typography component="h4" variant="h4">
-                            Agregar Proveedor
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} align="center">
-                        <FormControl component="fieldset">
-                            <FormHelperText>
-                                Datos del proveedor
-                            </FormHelperText>
-                        </FormControl>
-                    </Grid>
-=======
             <div className="container">
                 <h2>Agregar Proveedor
                     <small>Datos del Proveedor</small>
@@ -78,7 +62,6 @@ export default class ClienteAdd extends Component {
                         <span className="bar"></span>
                         <label>Nombre</label>
                     </div>
->>>>>>> origin/VRVG
 
                     <div className="group">
                         <input type="text" required onChange={e => this.getprovPhoneNum(e)} />

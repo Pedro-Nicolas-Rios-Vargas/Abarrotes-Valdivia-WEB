@@ -420,20 +420,6 @@ export default class SellAdd extends Component {
         }
 
         return (
-<<<<<<< HEAD
-            <div className="SellAdd" >
-                <div className="BuscarInput">
-                    <label>Buscar Producto </label>
-                    <input type="text" className="txtInputBuscarProducto" name="prodId" placeholder="ID o Nombre" onChange={e => this.getprodId(e.target.value)} />
-                    <br />
-                    <label>Buscar Cliente </label>
-                    <input type="text" className="txtInputBuscarCliente" name="nombre_C" placeholder="Nombre" onChange={e => this.getnombre_C(e.target.value)} disabled={this.state.inputCliente} />
-                    <br />
-                    <button onClick={() => this.agregar(this.state.nombre_C, this.state.prodId)}>Agregar</button>
-                </div>
-
-                <div className="tableSellShow" >
-=======
             <div className="container">
                 <h2>Ventas</h2>
                 <from>
@@ -453,7 +439,6 @@ export default class SellAdd extends Component {
                 <button className="btn" onClick={() => this.agregar(this.state.nombre_C, this.state.prodId)}>Agregar</button>
 
                 <div className="table" >
->>>>>>> origin/VRVG
                     <table className="tablaproducttes">
                         <thead>
                             <tr>

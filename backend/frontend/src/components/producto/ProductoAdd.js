@@ -91,80 +91,6 @@ export default class ProductoAdd extends Component {
 
     render() {
         return (
-<<<<<<< HEAD
-            <div>
-                <Grid container spacing={5}>
-                    <Grid item xs={12} align="center">
-                        <Typography component="h4" variant="h4">
-                            Agregar Producto
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12} align="center">
-                        <FormControl component="fieldset">
-                            <FormHelperText>
-                                Datos del Producto
-                            </FormHelperText>
-                        </FormControl>
-                    </Grid>
-
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false} margin={12}>
-                            <FormControl>
-                                <TextField
-                                    id="IDtxt"
-                                    onChange={this.getprodId}
-                                    label="Codigo de barras"
-                                    placeholder="9786075487267"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container spacing={5} justifyContent="center" alignItems="center">
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="productNametxt"
-                                    onChange={this.getNameProducto}
-                                    label="Nombre"
-                                    placeholder="Principes"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={false}>
-                            <FormControl>
-                                <TextField
-                                    id="buytxt"
-                                    onChange={this.getexistencia}
-                                    label="Existencia"
-                                    placeholder="12"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-
-                    <Grid container spacing={1} justifyContent="center" align="center">
-                        <Grid item xs={false} margin={12}>
-                            <FormControl>
-                                <TextField
-                                    id="stocktxt"
-                                    onChange={this.getstock}
-                                    label="Stock"
-                                    placeholder="13"
-                                    multiline
-                                    variant="outlined">
-                                </TextField>
-                            </FormControl>
-                        </Grid>
-                    </Grid>
-                    
-=======
             <div className="container">
             <h2>Agregar Producto
                 <small>Datos del Producto</small>
@@ -184,7 +110,6 @@ export default class ProductoAdd extends Component {
                     <span className="bar"></span>
                     <label>Existencia</label>
                 </div>
->>>>>>> origin/VRVG
 
                 <div className="group">
                     <input type="text" required onChange={e => this.getstock(e)} />
