@@ -29,22 +29,22 @@ function Switches(props) {
     return (
         <Switch>
             {/* <Route path="" exact component={Home} /> */}
-            <Route path="/cliente/add" component={ClienteAdd} />
-            <Route path="/cliente/consultar" component={ClienteConsult} />
-            <Route path="/cliente/modificar" component={ClientModi} />
-            <Route path="/cliente/eliminar" component={ClienteDelete} />
-            <Route path="/proveedor/agregar" component={ProvAdd} />
-            <Route path="/proveedor/consultar" component={ProvConsult} />
-            <Route path="/proveedor/modificar" component={ProvModi} />
-            <Route path="/proveedor/eliminar" component={ProvDelete} />
-            <Route path="/producto/agregar" component={ProductoAdd} />
-            <Route path="/producto/consultar" component={ProductoConsult} />
-            <Route path="/producto/modificar" component={ProductoModi} />
-            <Route path="/producto/eliminar" component={ProductoDelete} />
-            <Route path="/venta/agregar" component={SellAdd} />
-            <Route path="/venta/consultar" component={SellLog} />
-            <Route path="/compras/agregar" component={BuyAdd} />
-            <Route path="/compras/consultar" component={BuyLog} />
+            <Route path="home/cliente/add" component={ClienteAdd} />
+            <Route path="home/cliente/consultar" component={ClienteConsult} />
+            <Route path="home/cliente/modificar" component={ClientModi} />
+            <Route path="home/cliente/eliminar" component={ClienteDelete} />
+            <Route path="home/proveedor/agregar" component={ProvAdd} />
+            <Route path="home/proveedor/consultar" component={ProvConsult} />
+            <Route path="home/proveedor/modificar" component={ProvModi} />
+            <Route path="home/proveedor/eliminar" component={ProvDelete} />
+            <Route path="home/producto/agregar" component={ProductoAdd} />
+            <Route path="home/producto/consultar" component={ProductoConsult} />
+            <Route path="home/producto/modificar" component={ProductoModi} />
+            <Route path="home/producto/eliminar" component={ProductoDelete} />
+            <Route path="home/venta/agregar" component={SellAdd} />
+            <Route path="home/venta/consultar" component={SellLog} />
+            <Route path="home/compras/agregar" component={BuyAdd} />
+            <Route path="home/compras/consultar" component={BuyLog} />
         </Switch>
     );
 }
@@ -60,6 +60,7 @@ export default class App extends Component {
                 <Nav />
                 <main>
                     <Switches />
+
                 </main>
             </div>
         );
@@ -67,9 +68,9 @@ export default class App extends Component {
 }
 
 
-const appDiv = document.getElementById("app");
-render(
-    <Router>
-        <App />
-    </Router>
-    , appDiv);
+// const appDiv = document.getElementById("app");
+// render(
+//     <Router>
+//         <App />
+//     </Router>
+//     , appDiv);

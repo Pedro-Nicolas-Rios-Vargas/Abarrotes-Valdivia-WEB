@@ -47,6 +47,7 @@ export default class ClienteAdd extends Component {
     render() {
         return (
             <div className="container">
+                <h1>Pene</h1>
                 <h2>Agregar Cliente
                     <small>Datos del cliente</small>
                 </h2>

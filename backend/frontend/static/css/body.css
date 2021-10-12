@@ -351,7 +351,7 @@ input {
   border:none;
   border-bottom:1px solid #ffffff;
 }
-input .loginInput {
+input, .loginInput {
   width:460px;
 }
 input:focus { 
@@ -552,4 +552,9 @@ Bloque de estilos de las tablas
 .modal-body {
   padding: 1px 50px 0px 50px;
   margin-bottom: 10px;
+}
+
+.tableResponse:hover {
+  background: #5d6d7e00;
+  color: #fff;
 }

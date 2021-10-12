@@ -97,12 +97,8 @@ export default class ProvModi extends Component {
         const clienData = this.state.data;
         const rows = clienData.map((prov) =>
             <tr key={prov.provrId}>
-                <td>{prov.provName}</td>
-                <td>{prov.provPhoneNum}</td>
-                <td>
-                    {/* <button onClick={() => this.deleteData(clien.provrId)} className="btn btn-delete" >Eliminar</button> */}
-                    <button onClick={() => this.modiData(prov.provrId)} className="btn btn_confirm">Modificar</button>
-                </td>
+                <td onClick={() => this.modiData(prov.provrId)}>{prov.provName}</td>
+                <td onClick={() => this.modiData(prov.provrId)}>{prov.provPhoneNum}</td>
             </tr>
         );
 
@@ -122,7 +118,6 @@ export default class ProvModi extends Component {
                         <tr>
                             <th className="head">Nombres</th>
                             <th className="head">Telefono</th>
-                            <th className="head">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -135,10 +130,28 @@ export default class ProvModi extends Component {
                             {
                                 this.state.show ?
                                     <div>
-                                        <div className="textBox">
-                                            <input id='provrId' value={this.state.provrId} onChange={e => this.getprovrId(e.target.value)} type="text" placeholder="ID" disabled></input>
-                                            <input id='provName' value={this.state.provName} onChange={e => this.getprovName(e.target.value)} type="text" placeholder="Jesus Alonso"></input>
-                                            <input id='provPhoneNum' value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e.target.value)} type="text" placeholder="5555555555"></input>                                        </div>
+                                        <from>
+                                        <div className="group">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <input id='provName' value={this.state.provName}
+                                                    onChange={e => this.getprovName(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Nombre</label>
+                                        </div>
+
+                                        <div className="group">
+                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <input id='provName' value={this.state.provPhoneNum}
+                                                   onChange={e => this.getprovPhoneNum(e.target.value)}
+                                                    type="text" required />
+                                                <span className="highlight"></span>
+                                                <span className="bar"></span>
+                                                <label>Nombre</label>
+                                        </div>
+                                        
+                                        </from>
                                         <div>
                                             <button onClick={() => this.applyChanges(this.state.provrId)} className="btn btn-applyChanges">Guardar Cambios</button>
                                         </div>
