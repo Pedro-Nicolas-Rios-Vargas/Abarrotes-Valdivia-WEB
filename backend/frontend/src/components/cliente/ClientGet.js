@@ -102,7 +102,6 @@ export default class ClientGet extends Component {
     buscar(e) {
         const nombre = e.target.value.toLowerCase();
         const auxData = []
-        console.log(this.state.data)
         for (let i = 0; i < this.state.data.length; i++) {
             const element = this.state.data[i];
             const str = element.nombre_C.toLowerCase();
@@ -112,7 +111,7 @@ export default class ClientGet extends Component {
         }
         this.setState({
             dataTable: auxData,
-        })
+        });
     }
 
     render() {

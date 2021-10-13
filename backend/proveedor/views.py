@@ -47,7 +47,7 @@ def update(request, pk=None):
         proveedor_serializer = ProveedorSerializer(proveedor)
         return Response(proveedor_serializer.data, status=status.HTTP_200_OK)
     elif request.method == 'PUT':
-        proveedor_serializer = ProveedorSerializer(data=request.data)
+        proveedor_serializer = ProveedorSerializer(proveedor, data=request.data)
         if proveedor_serializer.is_valid():
             proveedor_serializer.save()
             return Response(proveedor_serializer.data, status=status.HTTP_200_OK)

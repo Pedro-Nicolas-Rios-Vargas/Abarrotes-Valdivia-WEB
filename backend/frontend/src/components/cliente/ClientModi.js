@@ -5,10 +5,12 @@ export default class ClientModi extends Component {
         super(props);
         this.state = {
             data: [],
+            dataTable: [],
             show: false,
             clientId: 0,
             nombre_C: "",
-            balance: 0.0
+            balance: 0.0,
+            buscador: ""
         };
         this.getClientData = this.getClientData.bind(this);
         this.deleteData = this.deleteData.bind(this);
@@ -18,6 +20,16 @@ export default class ClientModi extends Component {
         this.getclientId = this.getclientId.bind(this)
         this.getnombre_C = this.getnombre_C.bind(this)
         this.getbalance = this.getbalance.bind(this)
+
+        this.buscar = this.buscar.bind(this);
+        this.getBuscador = this.getBuscador.bind(this);
+    }
+
+    getBuscador(e) {
+        this.setState({
+            buscador: e.target.value,
+        });
+        this.buscar(e);
     }
 
     getclientId(value) {
@@ -34,9 +46,17 @@ export default class ClientModi extends Component {
 
 
     getbalance(value) {
-        this.setState({
-            balance: value
-        });
+        if (/^([-]?\d*)([.]\d{0,2})?$/.test(value)) {
+            this.setState({
+                balance: value,
+            });
+        } else {
+            this.setState({
+                balance: this.state.balance,
+            })
+        }
+        if(this.state.balance.length === 1) {
+        }
     }
 
     getClientData() {
@@ -44,7 +64,8 @@ export default class ClientModi extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({
-                    data: data
+                    data: data,
+                    dataTable: data,
                 });
             });
     }
@@ -90,12 +111,34 @@ export default class ClientModi extends Component {
             }),
         };
         fetch("/cliente/update-cliente/" + clientId, requiestClient)
-            .then((response) => response.json());
-        { this.setState({ show: false }) }
+            .then((response) => {
+                this.getClientData();
+            });
+        { this.setState({ 
+            show: false,
+            buscador: "",
+         }); 
+        }
+        alert("Datos del cliente modificados con exito")
+    }
+
+    buscar(e) {
+        const nombre = e.target.value.toLowerCase();
+        const auxData = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            const element = this.state.data[i];
+            const str = element.nombre_C.toLowerCase();
+            if (str.includes(nombre)) {
+                auxData.push(element);    
+            }
+        }
+        this.setState({
+            dataTable: auxData,
+        });
     }
 
     render() {
-        const clienData = this.state.data;
+        const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
                 <td className="tableResponse" onClick={() => this.modiData(clien.clientId)}>{clien.nombre_C}</td>
@@ -109,7 +152,7 @@ export default class ClientModi extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" required value={this.state.buscador} onChange={e => this.getBuscador(e)}/>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>

@@ -5,19 +5,19 @@ export default class ProvGet extends Component {
         super(props);
         this.state = {
             data: [],
+            dataTable: [],
             show: false,
             provrId: 0,
             provName: "",
             provPhoneNum: "",
         };
         this.getProvData = this.getProvData.bind(this);
-        this.deleteData = this.deleteData.bind(this);
-        this.modiData = this.modiData.bind(this);
-        this.applyChanges = this.applyChanges.bind(this);
 
-        this.getprovrId = this.getprovrId.bind(this)
-        this.getprovName = this.getprovName.bind(this)
-        this.getprovPhoneNum = this.getprovPhoneNum.bind(this)
+        this.getprovrId = this.getprovrId.bind(this);
+        this.getprovName = this.getprovName.bind(this);
+        this.getprovPhoneNum = this.getprovPhoneNum.bind(this);
+
+        this.buscar = this.buscar.bind(this);
     }
 
     getprovrId(value) {
@@ -33,9 +33,15 @@ export default class ProvGet extends Component {
     }
 
     getprovPhoneNum(value) {
-        this.setState({
-            provPhoneNum: value
-        });
+        if (/^(\d{0,10})?$/.test(value)) {
+            this.setState({
+                provPhoneNum: value,
+            });
+        } else {
+            this.setState({
+                provPhoneNum: this.state.provPhoneNum,
+            })
+        }
     }
 
     getProvData() {
@@ -43,7 +49,8 @@ export default class ProvGet extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({
-                    data: data
+                    data: data,
+                    dataTable: data,
                 });
             });
     }
@@ -52,49 +59,24 @@ export default class ProvGet extends Component {
         this.getProvData();
     }
 
-    deleteData(provrId) {
-        fetch('/proveedor/delete-proveedor/' + provrId, {
-            method: 'DELETE',
-            body: JSON.stringify(this.state),
-        }).then(response => response)
-            .then((data) => {
-                if (data) {
-                    this.getProvData();
-                }
-            });
+    buscar(e) {
+        const nombre = e.target.value.toLowerCase();
+        const auxData = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            const element = this.state.data[i];
+            const str = element.provName.toLowerCase();
+            if (str.includes(nombre)) {
+                auxData.push(element);    
+            }
+        }
+        this.setState({
+            dataTable: auxData,
+        });
     }
 
-    modiData(provrId) {
-        fetch('/proveedor/update-proveedor/' + provrId)
-            .then(response => response.json())
-            .then((data) => {
-                //console.log(provrId)
-                this.setState({
-                    provrId: provrId,
-                    provName: data.provName,
-                    provPhoneNum: data.provPhoneNum,
-                });
-            });
-        { this.setState({ show: true }) }
-    }
-
-    applyChanges(provrId) {
-        const requiestClient = {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                provrId: this.state.provrId,
-                provName: this.state.provName,
-                provPhoneNum: this.state.provPhoneNum,
-            }),
-        };
-        fetch("/proveedor/update-proveedor/" + provrId, requiestClient)
-            .then((response) => response.json());
-        { this.setState({ show: false }) }
-    }
 
     render() {
-        const clienData = this.state.data;
+        const clienData = this.state.dataTable;
         const rows = clienData.map((prov) =>
             <tr key={prov.provrId}>
                 <td>{prov.provName}</td>
@@ -107,7 +89,7 @@ export default class ProvGet extends Component {
                 <h2>Consultar Proveedor</h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" required onChange={e => this.buscar(e)}/>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>
