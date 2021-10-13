@@ -88,9 +88,9 @@ export default class ProductoAdd extends Component {
 
     AddClient() {
         //console.log(this)
-        if (this.state.prodName !== "" || this.state.existencia !== "" ||
-            this.state.presentacion !== "" || this.state.sellPrice !== "" ||
-            this.state.stock !== "" || this.state.prodId !== "") {
+        if (this.state.prodName !== "" && this.state.existencia !== "" &&
+            this.state.presentacion !== "" && this.state.sellPrice !== "" &&
+            this.state.stock !== "" && this.state.prodId !== "") {
             const requiestProducto = {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -157,7 +157,11 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
-                        <input type="text" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
+                        <input type="text" list="tipo-presentacion" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)}  onClick={e => this.getpresentacion(e)}/>
+                        <datalist id="tipo-presentacion">
+                            <option value="Unidad"></option>
+                            <option value="Kilogramo"></option>
+                        </datalist>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Presentacion</label>

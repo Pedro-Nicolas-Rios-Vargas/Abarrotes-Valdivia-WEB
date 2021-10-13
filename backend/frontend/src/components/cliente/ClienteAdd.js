@@ -36,7 +36,7 @@ export default class ClienteAdd extends Component {
 
     AddClient() {
         //console.log(this)
-        if(this.state.nombre_C === "" || this.state.balance === ""){
+        if(this.state.nombre_C === "" && this.state.balance === ""){
             alert("No se puede agregar un cliente sin nombre o sin saldo")
         } else {
             console.log(this.state.nombre_C)

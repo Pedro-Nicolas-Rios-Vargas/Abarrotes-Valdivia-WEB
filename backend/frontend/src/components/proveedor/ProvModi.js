@@ -85,24 +85,28 @@ export default class ProvModi extends Component {
     }
 
     applyChanges(provrId) {
-        console.log(provrId)
-        const requiestClient = {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                provrId: this.state.provrId,
-                provName: this.state.provName,
-                provPhoneNum: this.state.provPhoneNum,
-            }),
-        };
-        fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
-        .then((response) => {
-                this.getProvData();
-            });
-        { this.setState({ 
-            show: false,
-            buscador: "", }) }
-        alert("Datos del proveedor modificados con exito");
+        if (this.state.provName !== "" && this.state.provPhoneNum !== "") {
+            console.log(provrId)
+            const requiestClient = {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    provrId: this.state.provrId,
+                    provName: this.state.provName,
+                    provPhoneNum: this.state.provPhoneNum,
+                }),
+            };
+            fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
+            .then((response) => {
+                    this.getProvData();
+                });
+            { this.setState({ 
+                show: false,
+                buscador: "", }) }
+            alert("Datos del proveedor modificados con exito");
+        } else  {
+            alert("No se puede modificarr un Proveedor sin nombre o numero de teléfono")
+        }
     }
 
     buscar(e) {
@@ -144,7 +148,7 @@ export default class ProvModi extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
-                            <th className="head">Telefono</th>
+                            <th className="head">Teléfono</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -175,7 +179,7 @@ export default class ProvModi extends Component {
                                                     type="text" required />
                                                 <span className="highlight"></span>
                                                 <span className="bar"></span>
-                                                <label>Nombre</label>
+                                                <label>Teléfono</label>
                                         </div>
                                         
                                         </form>

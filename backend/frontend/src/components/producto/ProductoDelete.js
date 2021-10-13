@@ -148,7 +148,8 @@ export default class ProductoDelete extends Component {
         for (let i = 0; i < this.state.data.length; i++) {
             const element = this.state.data[i];
             const str = element.prodName.toLowerCase();
-            if (str.includes(nombre)) {
+            const code = element.prodId.toLowerCase();
+            if (str.includes(nombre) || code.includes(nombre)) {
                 auxData.push(element);
             }
         }

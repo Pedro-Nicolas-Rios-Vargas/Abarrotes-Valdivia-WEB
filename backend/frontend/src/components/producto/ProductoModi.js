@@ -143,32 +143,38 @@ export default class ProductoModi extends Component {
     }
 
     applyChanges(prodId) {
-        const requiestClient = {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                prodId: this.state.prodId,
-                prodName: this.state.prodName,
-                existencia: this.state.existencia,
-                sellPrice: this.state.sellPrice,
-                stock: this.state.stock,
-                presentacion: this.state.presentacion
-            }),
-        };
-        console.log(prodId);
-        fetch("/producto/update-producto/" + prodId, requiestClient)
-            .then((response) => response.json())
-            .then((data) => {
-                this.getProductData();
-            });
-        {
-            this.setState({
-                show: false,
-                buscador: "",
-            });
-
+        if (this.state.prodName !== "" && this.state.existencia !== "" &&
+        this.state.presentacion !== "" && this.state.sellPrice !== "" &&
+        this.state.stock !== "" && this.state.prodId !== "") {
+            const requiestClient = {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    prodId: this.state.prodId,
+                    prodName: this.state.prodName,
+                    existencia: this.state.existencia,
+                    sellPrice: this.state.sellPrice,
+                    stock: this.state.stock,
+                    presentacion: this.state.presentacion
+                }),
+            };
+            console.log(prodId);
+            fetch("/producto/update-producto/" + prodId, requiestClient)
+                .then((response) => response.json())
+                .then((data) => {
+                    this.getProductData();
+                });
+            {
+                this.setState({
+                    show: false,
+                    buscador: "",
+                });
+    
+            }
+            alert("Datos del producto modificados con exito")
+        } else {
+            alert("No se puede modificar un Producto sin nombre, existencia, stock, presentacion o precio");
         }
-        alert("Datos del producto modificados con exito")
 
     }
 
@@ -178,7 +184,8 @@ export default class ProductoModi extends Component {
         for (let i = 0; i < this.state.data.length; i++) {
             const element = this.state.data[i];
             const str = element.prodName.toLowerCase();
-            if (str.includes(nombre)) {
+            const code = element.prodId.toLowerCase();
+            if (str.includes(nombre) || code.includes(nombre)) {
                 auxData.push(element);
             }
         }
@@ -281,7 +288,7 @@ export default class ProductoModi extends Component {
                                                 <span className="bar"></span>
                                                 <label>Presentacion</label>
                                             </div>
-                                        </form>
+                                        </form> 
                                         <div className="footer">
                                             <button onClick={() => this.applyChanges(this.state.prodId)} className="btn">Guardar Cambios</button>
                                         </div>

@@ -101,25 +101,29 @@ export default class ClientModi extends Component {
     }
 
     applyChanges(clientId) {
-        const requiestClient = {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                clientId: this.state.clientId,
-                nombre_C: this.state.nombre_C,
-                balance: this.state.balance
-            }),
-        };
-        fetch("/cliente/update-cliente/" + clientId, requiestClient)
-            .then((response) => {
-                this.getClientData();
-            });
-        { this.setState({ 
-            show: false,
-            buscador: "",
-         }); 
+        if (this.state.nombre_C !== "" && this.state.balance !== "") {
+            const requiestClient = {
+                method: 'PUT',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    clientId: this.state.clientId,
+                    nombre_C: this.state.nombre_C,
+                    balance: this.state.balance
+                }),
+            };
+            fetch("/cliente/update-cliente/" + clientId, requiestClient)
+                .then((response) => {
+                    this.getClientData();
+                });
+            { this.setState({ 
+                show: false,
+                buscador: "",
+             }); 
+            }
+            alert("Datos del cliente modificados con exito")
+        } else {
+            alert("No se puede agregar un cliente sin nombre o sin saldo")
         }
-        alert("Datos del cliente modificados con exito")
     }
 
     buscar(e) {

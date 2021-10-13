@@ -35,7 +35,7 @@ export default class ClienteAdd extends Component {
 
     AddProv() {
         //console.log(this)
-        if (this.state.provName !== "" || this.state.provPhoneNum !== "") {
+        if (this.state.provName !== "" && this.state.provPhoneNum !== "") {
             const requiestClient = {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
@@ -55,7 +55,7 @@ export default class ClienteAdd extends Component {
                 provPhoneNum: "",
             });
         } else {
-            alert("No se puede agregar un Proveedor sin nombre o numero de telefon")
+            alert("No se puede agregar un Proveedor sin nombre o numero de teléfono")
         }
     }
 
@@ -77,7 +77,7 @@ export default class ClienteAdd extends Component {
                         <input type="text" required name="provPhoneNum" value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
-                        <label>Telefono</label>
+                        <label>Teléfono</label>
                     </div>
                 </form>
                 <div className="footer">
