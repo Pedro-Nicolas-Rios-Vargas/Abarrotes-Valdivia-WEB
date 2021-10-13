@@ -5,37 +5,47 @@ export default class ProvGet extends Component {
         super(props);
         this.state = {
             data: [],
+            dataTable: [],
             show: false,
             provrId: 0,
             provName: "",
             provPhoneNum: "",
+            buscador: ""
         };
         this.getProvData = this.getProvData.bind(this);
         this.deleteData = this.deleteData.bind(this);
-        this.modiData = this.modiData.bind(this);
-        this.applyChanges = this.applyChanges.bind(this);
 
-        this.getprovrId = this.getprovrId.bind(this)
-        this.getprovName = this.getprovName.bind(this)
-        this.getprovPhoneNum = this.getprovPhoneNum.bind(this)
+        this.getprovrId = this.getprovrId.bind(this);
+        this.getprovName = this.getprovName.bind(this);
+        this.getprovPhoneNum = this.getprovPhoneNum.bind(this);
+
+        this.buscar = this.buscar.bind(this);
+        this.getBuscador = this.getBuscador.bind(this);
+    }
+
+    getBuscador(e) {
+        this.setState({
+            buscador: e.target.value,
+        });
+        this.buscar(e);
     }
 
     getprovrId(value) {
         this.setState({
             provrId: value
-       });
+        });
     }
 
     getprovName(value) {
         this.setState({
             provName: value
-       });
+        });
     }
 
     getprovPhoneNum(value) {
         this.setState({
             provPhoneNum: value
-       });
+        });
     }
 
     getProvData() {
@@ -43,7 +53,8 @@ export default class ProvGet extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({
-                    data: data
+                    data: data,
+                    dataTable: data,
                 });
             });
     }
@@ -52,53 +63,44 @@ export default class ProvGet extends Component {
         this.getProvData();
     }
 
-    deleteData(provrId) {
-        fetch('/proveedor/delete-proveedor/' + provrId, {
-            method: 'DELETE',
-            body: JSON.stringify(this.state),
-        }).then(response => response)
-            .then((data) => {
-                if (data) {
-                    this.getProvData();
-                }
-            });
+    deleteData(provrId, provName) {
+        if (confirm("Desea eliminar al Proveedor:   " + "  " + provName)) {
+            fetch('/proveedor/delete-proveedor/' + provrId, {
+                method: 'DELETE',
+                body: JSON.stringify(this.state),
+            }).then(response => response)
+                .then((data) => {
+                    if (data) {
+                        this.getProvData();
+                    }
+                });
+            alert("Proveedor eliminado con exito");
+            this.setState({buscador: ""});
+        }
     }
 
-    modiData(provrId) {
-        fetch('/proveedor/update-proveedor/' + provrId)
-        .then(response => response.json())
-        .then((data) => {
-            //console.log(provrId)
-            this.setState({
-                provrId: provrId,
-                provName: data.provName,
-                provPhoneNum: data.provPhoneNum,
-            });
+    buscar(e) {
+        const nombre = e.target.value.toLowerCase();
+        const auxData = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            const element = this.state.data[i];
+            const str = element.provName.toLowerCase();
+            if (str.includes(nombre)) {
+                auxData.push(element);
+            }
+        }
+        this.setState({
+            dataTable: auxData,
         });
-        { this.setState({ show: true }) }
     }
 
-    applyChanges(provrId) {
-        const requiestClient = {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                provrId: this.state.provrId,
-                provName: this.state.provName,
-                provPhoneNum: this.state.provPhoneNum,
-            }),
-        };
-        fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
-        .then((response) => response.json());
-        { this.setState({ show: false }) }
-    }
 
     render() {
-        const provData = this.state.data;
+        const provData = this.state.dataTable;
         const rows = provData.map((prov) =>
             <tr key={prov.provrId}>
-                <td onClick={() => this.deleteData(prov.provrId)}>{prov.provName}</td>
-                <td onClick={() => this.deleteData(prov.provrId)}>{prov.provPhoneNum}</td>
+                <td onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provName}</td>
+                <td onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provPhoneNum}</td>
             </tr>
         );
 
@@ -107,7 +109,7 @@ export default class ProvGet extends Component {
                 <h2>Eliminar Proveedor</h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" required value={this.state.buscador} onChange={e => this.getBuscador(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>

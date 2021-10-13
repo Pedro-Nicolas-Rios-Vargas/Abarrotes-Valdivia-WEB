@@ -1,15 +1,8 @@
 import React, { Component } from 'react';
-import Button from "@material-ui/core/Button"
-import { FormControl, FormControlLabel, FormGroup, Grid } from '@material-ui/core';
-import { Typography } from '@material-ui/core';
-import { TextField } from '@material-ui/core';
-import { FormHelperText } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-
 
 export default class ClienteAdd extends Component {
-    defaultName = "hola"
-    defaultPhoneNum = "5555555555"
+    defaultName = ""
+    defaultPhoneNum = ""
     constructor(props) {
         super(props);
         this.state = {
@@ -29,24 +22,41 @@ export default class ClienteAdd extends Component {
     }
 
     getprovPhoneNum(e) {
-        this.setState({
-            provPhoneNum: e.target.value,
-        });
+        if (/^(\d{0,10})?$/.test(e.target.value)) {
+            this.setState({
+                provPhoneNum: e.target.value,
+            });
+        } else {
+            this.setState({
+                provPhoneNum: this.state.provPhoneNum,
+            })
+        }
     }
 
     AddProv() {
         //console.log(this)
-        const requiestClient = {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                provName: this.state.provName,
-                provPhoneNum: this.state.provPhoneNum,
-            }),
-        };
-        fetch("/proveedor/add-proveedor", requiestClient)
-            .then((response) => response.json())
-            .then((data) => console.log(data));
+        if (this.state.provName !== "" || this.state.provPhoneNum !== "") {
+            const requiestClient = {
+                method: 'POST',
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    provName: this.state.provName,
+                    provPhoneNum: this.state.provPhoneNum,
+                }),
+            };
+            fetch("/proveedor/add-proveedor", requiestClient)
+                .then((response) => response.json())
+                .then((data) => console.log(data));
+
+            alert("Proveedor agregado con exito");
+
+            this.setState({
+                provName: "",
+                provPhoneNum: "",
+            });
+        } else {
+            alert("No se puede agregar un Proveedor sin nombre o numero de telefon")
+        }
     }
 
     render() {
@@ -57,21 +67,21 @@ export default class ClienteAdd extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required onChange={e => this.getNameProv(e)} />
+                        <input type="text" required name="provName" value={this.state.provName} onChange={e => this.getNameProv(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>
                     </div>
 
                     <div className="group">
-                        <input type="text" required onChange={e => this.getprovPhoneNum(e)} />
+                        <input type="text" required name="provPhoneNum" value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Telefono</label>
                     </div>
                 </form>
                 <div className="footer">
-                    <button className="btn" onClick={() => this.AddClient()} >Agregar</button>
+                    <button className="btn" onClick={() => this.AddProv()} >Agregar</button>
                 </div>
             </div>
         );

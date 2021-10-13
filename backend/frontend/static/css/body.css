@@ -605,8 +605,3 @@ Bloque de estilos de las tablas
   cursor: pointer;
   overflow: hidden;
 }
-
-a:hover {
-  background: #28b463;
-  color: #fff;
-}

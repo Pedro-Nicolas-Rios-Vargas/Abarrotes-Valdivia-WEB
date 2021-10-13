@@ -19,5 +19,5 @@ urlpatterns = [
     path('compras/agregar', index),
     path('compras/consultar', index),
     path('', index),
-    path('home', index)
+    path('home/', index)
 ]

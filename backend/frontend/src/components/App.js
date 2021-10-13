@@ -102,7 +102,7 @@ export default class App extends Component {
                     {/* <Route path="" exact component={Home} /> */}
                     <Route exact path="/" component={Login}>
                     </Route>
-                    <Route exact path="/home" >
+                    <Route exact path="/home/" >
                         <div className="App">
                             <main>
                                 <Nav />

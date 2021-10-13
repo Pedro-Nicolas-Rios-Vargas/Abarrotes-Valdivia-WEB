@@ -5,19 +5,30 @@ export default class ProvModi extends Component {
         super(props);
         this.state = {
             data: [],
+            dataTable: [],
             show: false,
             provrId: 0,
             provName: "",
             provPhoneNum: "",
+            buscador: ""
         };
         this.getProvData = this.getProvData.bind(this);
-        this.deleteData = this.deleteData.bind(this);
         this.modiData = this.modiData.bind(this);
         this.applyChanges = this.applyChanges.bind(this);
 
-        this.getprovrId = this.getprovrId.bind(this)
-        this.getprovName = this.getprovName.bind(this)
-        this.getprovPhoneNum = this.getprovPhoneNum.bind(this)
+        this.getprovrId = this.getprovrId.bind(this);
+        this.getprovName = this.getprovName.bind(this);
+        this.getprovPhoneNum = this.getprovPhoneNum.bind(this);
+
+        this.buscar = this.buscar.bind(this);
+        this.getBuscador = this.getBuscador.bind(this);
+    }
+
+    getBuscador(e) {
+        this.setState({
+            buscador: e.target.value,
+        });
+        this.buscar(e);
     }
 
     getprovrId(value) {
@@ -33,9 +44,15 @@ export default class ProvModi extends Component {
     }
 
     getprovPhoneNum(value) {
-        this.setState({
-            provPhoneNum: value
-       });
+        if (/^(\d{0,10})?$/.test(value)) {
+            this.setState({
+                provPhoneNum: value,
+            });
+        } else {
+            this.setState({
+                provPhoneNum: this.state.provPhoneNum,
+            })
+        }
     }
 
     getProvData() {
@@ -43,25 +60,14 @@ export default class ProvModi extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({
-                    data: data
+                    data: data,
+                    dataTable: data,
                 });
             });
     }
 
     componentDidMount() {
         this.getProvData();
-    }
-
-    deleteData(provrId) {
-        fetch('/proveedor/delete-proveedor/' + provrId, {
-            method: 'DELETE',
-            body: JSON.stringify(this.state),
-        }).then(response => response)
-            .then((data) => {
-                if (data) {
-                    this.getProvData();
-                }
-            });
     }
 
     modiData(provrId) {
@@ -79,6 +85,7 @@ export default class ProvModi extends Component {
     }
 
     applyChanges(provrId) {
+        console.log(provrId)
         const requiestClient = {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
@@ -89,12 +96,32 @@ export default class ProvModi extends Component {
             }),
         };
         fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
-        .then((response) => response.json());
-        { this.setState({ show: false }) }
+        .then((response) => {
+                this.getProvData();
+            });
+        { this.setState({ 
+            show: false,
+            buscador: "", }) }
+        alert("Datos del proveedor modificados con exito");
+    }
+
+    buscar(e) {
+        const nombre = e.target.value.toLowerCase();
+        const auxData = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            const element = this.state.data[i];
+            const str = element.provName.toLowerCase();
+            if (str.includes(nombre)) {
+                auxData.push(element);    
+            }
+        }
+        this.setState({
+            dataTable: auxData,
+        });
     }
 
     render() {
-        const clienData = this.state.data;
+        const clienData = this.state.dataTable;
         const rows = clienData.map((prov) =>
             <tr key={prov.provrId}>
                 <td onClick={() => this.modiData(prov.provrId)}>{prov.provName}</td>
@@ -107,7 +134,7 @@ export default class ProvModi extends Component {
                 <h2>Modificar Proveedor</h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" required value={this.state.buscador} onChange={e => this.getBuscador(e)}/>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>
@@ -130,7 +157,7 @@ export default class ProvModi extends Component {
                             {
                                 this.state.show ?
                                     <div>
-                                        <from>
+                                        <form>
                                         <div className="group">
                                             {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
                                             <input id='provName' value={this.state.provName}
@@ -151,9 +178,9 @@ export default class ProvModi extends Component {
                                                 <label>Nombre</label>
                                         </div>
                                         
-                                        </from>
-                                        <div>
-                                            <button onClick={() => this.applyChanges(this.state.provrId)} className="btn btn-applyChanges">Guardar Cambios</button>
+                                        </form>
+                                        <div className="footer">
+                                            <button onClick={() => this.applyChanges(this.state.provrId)} className="btn">Guardar Cambios</button>
                                         </div>
                                     </div> : null
                             }

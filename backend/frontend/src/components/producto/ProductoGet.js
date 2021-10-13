@@ -5,6 +5,7 @@ export default class ProductoGet extends Component {
         super(props);
         this.state = {
             data: [],
+            dataTable: [],
             show: false,
             prodId: "",
             prodName: "",
@@ -14,16 +15,15 @@ export default class ProductoGet extends Component {
             presentacion: 0,
         };
         this.getProductData = this.getProductData.bind(this);
-        this.deleteData = this.deleteData.bind(this);
-        this.modiData = this.modiData.bind(this);
-        this.applyChanges = this.applyChanges.bind(this);
 
-        this.getprodId = this.getprodId.bind(this)
-        this.getprodName = this.getprodName.bind(this)
-        this.getExistencia = this.getExistencia.bind(this)
-        this.getsellPrice = this.getsellPrice.bind(this)
-        this.getstock = this.getstock.bind(this)
-        this.getpresentacion = this.getpresentacion.bind(this)
+        this.getprodId = this.getprodId.bind(this);
+        this.getprodName = this.getprodName.bind(this);
+        this.getExistencia = this.getExistencia.bind(this);
+        this.getsellPrice = this.getsellPrice.bind(this);
+        this.getstock = this.getstock.bind(this);
+        this.getpresentacion = this.getpresentacion.bind(this);
+
+        this.buscar = this.buscar.bind(this);
     }
 
     getprodId(value) {
@@ -67,7 +67,8 @@ export default class ProductoGet extends Component {
             .then(response => response.json())
             .then((data) => {
                 this.setState({
-                    data: data
+                    data: data,
+                    dataTable: data,
                 });
             });
     }
@@ -88,45 +89,24 @@ export default class ProductoGet extends Component {
             });
     }
 
-    modiData(prodId) {
-        fetch('/producto/update-producto/' + prodId)
-        .then(response => response.json())
-        .then((data) => {
-            //console.log(data)
-            this.setState({
-                prodId: data.prodId,
-                prodName: data.prodName,
-                sellPrice: data.sellPrice,
-                stock: data.stock,
-                presentacion: data.presentacion,
-                existencia: data.existencia,
-            });
+    buscar(e) {
+        const nombre = e.target.value.toLowerCase();
+        const auxData = []
+        for (let i = 0; i < this.state.data.length; i++) {
+            const element = this.state.data[i];
+            const str = element.prodName.toLowerCase();
+            if (str.includes(nombre)) {
+                auxData.push(element);    
+            }
+        }
+        this.setState({
+            dataTable: auxData,
         });
-        { this.setState({ show: true }) }
     }
 
-    applyChanges(prodId) {
-        const requiestClient = {
-            method: 'PUT',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                prodId: this.state.prodId,
-                prodName: this.state.prodName,
-                sellPrice: this.state.sellPrice,
-                stock: this.state.stock,
-                presentacion: this.state.presentacion,
-                existencia: this.state.existencia,
-            }),
-        };
-        console.log(prodId);
-        fetch("/producto/update-producto/"+ prodId, requiestClient)
-        .then((response) => response.json())
-        .then((data) => console.log(data));
-        { this.setState({ show: false }) }
-    }
 
     render() {
-        const clienData = this.state.data;
+        const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.prodId}>
                 <td>{clien.prodName}</td>
@@ -143,7 +123,7 @@ export default class ProductoGet extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" required  onChange={e => this.buscar(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>

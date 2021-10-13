@@ -23,7 +23,7 @@ export default class ClienteAdd extends Component {
     }
 
     getbalance(e) {
-        if (/^([-]?\d*)([.]\d{0,2})?$/.test(e.target.value)) {
+        if (/^([-]?\d{0,4})([.]\d{0,2})?$/.test(e.target.value)) {
             this.setState({
                 balance: e.target.value,
             });
@@ -31,8 +31,6 @@ export default class ClienteAdd extends Component {
             this.setState({
                 balance: this.state.balance,
             })
-        }
-        if(this.state.balance.length === 1) {
         }
     }
 
