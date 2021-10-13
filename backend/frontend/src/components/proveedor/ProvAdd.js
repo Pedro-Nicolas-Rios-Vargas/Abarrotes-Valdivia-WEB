@@ -16,9 +16,15 @@ export default class ClienteAdd extends Component {
     }
 
     getNameProv(e) {
-        this.setState({
-            provName: e.target.value,
-        });
+        if (/^(.{0,32})$/.test(e.target.value)) {
+            this.setState({
+                provName: e.target.value,
+            });
+        } else {
+            this.setState({
+                provName: this.state.provName,
+            })
+        }
     }
 
     getprovPhoneNum(e) {
@@ -35,27 +41,31 @@ export default class ClienteAdd extends Component {
 
     AddProv() {
         //console.log(this)
-        if (this.state.provName !== "" || this.state.provPhoneNum !== "") {
-            const requiestClient = {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    provName: this.state.provName,
-                    provPhoneNum: this.state.provPhoneNum,
-                }),
-            };
-            fetch("/proveedor/add-proveedor", requiestClient)
-                .then((response) => response.json())
-                .then((data) => console.log(data));
+        if (this.state.provName !== "" && this.state.provPhoneNum !== "") {
+            if (this.state.provPhoneNum.length == 10) {
+                const requiestClient = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        provName: this.state.provName,
+                        provPhoneNum: this.state.provPhoneNum,
+                    }),
+                };
+                fetch("/proveedor/add-proveedor", requiestClient)
+                    .then((response) => response.json())
+                    .then((data) => console.log(data));
 
-            alert("Proveedor agregado con exito");
+                alert("Proveedor agregado con exito");
 
-            this.setState({
-                provName: "",
-                provPhoneNum: "",
-            });
+                this.setState({
+                    provName: "",
+                    provPhoneNum: "",
+                });
+            } else {
+                alert("Número de telefono incompleto. Por favor, complételo")
+            }
         } else {
-            alert("No se puede agregar un Proveedor sin nombre o numero de telefon")
+            alert("No se puede agregar un Proveedor sin nombre o número de teléfono")
         }
     }
 
@@ -77,7 +87,7 @@ export default class ClienteAdd extends Component {
                         <input type="text" required name="provPhoneNum" value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
-                        <label>Telefono</label>
+                        <label>Teléfono</label>
                     </div>
                 </form>
                 <div className="footer">

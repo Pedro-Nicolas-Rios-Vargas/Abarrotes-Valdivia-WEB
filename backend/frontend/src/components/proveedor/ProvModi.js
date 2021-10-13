@@ -102,7 +102,7 @@ export default class ProvModi extends Component {
         { this.setState({ 
             show: false,
             buscador: "", }) }
-        alert("Datos del proveedor modificados con exito");
+        alert("Datos del proveedor modificados con éxito");
     }
 
     buscar(e) {
@@ -144,7 +144,7 @@ export default class ProvModi extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
-                            <th className="head">Telefono</th>
+                            <th className="head">Teléfono</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -175,7 +175,7 @@ export default class ProvModi extends Component {
                                                     type="text" required />
                                                 <span className="highlight"></span>
                                                 <span className="bar"></span>
-                                                <label>Nombre</label>
+                                                <label>Teléfono</label>
                                         </div>
                                         
                                         </form>

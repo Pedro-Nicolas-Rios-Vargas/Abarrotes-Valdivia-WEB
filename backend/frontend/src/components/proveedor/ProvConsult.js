@@ -99,7 +99,7 @@ export default class ProvGet extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
-                            <th className="head">Telefono</th>
+                            <th className="head">Teléfono</th>
                         </tr>
                     </thead>
                     <tbody>
