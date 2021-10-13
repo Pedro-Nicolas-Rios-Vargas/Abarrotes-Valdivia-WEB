@@ -442,7 +442,7 @@ export default class SellAdd extends Component {
                     <table className="tablaproducttes">
                         <thead>
                             <tr>
-                                <th className="head">Nomrbe</th>
+                                <th className="head">Nombre</th>
                                 {/* <th className="head">Precio de compra</th> */}
                                 <th className="head">Precio de venta</th>
                                 <th className="head">Cantidad</th>

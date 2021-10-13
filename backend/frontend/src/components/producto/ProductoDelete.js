@@ -185,7 +185,7 @@ export default class ProductoDelete extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head">Nomrbe</th>
+                            <th className="head">Nombre</th>
                             <th className="head">Existencia</th>
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
