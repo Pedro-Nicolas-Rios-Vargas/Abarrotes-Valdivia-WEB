@@ -64,7 +64,7 @@ export default class ProvGet extends Component {
     }
 
     deleteData(provrId, provName) {
-        if (confirm("Desea eliminar al Proveedor:   " + "  " + provName)) {
+        if (confirm("¿Desea eliminar al Proveedor:   " + " " + provName + "?")) {
             fetch('/proveedor/delete-proveedor/' + provrId, {
                 method: 'DELETE',
                 body: JSON.stringify(this.state),
@@ -74,7 +74,7 @@ export default class ProvGet extends Component {
                         this.getProvData();
                     }
                 });
-            alert("Proveedor eliminado con exito");
+            alert("Proveedor eliminado con éxito");
             this.setState({buscador: ""});
         }
     }

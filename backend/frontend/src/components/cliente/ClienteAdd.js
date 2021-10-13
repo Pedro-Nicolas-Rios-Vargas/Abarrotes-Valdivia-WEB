@@ -17,9 +17,16 @@ export default class ClienteAdd extends Component {
     }
 
     getNameClient(e) {
-        this.setState({
-            nombre_C: e.target.value,
-        });
+        if (/^(.{0,16})$/.test(e.target.value)) {
+            this.setState({
+                nombre_C: e.target.value,
+            });
+
+        } else {
+            this.setState({
+                balance: this.state.balance,
+            })
+        }
     }
 
     getbalance(e) {

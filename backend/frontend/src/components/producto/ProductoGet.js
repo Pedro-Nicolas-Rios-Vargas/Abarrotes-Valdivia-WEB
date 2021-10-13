@@ -139,7 +139,7 @@ export default class ProductoGet extends Component {
                             <th className="head">Existencia</th>
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
-                            <th className="head">Presentacion</th>
+                            <th className="head">Presentación</th>
                         </tr>
                     </thead>
                     <tbody>

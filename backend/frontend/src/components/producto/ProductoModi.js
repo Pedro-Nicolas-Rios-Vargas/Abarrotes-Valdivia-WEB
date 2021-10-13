@@ -221,11 +221,11 @@ export default class ProductoModi extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head">Nomrbe</th>
+                            <th className="head">Nombre</th>
                             <th className="head">Existencia</th>
                             <th className="head">Precio de venta</th>
                             <th className="head">Stock</th>
-                            <th className="head">Presentacion</th>
+                            <th className="head">Presentación</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -281,12 +281,16 @@ export default class ProductoModi extends Component {
 
                                             <div className="group">
                                                 {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
-                                                <input id='presentacion' value={this.state.presentacion}
+                                                <input id='presentacion' list="tipo-presentacion" autocomplete="off" value={this.state.presentacion}
                                                     onChange={e => this.getpresentacion(e.target.value)}
                                                     type="text" required />
+                                                <datalist id="tipo-presentacion">
+                                                    <option value="Unidad"></option>
+                                                    <option value="Kilogramo"></option>
+                                                </datalist>
                                                 <span className="highlight"></span>
                                                 <span className="bar"></span>
-                                                <label>Presentacion</label>
+                                                <label>Presentación</label>
                                             </div>
                                         </form> 
                                         <div className="footer">

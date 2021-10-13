@@ -106,7 +106,7 @@ export default class ProductoAdd extends Component {
             fetch("/producto/add-producto", requiestProducto)
                 .then((response) => response.json())
                 .then((data) => console.log(data));
-            alert("Producto agregado con exito");
+            alert("Producto agregado con éxito");
             this.setState({
                 prodName: "",
                 existencia: "",
@@ -116,7 +116,7 @@ export default class ProductoAdd extends Component {
                 prodId: "",
             })
         } else {
-            alert("No se puede agregar un Producto sin nombre, existencia, stock, presentacion o precio");
+            alert("No se puede agregar un Producto sin nombre, existencia, stock, presentación o precio");
         }
     }
 
@@ -157,14 +157,14 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
-                        <input type="text" list="tipo-presentacion" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)}  onClick={e => this.getpresentacion(e)}/>
+                        <input type="text" list="tipo-presentacion" autocomplete="off" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
                         <datalist id="tipo-presentacion">
                             <option value="Unidad"></option>
                             <option value="Kilogramo"></option>
                         </datalist>
                         <span className="highlight"></span>
                         <span className="bar"></span>
-                        <label>Presentacion</label>
+                        <label>Presentación</label>
                     </div>
 
                     <div className="group">
