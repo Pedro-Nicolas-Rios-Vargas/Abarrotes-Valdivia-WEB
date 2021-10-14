@@ -137,7 +137,7 @@ export default class Nav extends Component {
                                     <i className='bx bxs-chevron-down arrow' ></i>
                                 </div>
                                 <ul className="sub-menu">
-                                    <li><a className="link_name" href="#">Productos</a></li>
+                                    <li><a className="link_name" href="#">Reportes</a></li>
                                     <Link to="/#"><li onClick={() =>this.changeRotulo("Reportes")}>Ventas</li></Link>
                                     <Link to="/#"><li onClick={() =>this.changeRotulo("Reportes")}>Productos</li></Link>
                                 </ul>

@@ -17,7 +17,7 @@ export default class ClienteAdd extends Component {
     }
 
     getNameClient(e) {
-        if (/^(.{0,16})$/.test(e.target.value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ]{0,16}$/.test(e.target.value)) {
             this.setState({
                 nombre_C: e.target.value,
             });
@@ -43,9 +43,7 @@ export default class ClienteAdd extends Component {
 
     AddClient() {
         //console.log(this)
-        if(this.state.nombre_C === "" && this.state.balance === ""){
-            alert("No se puede agregar un cliente sin nombre o sin saldo")
-        } else {
+        if(this.state.nombre_C !== "" && this.state.balance !== ""){
             console.log(this.state.nombre_C)
             const requiestClient = {
                 method: 'POST',
@@ -63,6 +61,27 @@ export default class ClienteAdd extends Component {
                 nombre_C:"",
                 balance:"",
             })
+        } else {
+            if  (this.state.nombre_C !== "") {
+                const requiestClient = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nombre_C: this.state.nombre_C,
+                        balance: 0,
+                    }),
+                };
+                fetch("/cliente/crear-cliente", requiestClient)
+                    .then((response) => response.json())
+                    .then((data) => console.log(data));
+                alert("Se agrego el cliente")
+                this.setState({ 
+                    nombre_C:"",
+                    balance:"",
+                })
+            } else {
+                alert("No se puede agregar un cliente sin nombre")
+            }
         }
     }
 

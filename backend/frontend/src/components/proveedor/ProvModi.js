@@ -38,9 +38,15 @@ export default class ProvModi extends Component {
     }
 
     getprovName(value) {
-        this.setState({
-            provName: value
-       });
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,32}$/.test(value)) {
+            this.setState({
+                provName: value,
+            });
+        } else {
+            this.setState({
+                provName: this.state.provName,
+            })
+        }
     }
 
     getprovPhoneNum(value) {

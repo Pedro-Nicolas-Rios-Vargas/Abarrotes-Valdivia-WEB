@@ -289,9 +289,6 @@ h2 small {
 .footer {
     text-align:center; 
 }
-.footer a  {
-    color:#ffffff00; 
-}
 .btn{
   width: 170px;
   height: 40px;
@@ -395,7 +392,23 @@ input:disabled ~ label 		{
   width:660px; 
 }
 
+.barLogin{ 
+  position:relative; 
+  display:block; 
+  width:460px; 
+}
 .bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:0px; 
+  position:absolute;
+  background:#7a52ae; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.barLogin:before, .barLogin:after 	{
   content:'';
   height:2px; 
   width:0;
@@ -409,7 +422,16 @@ input:disabled ~ label 		{
 .bar:before {
   left:50%;
 }
+
+.barLogin:before {
+  left:50%;
+}
+
 .bar:after {
+  right:50%; 
+}
+
+.barLogin:after {
   right:50%; 
 }
 
@@ -418,37 +440,23 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
   width:50%;
 }
 
-.bar2{ 
-  position:relative; 
-  display:block; 
-  width:660px; 
-}
-
-.bar2:before, .bar2:after 	{
-  content:'';
-  height:2px; 
-  width:0;
-  bottom:0px; 
-  position:absolute;
-  background:#7a52ae; 
-  transition:0.2s ease all; 
-  -moz-transition:0.2s ease all; 
-  -webkit-transition:0.2s ease all;
-}
-.bar2:before {
-  left:50%;
-}
-.bar2:after {
-  right:50%; 
-}
-
-/* active state */
-input:focus ~ .bar2:before, input:focus ~ .bar2:after {
+.loginInput:focus ~ .barLogin:before, .loginInput:focus ~ .barLogin:after {
   width:50%;
 }
 
+
 /* HIGHLIGHTER ================================== */
 .highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+.highlightLogin {
   position:absolute;
   height:60%; 
   width:100px; 
@@ -465,6 +473,11 @@ input:focus ~ .highlight {
   animation:inputHighlighter 0.3s ease;
 }
 
+.loginInput:focus ~ .highlightLogin {
+  -webkit-animation:inputHighlighterLogin 0.3s ease-in-out;
+  -moz-animation:inputHighlighterLogin 0.3s ease-in-out;
+  animation:inputHighlighterLogin 0.3s ease-in-out;
+}
 /* ANIMATIONS ================ */
 @-webkit-keyframes inputHighlighter {
 	from { background:#7a52ae; }
@@ -475,6 +488,19 @@ input:focus ~ .highlight {
   to 	{ width:0; background:transparent; }
 }
 @keyframes inputHighlighter {
+	from { background:#7a52ae; }
+  to 	{ width:0; background:transparent; }
+}
+
+@-webkit-keyframes inputHighlighterLogin {
+	from { background:#7a52ae; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighterLogin {
+	from { background:#7a52ae; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighterLogin {
 	from { background:#7a52ae; }
   to 	{ width:0; background:transparent; }
 }
@@ -604,4 +630,6 @@ Bloque de estilos de las tablas
   font-size: 18px;
   cursor: pointer;
   overflow: hidden;
+  padding-top: 8px;
 }
+

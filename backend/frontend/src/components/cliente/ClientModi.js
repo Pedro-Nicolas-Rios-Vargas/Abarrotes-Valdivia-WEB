@@ -36,12 +36,20 @@ export default class ClientModi extends Component {
         this.setState({
             clientId: value
         });
+        
     }
 
     getnombre_C(value) {
-        this.setState({
-            nombre_C: value
-        });
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ]{0,16}$/.test(value)) {
+            this.setState({
+                nombre_C: value,
+            });
+
+        } else {
+            this.setState({
+                balance: this.state.balance,
+            })
+        }
     }
 
 

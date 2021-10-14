@@ -39,9 +39,16 @@ export default class ProductoAdd extends Component {
     }
 
     getNameProducto(e) {
-        this.setState({
-            prodName: e.target.value,
-        });
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,64}$/.test(e.target.value)) {
+            this.setState({
+                prodName: e.target.value,
+            });
+
+        } else {
+            this.setState({
+                prodName: this.state.prodName,
+            })
+        }
     }
 
     getexistencia(e) {
