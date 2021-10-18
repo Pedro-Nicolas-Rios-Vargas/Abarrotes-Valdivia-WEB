@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'BuyLog.apps.BuylogConfig',
     'sellRecord.apps.SellrecordConfig',
     'sellLog.apps.SelllogConfig',
+    'login.apps.LoginConfig',
 ]
 
 MIDDLEWARE = [
