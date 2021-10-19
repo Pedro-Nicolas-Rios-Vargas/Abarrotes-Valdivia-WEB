@@ -633,3 +633,15 @@ Bloque de estilos de las tablas
   padding-top: 8px;
 }
 
+.error {
+    color: #FFFFFF;
+    border: 2px solid #9F0000;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    background-color: #FF00005A;
+}
+
+.error.invisible {
+    display: none;
+}

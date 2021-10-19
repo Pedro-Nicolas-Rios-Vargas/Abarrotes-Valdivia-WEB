@@ -21,6 +21,7 @@ export default class Login extends Component {
         this.handlePwd = this.handlePwd.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
+        this.handleErrorDiv = this.handleErrorDiv.bind(this);
     }
 
     handleUsername(event) {
@@ -35,7 +36,28 @@ export default class Login extends Component {
         });
     }
 
+    handleErrorDiv() {
+        let errorTag = document.querySelector(".error");
+        errorTag.classList.toggle("invisible", false);
+    }
+
     handleSubmit(event) {
+        if (!this.state.username) {
+            console.log('Username esta vacio')
+            this.setState({
+                msg: 'No ha ingresado nada en el campo usuario.'
+            });
+            this.handleErrorDiv();
+            return;
+        }
+        if (!this.state.pwd) {
+            console.log('Pwd esta vacio')
+            this.setState({
+                msg: 'No ha ingresado nada en el campo contraseña.'
+            });
+            this.handleErrorDiv();
+            return;
+        }
         let request = {
             method: 'POST',
             headers: { "Content-Type": "application/json" },
@@ -52,6 +74,9 @@ export default class Login extends Component {
                 this.setState({
                     msg: data.Mensaje,
                 });
+                if (this.state.msg != 'Logged In') {
+                    this.handleErrorDiv();
+                }
             });
     }
 
@@ -61,10 +86,10 @@ export default class Login extends Component {
             return <Redirect to="/home/"/>
         } else if (msg) {
             return (
-                <div className="error">
-                    <p>
+                <div className="error invisible">
+                    <strong>
                         { msg }
-                    </p>
+                    </strong>
                 </div>
             )
         }
