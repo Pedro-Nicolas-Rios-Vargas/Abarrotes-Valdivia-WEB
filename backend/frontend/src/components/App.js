@@ -17,6 +17,7 @@ import SellAdd from "./venta/SellAdd";
 import SellLog from "./venta/SellLog";
 import BuyAdd from "./compras/BuyAdd";
 import BuyLog from "./compras/BuyLog";
+import Login from "./login"
 import {
     BrowserRouter as Router,
     Switch,
@@ -51,32 +52,32 @@ function Switches(props) {
     );
 }
 
-function Login() {
-    return (
-        <div className="container login">
-            <h2>Login
-            </h2>
-            <form>
-                <div className="group">
-                    <input className= "loginInput" type="text" required onChange={e => this.getNameProv(e)} />
-                    <span className="highlightLogin"></span>
-                    <span className="barLogin"></span>
-                    <label>Nombre</label>
-                </div>
-
-                <div className="group">
-                    <input className= "loginInput" type="text" required onChange={e => this.getprovPhoneNum(e)} />
-                    <span className="highlightLogin"></span>
-                    <span className="barLogin"></span>
-                    <label>Contraseña</label>
-                </div>
-            </form>
-            <div className="footer">
-                <button className="btn"><a className="abtn" href="/home">Confirmar</a></button>
-            </div>
-        </div>
-    );
-}
+//function Login() {
+//    return (
+//        <div className="container login">
+//            <h2>Login
+//            </h2>
+//            <form>
+//                <div className="group">
+//                    <input className= "loginInput" type="text" required onChange={e => this.getNameProv(e)} />
+//                    <span className="highlightLogin"></span>
+//                    <span className="barLogin"></span>
+//                    <label>Nombre</label>
+//                </div>
+//
+//                <div className="group">
+//                    <input className= "loginInput" type="text" required onChange={e => this.getprovPhoneNum(e)} />
+//                    <span className="highlightLogin"></span>
+//                    <span className="barLogin"></span>
+//                    <label>Contraseña</label>
+//                </div>
+//            </form>
+//            <div className="footer">
+//                <button className="btn"><a className="abtn" href="/home">Confirmar</a></button>
+//            </div>
+//        </div>
+//    );
+//}
 
 function noMatch() {
     let path = useLocation();
