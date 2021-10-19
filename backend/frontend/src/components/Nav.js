@@ -11,12 +11,14 @@ export default class Nav extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            msg: '',
             collapsed: false,
             rotulo: 'Inicio',
         };
 
         this.showingMenu = this.showingMenu.bind(this);
-        
+        this.logout = this.logout.bind(this);
+        this.responseHandler = this.responseHandler.bind(this);
     }
     toggleMenu = (event) => {
         let sidebar = document.querySelector(".sidebar");
@@ -37,9 +39,39 @@ export default class Nav extends Component {
         arrowParent.classList.toggle("showMenu");
     }
 
+    logout() {
+        let request = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "Logged": false
+            }),
+        };
+        fetch('/logout/', request).
+            then((response) => {
+                return response.json();
+            }).
+            then((data) => {
+                this.setState({
+                    msg: data.Mensaje,
+                });
+            });
+    }
+
+    responseHandler() {
+        let msg = this.state.msg;
+        if (msg == 'Salir') {
+            return <Redirect to="/"/>
+        } else if (msg) {
+            return <p>Issa porra</p>
+        }
+    }
+
     render() {
+        let afterResponse = this.responseHandler();
         return (
                 <div>
+                    { afterResponse }
                     <div className="sidebar close">
                         <div className="logo-details">
                             <i className='bx bx-store' ></i>
@@ -194,7 +226,10 @@ export default class Nav extends Component {
                                         <div className="profile_name">Rex</div>
                                         <div className="job">Desarrollador</div>
                                     </div>
-                                    <i className='bx bx-log-out' ></i>
+                                    <i
+                                        className='bx bx-log-out'
+                                        onClick={() => this.logout()} >
+                                    </i>
                                 </div>
                             </li>
                         </ul>

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'sellRecord.apps.SellrecordConfig',
     'sellLog.apps.SelllogConfig',
     'login.apps.LoginConfig',
+    'logout.apps.LogoutConfig',
 ]
 
 MIDDLEWARE = [

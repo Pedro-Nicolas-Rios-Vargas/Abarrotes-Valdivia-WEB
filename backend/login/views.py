@@ -6,14 +6,11 @@ from userManager import UserData
 
 
 # Create your views here.
-class loginValidationView(APIView):
+class LoginValidationView(APIView):
     serializer_class = UserSerializer
 
     def __init__(self):
         self.user = UserData()
-        from os import getcwd
-        print(getcwd())  # Solo para saber cual es el directorio base
-        self.log_path = './user.json'
         self.user_data = self.user.user_data
 
     def post(self, request, format=None):
@@ -23,10 +20,7 @@ class loginValidationView(APIView):
             passwordEntry = dataEntry.data.get('pwd')
             if (usernameEntry == self.user_data['username']):
                 if (passwordEntry == self.user_data['password']):
-                    #self._changeLoggedStatusToTrue()
-                    #self.user._changeLoggedStatusToTrue()
-                    #self._changeLoggedStatusToFalse()
-                    self.user.changeLoggedStatusToFalse()
+                    self.user.changeLoggedStatusToTrue()
                     return Response(
                             {'Mensaje': 'Logged In'},
                             status=status.HTTP_200_OK
