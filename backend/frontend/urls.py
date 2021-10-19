@@ -18,6 +18,6 @@ urlpatterns = [
     path('venta/consultar', index),
     path('compras/agregar', index),
     path('compras/consultar', index),
-    path('', index),
+    path('', index, name='toLogin'),
     path('home/', index)
 ]
