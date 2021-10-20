@@ -28,5 +28,6 @@ urlpatterns = [
     path('buyRecord/', include('buyRecord.urls')),
     path('sellRecord/', include('sellRecord.urls')),
     path('sellLog/', include('sellLog.urls')),
-    path('buyLog/', include('BuyLog.urls'))
+    path('buyLog/', include('BuyLog.urls')),
+    path('cuenta/', include('cuenta.urls')),
 ]

@@ -1,5 +1,5 @@
-import React, { Component, useCallback } from 'react';
-
+import React, { Component, useState } from 'react';
+import AutoComplete from './AutoComplete';
 export default class SellAdd extends Component {
     constructor(props) {
         super(props);
@@ -29,6 +29,8 @@ export default class SellAdd extends Component {
             btnMenos: false,
             sellId: 0,
             sellDate: "",
+            mandarCliente:[],
+            mandarProductos:[],
         };
 
         this.getProductData = this.getProductData.bind(this);
@@ -69,10 +71,21 @@ export default class SellAdd extends Component {
         fetch('/cliente/get-client')
             .then(response => response.json())
             .then((data) => {
+                const juntar  = [];
+                for (let i = 0; i < data.length; i++) {
+                    const element = data[i];
+                    const aux = {
+                        id: element.clientId,
+                        nombre: element.nombre_C
+                    }
+                    juntar.push(aux)
+                }
                 this.setState({
-                    dataCliente: data
+                    dataCliente: data,
+                    mandarCliente: juntar,
                 });
             });
+
     }
 
     getclientId(value) {
@@ -121,8 +134,18 @@ export default class SellAdd extends Component {
         await fetch('/producto/get-producto')
             .then(response => response.json())
             .then((data) => {
+                const juntar  = [];
+                for (let i = 0; i < data.length; i++) {
+                    const element = data[i];
+                    const aux = {
+                        id: element.prodId,
+                        nombre: element.prodName
+                    }
+                    juntar.push(aux)
+                }
                 this.setState({
-                    data: data
+                    data: data,
+                    mandarProductos:juntar,
                 });
             });
     }
@@ -187,17 +210,21 @@ export default class SellAdd extends Component {
     }
 
     actualizar() {
+        console.log(this.state.aPagar)
         const paraLaFeria = this.state.together
         let total = 0
         for (let i = 0; i < paraLaFeria.length; i++) {
             const element = paraLaFeria[i];
             total = parseFloat(total) + parseFloat(element.sellPrice) * parseFloat(element.cantidad);
         }
-
-        this.setState({
-            total: total,
-            cambio: total - this.state.aPagar,
-        });
+        if (this.state.aPagar === NaN) {
+            console.log(pito)
+        } else {
+            this.setState({
+                total: total,
+                cambio: total - this.state.aPagar,
+            });
+        }
     }
 
     buscarCliente(nombre_C) {
@@ -227,12 +254,12 @@ export default class SellAdd extends Component {
         });
     }
 
-    agregar(nombre_C, prodId) {
-        if (nombre_C === "" || prodId === "") {
-            console.log("Cliente o producto no seleccionado");
+    agregar() {
+        if (this.state.nombre_C === "" || this.state.prodId === "") {
+            alert("Cliente o producto no seleccionado");
         } else {
-            this.buscarProducto(prodId);
-            this.buscarCliente(nombre_C);
+            this.buscarProducto(this.state.prodId);
+            this.buscarCliente(this.state.nombre_C);
             this.setState({
                 showFeriaYmas: true,
                 inputCliente: true
@@ -336,6 +363,7 @@ export default class SellAdd extends Component {
             console.log("llamar sellLog");
             await pushSellLog(together);
             console.log("termino")
+            await movement(cliente, total)
         }
 
         function pushSellRecord(cliente, total) {
@@ -358,8 +386,24 @@ export default class SellAdd extends Component {
             });
 
         }
-
-        //Aqui te quedastes en validar existencia y mandar a guardar en la db
+        function movement(cliente, total) {
+            return new Promise((resolve, reject) => {
+                const fecha = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                    const movementClient = {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            clientId: cliente.clientId,
+                            dateTransaction: fecha,
+                            total: total,
+                        }),
+                    };
+                    fetch("/cuenta/add-movement", movementClient)
+                    .then((response) => response.json())
+                    .then((data) => console.log(data))
+                    resolve(movementClient)
+            });
+        }
         const together = this.state.together;
         let continuar = true;
         const data = this.state.data;
@@ -368,17 +412,47 @@ export default class SellAdd extends Component {
             const productoDB = data.find(data => data.prodId === element.prodId);
             if (element.cantidad > productoDB.existencia) {
                 continuar = false;
-                console.log("No tienes suficiente producto en existencia")
+                alert("No tienes suficiente producto en existencia");
                 break;
             }
         }
 
         if (continuar) {
-            asyncAll(this.state.cliente, this.state.total, together);
+            if (this.state.cambio === 0){
+                //asyncAll(this.state.cliente, this.state.total, together);
+            } else if(this.state.cambio > 0 ) {
+                if(this.state.cliente.balance > 0) {
+                    alert("El cliente tiene saldo acredor suficiente para abonar\nPor lo que el saldo actual del cliente es: " +
+                    this.state.cliente.balance - Math.abs( this.state.cambio))
+                    console.log(this.state.cliente.balance - Math.abs( this.state.cambio))
+
+                } else {
+                    if (confirm("Falta dinero por pagar\n ¿Desea agregar el dinero faltante como saldo deudor del cliente?")) {
+                        console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
+                    } else {
+                        alert("Dinero faltante para realizar la venta")
+                    }
+                }
+            } else if(this.state.cambio < 0) {
+                if(confirm("Cambio sobrante\n ¿Desea agregar el cambio sobrante como saldo acredor del cliente?")) {
+                    console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
+                } else {
+                    alert("El cambio es: " + (-1 * this.state.cambio));
+                }
+            }
+            console.log(this.state.cliente)
+
         }
 
     }
 
+    retornoCliente(r) {
+        this.setState({nombre_C:r})
+    }
+
+    retornoProducto(r) {
+        this.setState({prodId:r});
+    }
 
     render() {
         const together = this.state.together;
@@ -407,7 +481,6 @@ export default class SellAdd extends Component {
                     <button id="upCantidad" className="btn btn_controller" onClick={() => this.upCanitdad(product.prodId)}>+</button>
                     <button id="downCantidad" className="btn btn_controller" onClick={() => this.downCanitdad(product.prodId)}>-</button>
                 </td>
-                <td>{product.cliente}</td>
                 <td>
                     <button onClick={() => this.removeRow(product.prodId)} className="btn btn_confirm">Eliminar</button>
                 </td>
@@ -415,28 +488,35 @@ export default class SellAdd extends Component {
         );
 
         const apagarCambiante = event => {
-            const cambio = parseFloat(this.state.total - event.target.value);
-            this.setState({ cambio: cambio });
+            if (/^(\d{0,4})([.]\d{0,2})?$/.test(event.target.value)) {
+                const cambio = parseFloat(this.state.total - event.target.value);
+                this.setState({ cambio: cambio, aPagar: event.target.value });
+            } else {
+                this.setState({aPagar:this.state.aPagar})
+            }
         }
 
         return (
             <div className="container">
                 <h2>Ventas</h2>
-                <from>
-                    <div className="group">
+                <form>
+                    {/* ['Pepe','Pene', 'Pedro', 'pixiv'] */}
+                        <AutoComplete item={this.state.mandarCliente} inputName={"Nombre del Cliente"} data={ {input:0, retornoCliente:this.retornoCliente.bind(this)} } />
+                    {/* <div className="group">
                         <input type="text" required onChange={e => this.getprodId(e.target.value)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>ID o Nombre del producto</label>
-                    </div>
-                    <div className="group">
+                    </div> */}
+                    {/* <div className="group">
                         <input className="diabled" type="text" required onChange={e => this.getnombre_C(e.target.value)} disabled={this.state.inputCliente} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label className="disable">Nombre del cliente</label>
-                    </div>
-                </from>
-                <button className="btn" onClick={() => this.agregar(this.state.nombre_C, this.state.prodId)}>Agregar</button>
+                    </div> */}
+                        <AutoComplete item={this.state.mandarProductos} inputName={"ID o Nombre del producto"} data={ {input:1, retornoProducto:this.retornoProducto.bind(this)} }/>
+                </form>
+                <button className="btn" onClick={() => this.agregar()}>Agregar</button>
 
                 <div className="table" >
                     <table className="tablaproducttes">
@@ -446,7 +526,6 @@ export default class SellAdd extends Component {
                                 {/* <th className="head">Precio de compra</th> */}
                                 <th className="head">Precio de venta</th>
                                 <th className="head">Cantidad</th>
-                                <th className="head">Cliente</th>
                                 <th className="head">Opciones</th>
                             </tr>
                         </thead>
@@ -463,11 +542,11 @@ export default class SellAdd extends Component {
                                     <label className="a">Total: $</label>
                                     <label className="b">{this.state.total}</label>
                                     <label className="a">Cambio: $</label>
-                                    <label className="b">{this.state.cambio}</label>
+                                    <label className="b">{(Math.abs( this.state.cambio))} No se como indicar cambio si falta dinero</label>
                                 </div>
                                 <form>
                                     <div className="group">
-                                        <input id="inputApagar" type="text" name="Apagar" required onChange={apagarCambiante} />
+                                        <input id="inputApagar" value={this.state.aPagar} type="text" name="Apagar" required onChange={apagarCambiante} />
                                         <span className="highlight"></span>
                                         <span className="bar"></span>
                                         <label >A pagar</label>
