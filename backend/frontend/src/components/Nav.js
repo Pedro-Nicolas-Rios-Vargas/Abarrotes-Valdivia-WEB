@@ -212,8 +212,8 @@ export default class Nav extends Component {
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Backups</a></li>
-                                    <li><a href="/#">Respaldos</a></li>
-                                    <li><a href="/#">Restauraciones</a></li>
+                                    <Link to="/Backup/BackupRespaldo"><li onClick={() =>this.changeRotulo("Backups")}>Respaldos</li></Link>
+                                    <Link to="/Backup/BackupRestauracion"><li onClick={() =>this.changeRotulo("Restores")}>Restauraciones</li></Link>
                                 </ul>
                             </li>
 

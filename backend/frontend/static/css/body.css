@@ -267,7 +267,28 @@ Este es el bloque de estilos para agregar
   padding:10px 50px 50px;
   border-radius: 25px;
 }
-
+.containerRespaldo{
+  width: 200px;
+  margin: 39vh auto 0;
+  background: #11101d;
+  padding: 10px 50px 50px 10px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+.containerRestauracion{
+  width: 400px;
+  margin: 39vh auto 0;
+  background: #11101d;
+  padding: 10px 50px 50px 10px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
 .login { 
   width:560px; 
   margin:30px auto 0; 
@@ -300,6 +321,21 @@ h2 small {
   cursor: pointer;
   overflow: hidden;
   transition: all .35s;
+}
+
+.btnRespaldo{
+  width: 120px;
+  height: 60px;
+  margin-top: 33px;
+  margin-right: -37px;
+}
+
+.btnRestauracion{
+  width: 120px;
+  height: 60px;
+  margin-top: 33px;
+  margin-right: 0px;
+  margin-left: 104px;
 }
 
 .btn_confirm{
@@ -644,4 +680,69 @@ Bloque de estilos de las tablas
 
 .error.invisible {
     display: none;
+}
+
+/*
+Loader
+*/
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.centered {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50px, -50px);
+}
+
+.rotater {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #ccc;
+  border-radius: 50%;
+  border-top: 3px solid tomato;
+  border-bottom: 3px solid navy;
+  animation: rotater-animate 0.5s infinite linear;
+}
+
+@keyframes rotater-animate {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.upload-box{
+  font-size: 16;
+  text-align: center;
+  background: black;
+  color:white; 
+  border-radius: 50px;
+  width: 350px;
+  outline: none;
+  padding-top: 20px;
+margin-top: 45px;
+margin-right: -44px;
+}
+
+input[type="file"]{
+  text-align: center;
+  color: white;
+  background:#206a5d;
+  padding: 20px;
+  border: none;
+  border-radius:50px ;
+  box-shadow: 1px, 0 1px 1px #6b4559;
+}
+input[type="file"]:hover{
+  background: #438a5e;
 }

@@ -19,5 +19,7 @@ urlpatterns = [
     path('compras/agregar', index),
     path('compras/consultar', index),
     path('', index, name='toLogin'),
+    path('Backup/BackupRespaldo', index),
+    path('Backup/BackupRestauracion', index),
     path('home/', index)
 ]
