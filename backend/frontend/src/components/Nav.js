@@ -208,7 +208,10 @@ export default class Nav extends Component {
                                         <i className='bx bx-coffee'></i>
                                         <span className="link_name">Backups</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Backups</a></li>
