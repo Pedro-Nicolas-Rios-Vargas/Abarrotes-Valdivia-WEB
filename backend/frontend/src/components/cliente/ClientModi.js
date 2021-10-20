@@ -10,7 +10,8 @@ export default class ClientModi extends Component {
             clientId: 0,
             nombre_C: "",
             balance: 0.0,
-            buscador: ""
+            buscador: "",
+            balancePreModi: 0.0,
         };
         this.getClientData = this.getClientData.bind(this);
         this.deleteData = this.deleteData.bind(this);
@@ -36,7 +37,7 @@ export default class ClientModi extends Component {
         this.setState({
             clientId: value
         });
-        
+
     }
 
     getnombre_C(value) {
@@ -63,7 +64,7 @@ export default class ClientModi extends Component {
                 balance: this.state.balance,
             })
         }
-        if(this.state.balance.length === 1) {
+        if (this.state.balance.length === 1) {
         }
     }
 
@@ -102,14 +103,38 @@ export default class ClientModi extends Component {
                 this.setState({
                     clientId: clientId,
                     nombre_C: data.nombre_C,
-                    balance: data.balance
+                    balance: data.balance,
+                    balancePreModi: data.balance,
                 });
             });
         { this.setState({ show: true }) }
     }
 
     applyChanges(clientId) {
+        let transaction
         if (this.state.nombre_C !== "" && this.state.balance !== "") {
+            if (this.state.balancePreModi !== this.state.balance) {
+                if (this.balancePreModi < this.state.balance) {
+                    transaction = (this.state.balance + Math.abs(this.state.balancePreModi))
+                } else {
+                    transaction = (this.state.balance - this.state.balancePreModi)
+                }
+                //Agregar transaccion a la cuenta
+                let date = new Date();
+                const fecha = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                const movementClient = {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        clientId: clientId,
+                        dateTransaction: fecha,
+                        total: transaction,
+                    }),
+                };
+                fetch("/cuenta/add-movement", movementClient)
+                .then((response) => response.json())
+                .then((data) => console.log(data))
+            }
             const requiestClient = {
                 method: 'PUT',
                 headers: { "Content-Type": "application/json" },
@@ -123,11 +148,13 @@ export default class ClientModi extends Component {
                 .then((response) => {
                     this.getClientData();
                 });
-            { this.setState({ 
-                show: false,
-                buscador: "",
-             }); 
+            {
+                this.setState({
+                    show: false,
+                    buscador: "",
+                });
             }
+
             alert("Datos del cliente modificados con exito")
         } else {
             alert("No se puede agregar un cliente sin nombre o sin saldo")
@@ -141,7 +168,7 @@ export default class ClientModi extends Component {
             const element = this.state.data[i];
             const str = element.nombre_C.toLowerCase();
             if (str.includes(nombre)) {
-                auxData.push(element);    
+                auxData.push(element);
             }
         }
         this.setState({
@@ -164,7 +191,7 @@ export default class ClientModi extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required value={this.state.buscador} onChange={e => this.getBuscador(e)}/>
+                        <input type="text" required value={this.state.buscador} onChange={e => this.getBuscador(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>

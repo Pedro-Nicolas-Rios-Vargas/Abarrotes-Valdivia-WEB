@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import Modal from './ModalClient'
 export default class ClientGet extends Component {
     constructor(props) {
         super(props);
@@ -9,10 +9,14 @@ export default class ClientGet extends Component {
             show: false,
             clientId: 0,
             nombre_C: "",
-            balance: 0.0
+            balance: 0.0,
+            show: false,
+            movement: [],
+            dataMovement: [],
+            cliente: "Pedro furro"
         };
         this.getClientData = this.getClientData.bind(this);
-        this.deleteData = this.deleteData.bind(this);
+        this.deleteData = this.movementConsult.bind(this);
         this.modiData = this.modiData.bind(this);
         this.applyChanges = this.applyChanges.bind(this);
 
@@ -20,6 +24,9 @@ export default class ClientGet extends Component {
         this.getnombre_C = this.getnombre_C.bind(this)
         this.getbalance = this.getbalance.bind(this)
         this.buscar = this.buscar.bind(this);
+        this.setShow = this.setShow.bind(this);
+
+        this.movementConsult = this.movementConsult.bind(this);
     }
 
     getclientId(value) {
@@ -52,11 +59,22 @@ export default class ClientGet extends Component {
             });
     }
 
-    componentDidMount() {
-        this.getClientData();
+    async getMovementClientData() {
+        fetch('/cuenta/get-movement')
+        .then(response => response.json())
+        .then((data) => {
+            this.setState({
+                dataMovement:data
+            })
+        });
     }
 
-    deleteData(clientId) {
+    componentDidMount() {
+        this.getClientData();
+        this.getMovementClientData();
+    }
+
+    movementConsult(clientId) {
         fetch('/cliente/delete-cliente/' + clientId, {
             method: 'DELETE',
             body: JSON.stringify(this.state),
@@ -114,16 +132,47 @@ export default class ClientGet extends Component {
         });
     }
 
+    setShow() {
+        this.setState({show:false,})
+    }
+
+    async movementConsult(clientId, nombre_C) {
+        const movementData = this.state.dataMovement;
+        const movementMatch = [];
+        console.log(clientId, nombre_C);
+
+        for (let i = 0; i < movementData.length; i++) {
+            const element = movementData[i];
+            if (element.clientId === clientId) {
+                const aux = {
+                    movementId: element.movementId,
+                    dateTransaction: element.dateTransaction,
+                    total: element.total,
+                }
+                movementMatch.push(aux);
+            }
+        }
+        this.setState({
+            show:true,
+            movement: movementMatch,
+            cliente: nombre_C,
+        })
+    }
+
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td>{clien.nombre_C}</td>
-                <td>{clien.balance}</td>
-                <td>
-                    {/* <button onClick={() => this.deleteData(clien.clientId)} className="btn btn-delete" >Eliminar</button>
-                    <button onClick={() => this.modiData(clien.clientId)} className="btn btn-modifi">Modificar</button> */}
-                </td>
+                <td onClick={() => this.movementConsult(clien.clientId, clien.nombre_C)}>{clien.nombre_C}</td>
+                <td onClick={() => this.movementConsult(clien.clientId, clien.nombre_C)}>{clien.balance}</td>
+            </tr>
+        );
+
+        const movementTable = this.state.movement;
+        const tablaModal = movementTable.map((element) =>
+            <tr key={element.movementId}>
+                <td>{element.dateTransaction}</td>
+                <td>{element.total}</td>
             </tr>
         );
 
@@ -151,6 +200,21 @@ export default class ClientGet extends Component {
                         {rows}
                     </tbody>
                 </table>
+                <Modal title={"Cuenta de " + this.state.cliente} onClose={() => this.setShow(false)} show={this.state.show}>
+                <div >
+                <table className="table">
+                    <thead>
+                        <tr>
+                            <th className="head-table">Fecha</th>
+                            <th className="head-table">Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {tablaModal}
+                    </tbody>
+                </table>
+                </div>
+                </Modal>
             </div>
         );
     }

@@ -633,3 +633,20 @@ Bloque de estilos de las tablas
   padding-top: 8px;
 }
 
+/* Auto acompletado  */
+.AutoCompleteTextUL {
+  color: white;
+  list-style-type: none;
+  text-align: left;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  background-color: #11101d;
+  width: 660px;
+  z-index: 1;
+}
+
+.AutoCompleteTextIL:hover {
+  text-decoration: none;
+  background-color: grey;
+}

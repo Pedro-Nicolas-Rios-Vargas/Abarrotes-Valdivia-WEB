@@ -65,19 +65,24 @@ export default class ClienteDelete extends Component {
         this.getClientData();
     }
 
-    deleteData(clientId, nombre_C) {
-        if (confirm("Desea eliminar al cliente: " + "  " + nombre_C)) {
-            fetch('/cliente/delete-cliente/' + clientId, {
-                method: 'DELETE',
-                body: JSON.stringify(this.state),
-            }).then(response => response)
-            .then((data) => {
-                if (data) {
-                    this.getClientData();
-                }
-            });
-            alert("Cliente eliminado con exito");
-            this.setState({buscador: ""});
+    deleteData(clientId, nombre_C, balance) {
+        console.log(balance)
+        if(balance === "0.00") {
+            if (confirm("Desea eliminar al cliente: " + "  " + nombre_C)) {
+                fetch('/cliente/delete-cliente/' + clientId, {
+                    method: 'DELETE',
+                    body: JSON.stringify(this.state),
+                }).then(response => response)
+                .then((data) => {
+                    if (data) {
+                        this.getClientData();
+                    }
+                });
+                alert("Cliente eliminado con exito");
+                this.setState({buscador: ""});
+            }
+        } else {
+            alert("No se puede eliminar un cliente con saldo deudor o acredor.")
         }
     }
 
@@ -100,8 +105,8 @@ export default class ClienteDelete extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C)} >{clien.nombre_C}</td>
-                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C)} >{clien.balance}</td>
+                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.nombre_C}</td>
+                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.balance}</td>
             </tr>
         );
 
