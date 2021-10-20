@@ -460,7 +460,7 @@ input:disabled ~ label 		{
 }
 
 .barLogin:before {
-  left:50%;
+  left:0%;
 }
 
 .bar:after {
@@ -468,7 +468,7 @@ input:disabled ~ label 		{
 }
 
 .barLogin:after {
-  right:50%; 
+  right:0%; 
 }
 
 /* active state */

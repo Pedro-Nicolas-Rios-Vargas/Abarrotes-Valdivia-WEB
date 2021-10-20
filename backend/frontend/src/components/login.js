@@ -109,27 +109,27 @@ export default class Login extends Component {
                     <div className="group">
                         <input
                             id="username"
-                            className="loginEntrada"
+                            className="loginInput"
                             type="text"
                             required
                             onChange={e => this.handleUsername(e)}
                             value={ this.state.username }
                         />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
+                        <span className="highlightLogin"></span>
+                        <span className="barLogin"></span>
                         <label htmlFor="username">Nombre</label>
                     </div>
 
                     <div className="group">
                         <input
                             id="password"
-                            className="loginEntrada"
+                            className="loginInput"
                             type="password"
                             required
                             onChange={e => this.handlePwd(e)}
                         />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
+                        <span className="highlightLogin"></span>
+                        <span className="barLogin"></span>
                         <label htmlFor="password">Contraseña</label>
                     </div>
                 </form>
