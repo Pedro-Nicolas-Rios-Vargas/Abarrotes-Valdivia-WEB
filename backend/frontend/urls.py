@@ -18,6 +18,8 @@ urlpatterns = [
     path('venta/consultar', index),
     path('compras/agregar', index),
     path('compras/consultar', index),
+    path('Backup/BackupRespaldo', index),
+    path('Backup/BackupRestauracion', index),
     path('', index),
     path('home/', index)
 ]

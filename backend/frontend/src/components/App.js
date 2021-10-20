@@ -17,6 +17,9 @@ import SellAdd from "./venta/SellAdd";
 import SellLog from "./venta/SellLog";
 import BuyAdd from "./compras/BuyAdd";
 import BuyLog from "./compras/BuyLog";
+import Backup from "./Backups/Backup";
+import Restore from "./Backups/Restore";
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -234,6 +237,22 @@ export default class App extends Component {
                             <main>
                                 <Nav />
                                 <BuyLog />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/Backup/BackupRespaldo">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <Backup/>
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/Backup/BackupRestauracion">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <Restore/>
                             </main>
                         </div>
                     </Route>
