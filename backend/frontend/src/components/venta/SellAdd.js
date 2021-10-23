@@ -1,8 +1,10 @@
 import React, { Component, useState } from 'react';
 import AutoComplete from './AutoComplete';
 export default class SellAdd extends Component {
+
     constructor(props) {
         super(props);
+
         this.state = {
             data: [],
             show: false,
@@ -29,8 +31,8 @@ export default class SellAdd extends Component {
             btnMenos: false,
             sellId: 0,
             sellDate: "",
-            mandarCliente:[],
-            mandarProductos:[],
+            mandarCliente: [],
+            mandarProductos: [],
         };
 
         this.getProductData = this.getProductData.bind(this);
@@ -52,6 +54,8 @@ export default class SellAdd extends Component {
         this.removeRow = this.removeRow.bind(this);
         this.actualizar = this.actualizar.bind(this);
         this.finalizar = this.finalizar.bind(this);
+        this.actualizarCliente = this.actualizarCliente.bind(this);
+        this.movement = this.movement.bind(this);
     }
 
 
@@ -71,7 +75,7 @@ export default class SellAdd extends Component {
         fetch('/cliente/get-client')
             .then(response => response.json())
             .then((data) => {
-                const juntar  = [];
+                const juntar = [];
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     const aux = {
@@ -134,7 +138,7 @@ export default class SellAdd extends Component {
         await fetch('/producto/get-producto')
             .then(response => response.json())
             .then((data) => {
-                const juntar  = [];
+                const juntar = [];
                 for (let i = 0; i < data.length; i++) {
                     const element = data[i];
                     const aux = {
@@ -145,7 +149,7 @@ export default class SellAdd extends Component {
                 }
                 this.setState({
                     data: data,
-                    mandarProductos:juntar,
+                    mandarProductos: juntar,
                 });
             });
     }
@@ -161,7 +165,6 @@ export default class SellAdd extends Component {
         // de dicho producto.
         // Ve como hacer para que la cantidad aumente
         if (parseInt(prodIdBuscar)) {
-            console.log('Es numero');
             const nuevoProducto = this.state.data.find(data => data.prodId === prodIdBuscar);
             if (nuevoProducto !== undefined) {
                 const listaProductos = this.state.together;
@@ -177,7 +180,10 @@ export default class SellAdd extends Component {
                     listaProductos[posicion] = {
                         prodId: aux.prodId,
                         prodName: aux.prodName,
+                        existencia: aux.existencia,
                         sellPrice: aux.sellPrice,
+                        stock: aux.stock,
+                        presentacion: aux.presentacion,
                         cantidad: aux.cantidad + 1,
                         cliente: this.state.cliente,
                     }
@@ -190,7 +196,10 @@ export default class SellAdd extends Component {
                     const fucion = {
                         prodId: nuevoProducto.prodId,
                         prodName: nuevoProducto.prodName,
+                        existencia: nuevoProducto.existencia,
                         sellPrice: nuevoProducto.sellPrice,
+                        stock: nuevoProducto.stock,
+                        presentacion: nuevoProducto.presentacion,
                         cantidad: 1,
                         cliente: this.state.cliente,
                     }
@@ -202,7 +211,7 @@ export default class SellAdd extends Component {
                 }
 
             } else {
-                console.log('Es txt');
+                //console.log('Es txt');
             }
         } else {
             console.log('Producto no encontrado')
@@ -210,19 +219,18 @@ export default class SellAdd extends Component {
     }
 
     actualizar() {
-        console.log(this.state.aPagar)
         const paraLaFeria = this.state.together
-        let total = 0
+        let total2 = 0
         for (let i = 0; i < paraLaFeria.length; i++) {
             const element = paraLaFeria[i];
-            total = parseFloat(total) + parseFloat(element.sellPrice) * parseFloat(element.cantidad);
+            total2 = parseFloat(total2) + parseFloat(element.sellPrice) * parseFloat(element.cantidad);
         }
         if (this.state.aPagar === NaN) {
-            console.log(pito)
+            alert("No hay dinero con el cual cobrar")
         } else {
             this.setState({
-                total: total,
-                cambio: total - this.state.aPagar,
+                total: total2,
+                cambio: this.state.aPagar - total2,
             });
         }
     }
@@ -258,11 +266,12 @@ export default class SellAdd extends Component {
         if (this.state.nombre_C === "" || this.state.prodId === "") {
             alert("Cliente o producto no seleccionado");
         } else {
+            this.actualizar();
             this.buscarProducto(this.state.prodId);
             this.buscarCliente(this.state.nombre_C);
             this.setState({
                 showFeriaYmas: true,
-                inputCliente: true
+                inputCliente: true,
             });
         }
     }
@@ -278,11 +287,14 @@ export default class SellAdd extends Component {
         const posicion = listaProductos.findIndex(getIndex);
         const aux = listaProductos[posicion];
         if (listaProductos[posicion].cantidad !== 0) {
-            console.log(listaProductos[posicion].cantidad)
+            //console.log(listaProductos[posicion].cantidad)
             listaProductos[posicion] = {
                 prodId: aux.prodId,
                 prodName: aux.prodName,
+                existencia: aux.existencia,
                 sellPrice: aux.sellPrice,
+                stock: aux.stock,
+                presentacion: aux.presentacion,
                 cantidad: aux.cantidad - 1,
                 cliente: this.state.cliente,
             }
@@ -307,7 +319,10 @@ export default class SellAdd extends Component {
         listaProductos[posicion] = {
             prodId: aux.prodId,
             prodName: aux.prodName,
+            existencia: aux.existencia,
             sellPrice: aux.sellPrice,
+            stock: aux.stock,
+            presentacion: aux.presentacion,
             cantidad: aux.cantidad + 1,
             cliente: this.state.cliente,
         }
@@ -318,17 +333,47 @@ export default class SellAdd extends Component {
         this.actualizar();
     }
 
+    async movement(cliente, total) {
+        let date = new Date();
+        const fecha = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+        const movementClient = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                clientId: cliente.clientId,
+                dateTransaction: fecha,
+                total: total,
+            }),
+        };
+        await fetch("/cuenta/add-movement", movementClient)
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+    }
 
-
+    async actualizarCliente(cliente, total) {
+        console.log("Lo que recibe el metodo:", total)
+        const requiestClient = {
+            method: 'PUT',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                clientId: cliente.clientId,
+                nombre_C: cliente.nombre_C,
+                balance: total
+            }),
+        };
+        await fetch("/cliente/update-cliente/" + cliente.clientId, requiestClient)
+            .then((response) => {
+            });
+    }
 
     finalizar() {
+
         function pushSellLog(together) {
             return new Promise((resolve, reject) => {
-                console.log("sellLog")
+                //console.log("sellLog")
                 fetch('/sellLog/get-last')
                     .then(response => response.json())
                     .then((data) => {
-                        console.log("asdafasdgasfksfhjgadf", data.sellId)
                         for (let i = 0; i < together.length; i++) {
                             const element = together[i];
                             const sellLog = {
@@ -343,6 +388,23 @@ export default class SellAdd extends Component {
                             fetch("/sellLog/add-sellLog", sellLog)
                                 .then((response) => response.json())
                                 .then((data) => console.log(data));
+
+                            console.log("Producto a actualizar existencia: ", element)
+                            const producto = {
+                                method: 'PUT',
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    prodId: element.prodId,
+                                    prodName: element.prodName,
+                                    existencia: element.existencia - element.cantidad,
+                                    sellPrice: element.sellPrice,
+                                    stock: element.stock,
+                                    presentacion: element.presentacion
+                                })
+                            }
+                            fetch("/producto/update-producto/" + element.prodId, producto)
+                                .then((response) => response.json())
+                                .then((data) => { console.log(data) });
                         }
                     });
             });
@@ -352,26 +414,25 @@ export default class SellAdd extends Component {
             await fetch("/sellRecord/add-sellRecord", sellRecord)
                 .then((response) => response.json())
                 .then((data) => console.log(data));
-            console.log("Termino de ejecutarse mandarDB")
+            //console.log("Termino de ejecutarse mandarDB")
         }
 
         async function asyncAll(cliente, total, together) {
-            console.log("Llamar sellRecord");
+            //console.log("Llamar sellRecord");
             const sellRecord = await pushSellRecord(cliente, total);
-            console.log("Lamar mandarDB");
+            //console.log("Lamar mandarDB");
             await mandarDB(sellRecord);
-            console.log("llamar sellLog");
+            //console.log("llamar sellLog");
             await pushSellLog(together);
-            console.log("termino")
-            await movement(cliente, total)
+            //console.log("termino")
+            //await movement(cliente, total)
         }
 
         function pushSellRecord(cliente, total) {
             return new Promise((resolve, reject) => {
-                console.log("sellRecord")
+                //console.log("sellRecord")
                 let date = new Date();
                 const fecha = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-                //console.log(this)
                 const sellRecord = {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
@@ -381,29 +442,12 @@ export default class SellAdd extends Component {
                         total: total,
                     }),
                 };
-                console.log("Termina de ejecutarse sellRecord")
+                //console.log("Termina de ejecutarse sellRecord")
                 resolve(sellRecord)
             });
 
         }
-        function movement(cliente, total) {
-            return new Promise((resolve, reject) => {
-                const fecha = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-                    const movementClient = {
-                        method: 'POST',
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            clientId: cliente.clientId,
-                            dateTransaction: fecha,
-                            total: total,
-                        }),
-                    };
-                    fetch("/cuenta/add-movement", movementClient)
-                    .then((response) => response.json())
-                    .then((data) => console.log(data))
-                    resolve(movementClient)
-            });
-        }
+
         const together = this.state.together;
         let continuar = true;
         const data = this.state.data;
@@ -412,46 +456,72 @@ export default class SellAdd extends Component {
             const productoDB = data.find(data => data.prodId === element.prodId);
             if (element.cantidad > productoDB.existencia) {
                 continuar = false;
-                alert("No tienes suficiente producto en existencia");
+                alert("No tiene suficiente existencia del producto: \n" + (element.prodName).toString());
                 break;
             }
         }
 
+
         if (continuar) {
-            if (this.state.cambio === 0){
-                //asyncAll(this.state.cliente, this.state.total, together);
-            } else if(this.state.cambio > 0 ) {
-                if(this.state.cliente.balance > 0) {
-                    alert("El cliente tiene saldo acredor suficiente para abonar\nPor lo que el saldo actual del cliente es: " +
-                    this.state.cliente.balance - Math.abs( this.state.cambio))
-                    console.log(this.state.cliente.balance - Math.abs( this.state.cambio))
+            if (this.state.cambio === 0) {
+                asyncAll(this.state.cliente, this.state.total, together);
+                //En este caso es no se agrega nada a movement y no hay cambio, es una compra normal
+            } else if (this.state.cambio < 0) {
+                if (this.state.cliente.balance > 0) {
+                    alert("El cliente tiene saldo acredor suficiente para abonar\nPor lo que el saldo actual del cliente es: " + (this.state.cliente.balance - Math.abs(this.state.cambio)).toString());
+                    this.movement(this.state.cliente, this.state.cambio);
+                    this.actualizarCliente(this.state.cliente, this.state.cliente.balance - Math.abs(this.state.cambio));
+                    asyncAll(this.state.cliente, this.state.total, together);
+                    //Aqui mandar a llamar al emtodo para hacer el movement, restando el saldo del cliente y restarle al cliente el saldo 
+                    //que se uso para pagar por lo que en movement saldra que se resto el cambio es decir this.state.cambio
+                    //y el saldo del cliente actual sera el console.log de arriba xd
+
+                    //poner aqui metodo o instrucciones para poner en la forma base ventas
 
                 } else {
                     if (confirm("Falta dinero por pagar\n ¿Desea agregar el dinero faltante como saldo deudor del cliente?")) {
-                        console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
+                        alert("El saldo deudor del cliente a aumentado.\n Ahora cuenta con un saldo de: " + (this.state.cambio).toString());
+                        this.movement(this.state.cliente, this.state.cambio);
+                        this.actualizarCliente(this.state.cliente, this.state.cliente.balance - Math.abs(this.state.cambio));
+                        asyncAll(this.state.cliente, this.state.total, together);
+
+                        //poner aqui metodo o instrucciones para poner en la forma base ventas
+
+                        //console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
+                        //LLamar al metodo movement, y el saldo del cliente sera el cambio mas el posible saldo negativo que tenga xd
+                        //Y en movement poner en transaccion el cambio
                     } else {
                         alert("Dinero faltante para realizar la venta")
                     }
                 }
-            } else if(this.state.cambio < 0) {
-                if(confirm("Cambio sobrante\n ¿Desea agregar el cambio sobrante como saldo acredor del cliente?")) {
-                    console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
+            } else if (this.state.cambio > 0) {
+                if (confirm("Cambio sobrante\n ¿Desea agregar el cambio sobrante como saldo acredor del cliente?")) {
+                    alert("Se a agregado saldo acredor al cliente. \n Ahora cuenta con un saldo de: " + (this.state.cambio).toString());
+                    this.movement(this.state.cliente, parseFloat(this.state.cambio));
+                    this.actualizarCliente(this.state.cliente, parseFloat(parseFloat(this.state.cliente.balance) + parseFloat(this.state.cambio)).toFixed(2));
+                    asyncAll(this.state.cliente, this.state.total, together);
+                    //console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
+                    //Este caso no creo que pase nunca, pero por si se da el caso, hay que poner en el saldo del movement el cambio positivo y sumar el saldo positivo 
+                    //Al saldo actual del cliente, por lo que si el cliente tiene saldo negativo este se convertira en positivo o en negativo si el cambio no es lo
+                    //suficiente para que el saldo sea positivo xd
                 } else {
-                    alert("El cambio es: " + (-1 * this.state.cambio));
+                    alert("El cambio es: " + (this.state.cambio));
+                    //asyncAll(this.state.cliente, this.state.total, together);
+                    //Aqui llamaar a la venta normal pero sin ningun cambio en el movement del cliente
                 }
             }
-            console.log(this.state.cliente)
+            //console.log(this.state.cliente)
 
         }
 
     }
 
     retornoCliente(r) {
-        this.setState({nombre_C:r})
+        this.setState({ nombre_C: r })
     }
 
     retornoProducto(r) {
-        this.setState({prodId:r});
+        this.setState({ prodId: r });
     }
 
     render() {
@@ -488,11 +558,12 @@ export default class SellAdd extends Component {
         );
 
         const apagarCambiante = event => {
+
             if (/^(\d{0,4})([.]\d{0,2})?$/.test(event.target.value)) {
-                const cambio = parseFloat(this.state.total - event.target.value);
+                const cambio = parseFloat(event.target.value - this.state.total);
                 this.setState({ cambio: cambio, aPagar: event.target.value });
             } else {
-                this.setState({aPagar:this.state.aPagar})
+                this.setState({ aPagar: this.state.aPagar })
             }
         }
 
@@ -501,7 +572,7 @@ export default class SellAdd extends Component {
                 <h2>Ventas</h2>
                 <form>
                     {/* ['Pepe','Pene', 'Pedro', 'pixiv'] */}
-                        <AutoComplete item={this.state.mandarCliente} inputName={"Nombre del Cliente"} data={ {input:0, retornoCliente:this.retornoCliente.bind(this)} } />
+                    <AutoComplete item={this.state.mandarCliente} inputName={"Nombre del Cliente"} data={{ input: 0, retornoCliente: this.retornoCliente.bind(this) }} />
                     {/* <div className="group">
                         <input type="text" required onChange={e => this.getprodId(e.target.value)} />
                         <span className="highlight"></span>
@@ -514,11 +585,14 @@ export default class SellAdd extends Component {
                         <span className="bar"></span>
                         <label className="disable">Nombre del cliente</label>
                     </div> */}
-                        <AutoComplete item={this.state.mandarProductos} inputName={"ID o Nombre del producto"} data={ {input:1, retornoProducto:this.retornoProducto.bind(this)} }/>
+                    <AutoComplete item={this.state.mandarProductos} inputName={"ID o Nombre del producto"} data={{ input: 1, retornoProducto: this.retornoProducto.bind(this) }} />
                 </form>
+                <div className="footer">
                 <button className="btn" onClick={() => this.agregar()}>Agregar</button>
 
-                <div className="table" >
+                </div>
+
+                <div className="tableVentasCompras" >
                     <table className="tablaproducttes">
                         <thead>
                             <tr>
@@ -542,7 +616,7 @@ export default class SellAdd extends Component {
                                     <label className="a">Total: $</label>
                                     <label className="b">{this.state.total}</label>
                                     <label className="a">Cambio: $</label>
-                                    <label className="b">{(Math.abs( this.state.cambio))} No se como indicar cambio si falta dinero</label>
+                                    <label className="b">{this.state.cambio}</label>
                                 </div>
                                 <form>
                                     <div className="group">
@@ -552,7 +626,9 @@ export default class SellAdd extends Component {
                                         <label >A pagar</label>
                                     </div>
                                 </form>
+                                <div className="footer">
                                 <button className="btn" onClick={() => this.finalizar()}>Finalizar</button>
+                                    </div>
                             </div> : null
                     }
                 </div>

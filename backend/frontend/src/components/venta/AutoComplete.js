@@ -32,7 +32,6 @@ export default class AutoComplete extends React.Component {
     suggestionsSelected(value) {
         const id = value.id;
         const nombre = value.nombre;
-        console.log(id,nombre)
         if (this.props.data.input === 0) {
             this.setState(() => ({
                 text: nombre,
