@@ -296,7 +296,6 @@ export default class SellAdd extends Component {
                 stock: aux.stock,
                 presentacion: aux.presentacion,
                 cantidad: aux.cantidad - 1,
-                cliente: this.state.cliente,
             }
             this.setState({
                 together: listaProductos,
@@ -518,6 +517,7 @@ export default class SellAdd extends Component {
 
     retornoCliente(r) {
         this.setState({ nombre_C: r })
+        this.buscarCliente(r);
     }
 
     retornoProducto(r) {
