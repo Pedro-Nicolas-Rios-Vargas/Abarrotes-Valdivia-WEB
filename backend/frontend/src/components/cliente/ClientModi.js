@@ -132,8 +132,8 @@ export default class ClientModi extends Component {
                     }),
                 };
                 fetch("/cuenta/add-movement", movementClient)
-                .then((response) => response.json())
-                .then((data) => console.log(data))
+                    .then((response) => response.json())
+                    .then((data) => console.log(data))
             }
             const requiestClient = {
                 method: 'PUT',
@@ -148,13 +148,10 @@ export default class ClientModi extends Component {
                 .then((response) => {
                     this.getClientData();
                 });
-            {
-                this.setState({
-                    show: false,
-                    buscador: "",
-                });
-            }
-
+            this.setState({
+                show: false,
+                buscador: "",
+            });
             alert("Datos del cliente modificados con exito")
         } else {
             alert("No se puede agregar un cliente sin nombre o sin saldo")

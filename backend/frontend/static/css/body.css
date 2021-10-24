@@ -577,6 +577,42 @@ Bloque de estilos de las tablas
              box-shadow: 0 6px 6px -6px #0E1119;
  }
 
+ .tableVentasCompras {
+  width: 100%;
+  margin: 30px auto;
+  display: flex;
+  padding: 0px 0px 0px 0px;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.tableVentasCompras td, .tableVentasCompras tr {
+    padding: 0;
+    color: #11101D;
+    text-align: center;
+    font-size: 18px;
+}
+
+.tableVentasCompras tr:nth-child(odd) {
+    background-color: #E4E9F7;
+}
+
+.tableVentasCompras tr:nth-child(even) {
+    background-color: #e4e9f7;
+}
+
+.tableVentasCompras th {
+    background-color: #7B849D;
+    color: #11101d
+}
+
+.tableVentasCompras tr:hover {
+    background-color: #748a9e ;
+ -webkit-box-shadow: 0 6px 6px -6px #0E1119;
+             box-shadow: 0 6px 6px -6px #0E1119;
+ }
+
  .a {
    position: inherit;
   }
