@@ -57,5 +57,3 @@ def update(request, pk=None):
             return Response(client_serializer.data, status=status.HTTP_200_OK)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     return Response({'ERROR':'No existe ningun cliente con esos datos'}, status=status.HTTP_404_NOT_FOUND)
-
-    

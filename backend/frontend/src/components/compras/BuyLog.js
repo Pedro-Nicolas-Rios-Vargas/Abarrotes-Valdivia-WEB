@@ -8,7 +8,7 @@ export default class ProvGet extends Component {
             recordData: [],
             logData: [],
             dataProduct: [],
-            dataCliente: [],
+            dataProv: [],
             tablaDetallada: [],
             existencia: 0,
             sellPrice: 0.0,
@@ -37,7 +37,7 @@ export default class ProvGet extends Component {
     }
 
     async getSellLogData() {
-        await fetch('/sellLog/get-sellLog')
+        await fetch('/buyLog/get-buyLog')
             .then(response => response.json())
             .then((data) => {
                 this.setState({
@@ -46,17 +46,17 @@ export default class ProvGet extends Component {
             });
     }
     async getClientData() {
-        await fetch('/cliente/get-client')
+        await fetch('/proveedor/get-proveedor')
         .then(response => response.json())
         .then((data) => {
             this.setState({
-                dataCliente: data
+                dataProv: data
             });
         });
     }
 
     async getSellRecordData() {
-        await fetch('/sellRecord/get-sellRecord')
+        await fetch('/buyRecord/get-buyRecord')
             .then(response => response.json())
             .then((data) => {
                 this.setState({
@@ -69,7 +69,7 @@ export default class ProvGet extends Component {
         this.setState({show: false,})
     }
 
-    async openModal(sellId){
+    async openModal(buyId){
         const logData = this.state.logData;
         let encontrado = false;
         const dataproduct = this.state.dataProduct;
@@ -77,9 +77,7 @@ export default class ProvGet extends Component {
         let aux = [];
         for (let i = 0; i < logData.length; i++) {
             const element = logData[i];
-            console.log(element.sellId, sellId)
-            if (element.sellId === sellId) {
-                console.log(element)
+            if (element.buyId === buyId) {
                 const product = dataproduct.find(dataproduct => dataproduct.prodId === element.prodId);
                     aux = {
                         prodId: product.prodId,
@@ -114,25 +112,25 @@ export default class ProvGet extends Component {
     render() {
         const sellRecord = this.state.recordData;
         const rowsData = [];
-        const cliente = this.state.dataCliente;
+        const cliente = this.state.dataProv;
         if(cliente.length > 0){
             for (let i = 0; i < sellRecord.length; i++) {
                 const element = sellRecord[i];
-                const client = cliente.find(cliente => cliente.clientId === element.clientId);
+                const client = cliente.find(cliente => cliente.provrId === element.provrId);
                 const aux = {
-                    sellId: element.sellId,
-                    clientName: client.nombre_C,
-                    sellDate: element.sellDate,
+                    buyId: element.buyId,
+                    provName: client.provName,
+                    buyDate: element.buyDate,
                     total: element.total,
                 };
                 rowsData.push(aux);
             }
         }
         const rows = rowsData.map((element) =>
-            <tr key={element.sellId}>
-                <td onClick={() => this.openModal(element.sellId)}>{element.clientName}</td>
-                <td onClick={() => this.openModal(element.sellId)}>{element.sellDate}</td>
-                <td onClick={() => this.openModal(element.sellId)}>{element.total}</td>
+            <tr key={element.buyId}>
+                <td onClick={() => this.openModal(element.buyId)}>{element.provName}</td>
+                <td onClick={() => this.openModal(element.buyId)}>{element.buyDate}</td>
+                <td onClick={() => this.openModal(element.buyId)}>{element.total}</td>
             </tr>
         );
         const detalles = this.state.tablaDetallada;
@@ -145,7 +143,7 @@ export default class ProvGet extends Component {
         );
         return (
             <div className="container">
-                <h2>Compras
+                <h2>Registro de Venta
                 </h2>
                 <form>
                     <div className="group">
