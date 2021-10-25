@@ -6,6 +6,7 @@ export default class SellAdd extends Component {
         super(props);
 
         this.state = {
+            reset: "",
             data: [],
             show: false,
             prodId: "",
@@ -56,6 +57,9 @@ export default class SellAdd extends Component {
         this.finalizar = this.finalizar.bind(this);
         this.actualizarCliente = this.actualizarCliente.bind(this);
         this.movement = this.movement.bind(this);
+        this.baseState = this.baseState.bind(this);
+        this.clearInput1 = this.clearInput1.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
 
 
@@ -235,6 +239,22 @@ export default class SellAdd extends Component {
         }
     }
 
+    baseState() {
+        this.setState(({
+            together: [],
+            total: 0,
+            cambio: 0,
+            cliente: {},
+            showFeriaYmas: false,
+            aPagar: 0,
+            nombre_C: "",
+            prodName: "",
+            reset: "",
+        }));
+        this.clearInput1();
+        this.clearInput();
+    }
+
     buscarCliente(nombre_C) {
         const nuevoCliente = this.state.dataCliente.find(cliente => cliente.nombre_C === nombre_C);
         if (nuevoCliente !== undefined) {
@@ -287,7 +307,6 @@ export default class SellAdd extends Component {
         const posicion = listaProductos.findIndex(getIndex);
         const aux = listaProductos[posicion];
         if (listaProductos[posicion].cantidad !== 0) {
-            //console.log(listaProductos[posicion].cantidad)
             listaProductos[posicion] = {
                 prodId: aux.prodId,
                 prodName: aux.prodName,
@@ -296,7 +315,6 @@ export default class SellAdd extends Component {
                 stock: aux.stock,
                 presentacion: aux.presentacion,
                 cantidad: aux.cantidad - 1,
-                cliente: this.state.cliente,
             }
             this.setState({
                 together: listaProductos,
@@ -351,7 +369,6 @@ export default class SellAdd extends Component {
     }
 
     async actualizarCliente(cliente, total) {
-        console.log("Lo que recibe el metodo:", total)
         const requiestClient = {
             method: 'PUT',
             headers: { "Content-Type": "application/json" },
@@ -370,7 +387,6 @@ export default class SellAdd extends Component {
 
         function pushSellLog(together) {
             return new Promise((resolve, reject) => {
-                //console.log("sellLog")
                 fetch('/sellLog/get-last')
                     .then(response => response.json())
                     .then((data) => {
@@ -389,7 +405,6 @@ export default class SellAdd extends Component {
                                 .then((response) => response.json())
                                 .then((data) => console.log(data));
 
-                            console.log("Producto a actualizar existencia: ", element)
                             const producto = {
                                 method: 'PUT',
                                 headers: { "Content-Type": "application/json" },
@@ -414,7 +429,6 @@ export default class SellAdd extends Component {
             await fetch("/sellRecord/add-sellRecord", sellRecord)
                 .then((response) => response.json())
                 .then((data) => console.log(data));
-            //console.log("Termino de ejecutarse mandarDB")
         }
 
         async function asyncAll(cliente, total, together) {
@@ -448,6 +462,7 @@ export default class SellAdd extends Component {
 
         }
 
+
         const together = this.state.together;
         let continuar = true;
         const data = this.state.data;
@@ -465,6 +480,7 @@ export default class SellAdd extends Component {
         if (continuar) {
             if (this.state.cambio === 0) {
                 asyncAll(this.state.cliente, this.state.total, together);
+                this.baseState();
                 //En este caso es no se agrega nada a movement y no hay cambio, es una compra normal
             } else if (this.state.cambio < 0) {
                 if (this.state.cliente.balance > 0) {
@@ -472,6 +488,7 @@ export default class SellAdd extends Component {
                     this.movement(this.state.cliente, this.state.cambio);
                     this.actualizarCliente(this.state.cliente, this.state.cliente.balance - Math.abs(this.state.cambio));
                     asyncAll(this.state.cliente, this.state.total, together);
+                    this.baseState();
                     //Aqui mandar a llamar al emtodo para hacer el movement, restando el saldo del cliente y restarle al cliente el saldo 
                     //que se uso para pagar por lo que en movement saldra que se resto el cambio es decir this.state.cambio
                     //y el saldo del cliente actual sera el console.log de arriba xd
@@ -484,6 +501,7 @@ export default class SellAdd extends Component {
                         this.movement(this.state.cliente, this.state.cambio);
                         this.actualizarCliente(this.state.cliente, this.state.cliente.balance - Math.abs(this.state.cambio));
                         asyncAll(this.state.cliente, this.state.total, together);
+                        this.baseState();
 
                         //poner aqui metodo o instrucciones para poner en la forma base ventas
 
@@ -500,28 +518,42 @@ export default class SellAdd extends Component {
                     this.movement(this.state.cliente, parseFloat(this.state.cambio));
                     this.actualizarCliente(this.state.cliente, parseFloat(parseFloat(this.state.cliente.balance) + parseFloat(this.state.cambio)).toFixed(2));
                     asyncAll(this.state.cliente, this.state.total, together);
+                    this.baseState();
                     //console.log("Hacer la llamada al metodo para actualizar movement, copear de clienteModi y terminar la venta con los metodos culeros asincronos");
                     //Este caso no creo que pase nunca, pero por si se da el caso, hay que poner en el saldo del movement el cambio positivo y sumar el saldo positivo 
                     //Al saldo actual del cliente, por lo que si el cliente tiene saldo negativo este se convertira en positivo o en negativo si el cambio no es lo
                     //suficiente para que el saldo sea positivo xd
                 } else {
                     alert("El cambio es: " + (this.state.cambio));
-                    //asyncAll(this.state.cliente, this.state.total, together);
+                    asyncAll(this.state.cliente, this.state.total, together);
+                    this.baseState();
                     //Aqui llamaar a la venta normal pero sin ningun cambio en el movement del cliente
                 }
-            }
-            //console.log(this.state.cliente)
-
+            }   
         }
-
+        
     }
 
     retornoCliente(r) {
-        this.setState({ nombre_C: r })
+        this.setState({ 
+            nombre_C: r,
+         });
+        this.buscarCliente(r);
     }
 
     retornoProducto(r) {
-        this.setState({ prodId: r });
+        this.setState({ 
+            prodId: r.id,
+            prodName: r.text, 
+        });
+    }
+
+    clearInput1(){
+        this.input1.clear();
+    }
+
+    clearInput(){
+        this.input.clear();
     }
 
     render() {
@@ -571,21 +603,9 @@ export default class SellAdd extends Component {
             <div className="container">
                 <h2>Ventas</h2>
                 <form>
-                    {/* ['Pepe','Pene', 'Pedro', 'pixiv'] */}
-                    <AutoComplete item={this.state.mandarCliente} inputName={"Nombre del Cliente"} data={{ input: 0, retornoCliente: this.retornoCliente.bind(this) }} />
-                    {/* <div className="group">
-                        <input type="text" required onChange={e => this.getprodId(e.target.value)} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label>ID o Nombre del producto</label>
-                    </div> */}
-                    {/* <div className="group">
-                        <input className="diabled" type="text" required onChange={e => this.getnombre_C(e.target.value)} disabled={this.state.inputCliente} />
-                        <span className="highlight"></span>
-                        <span className="bar"></span>
-                        <label className="disable">Nombre del cliente</label>
-                    </div> */}
-                    <AutoComplete item={this.state.mandarProductos} inputName={"ID o Nombre del producto"} data={{ input: 1, retornoProducto: this.retornoProducto.bind(this) }} />
+                    <AutoComplete ref={input1 => this.input1 = input1} item={this.state.mandarCliente} inputName={"Nombre del Cliente"}  data={{ input: 0, retornoCliente: this.retornoCliente.bind(this) }} />
+
+                    <AutoComplete ref={input => this.input = input} item={this.state.mandarProductos} inputName={"ID o Nombre del producto"} data={{ input: 1, retornoProducto: this.retornoProducto.bind(this) }} />
                 </form>
                 <div className="footer">
                 <button className="btn" onClick={() => this.agregar()}>Agregar</button>

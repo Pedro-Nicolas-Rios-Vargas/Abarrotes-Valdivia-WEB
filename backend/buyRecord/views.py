@@ -18,6 +18,7 @@ class CreateBuyRecordView(APIView):
 
     def post(self, request, pk=None):
         serializer = self.serializer_class(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             buyDate = serializer.data.get('buyDate')
             total = serializer.data.get('total')
