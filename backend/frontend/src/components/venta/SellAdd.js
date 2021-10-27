@@ -56,6 +56,7 @@ export default class SellAdd extends Component {
         this.finalizar = this.finalizar.bind(this);
         this.actualizarCliente = this.actualizarCliente.bind(this);
         this.movement = this.movement.bind(this);
+        this.initSocketServer = this.initSocketServer.bind(this);
     }
 
 
@@ -154,9 +155,31 @@ export default class SellAdd extends Component {
             });
     }
 
+    initSocketServer() {
+        let request = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                mensaje: "Hoal",
+            }),
+        };
+        fetch('/socket/barcode-request', request).
+            then((response) => {
+                return response.json();
+            }).
+            then((data) => {
+                this.setState({
+                    prodId: data.Barcode
+                });
+                console.log('barcode Venta:', this.state.prodId);
+                this.agregar();
+            });
+    }
+
     componentDidMount() {
         this.getProductData();
         this.getClientData();
+        this.initSocketServer();
     }
 
 
@@ -273,6 +296,7 @@ export default class SellAdd extends Component {
                 showFeriaYmas: true,
                 inputCliente: true,
             });
+            this.initSocketServer();
         }
     }
 

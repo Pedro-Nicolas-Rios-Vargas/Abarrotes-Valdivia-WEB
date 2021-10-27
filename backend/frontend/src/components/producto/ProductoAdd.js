@@ -21,9 +21,11 @@ export default class ProductoAdd extends Component {
         this.getNameProducto = this.getNameProducto.bind(this);
         this.getexistencia = this.getexistencia.bind(this);
         this.getstock = this.getstock.bind(this);
-        this.getpresentacion = this.getpresentacion.bind(this)
-        this.getsellPrice = this.getsellPrice.bind(this)
+        this.getpresentacion = this.getpresentacion.bind(this);
+        this.getsellPrice = this.getsellPrice.bind(this);
         this.getprodId = this.getprodId.bind(this);
+        this.initSocketServer = this.initSocketServer.bind(this);
+        this.agregar = this.agregar.bind(this);
     }
 
     getprodId(e) {
@@ -127,6 +129,35 @@ export default class ProductoAdd extends Component {
         }
     }
 
+    agregar() {
+        this.AddClient();
+        this.initSocketServer();
+    }
+
+    initSocketServer() {
+        let request = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                mensaje: "Hoal",
+            }),
+        };
+        fetch('/socket/barcode-request', request).
+            then((response) => {
+                return response.json();
+            }).
+            then((data) => {
+                this.setState({
+                    prodId: data.Barcode
+                });
+                console.log('barcode:', this.state.prodId);
+            });
+    }
+
+    componentDidMount() {
+        this.initSocketServer();
+    }
+
     render() {
         return (
             <div className="container">
@@ -182,7 +213,7 @@ export default class ProductoAdd extends Component {
                     </div>
                 </form>
                 <div className="footer">
-                    <button className="btn" onClick={() => this.AddClient()} >Agregar</button>
+                    <button className="btn" onClick={ () => this.agregar() } >Agregar</button>
                 </div>
             </div>
         );

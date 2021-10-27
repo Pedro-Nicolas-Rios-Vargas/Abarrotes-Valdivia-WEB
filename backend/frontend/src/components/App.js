@@ -24,71 +24,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link,
-    Redirect,
-    useLocation,
 } from "react-router-dom";
-
-function Switches(props) {
-    return (
-        <Switch>
-            {/* <Route path="" exact component={Home} /> */}
-            <Route exact path="/" component={Login} />
-            <Route path="/cliente/add" component={ClienteAdd} />
-            <Route path="/cliente/consultar" component={ClienteConsult} />
-            <Route path="/cliente/modificar" component={ClientModi} />
-            <Route path="/cliente/eliminar" component={ClienteDelete} />
-            <Route path="/proveedor/agregar" component={ProvAdd} />
-            <Route path="/proveedor/consultar" component={ProvConsult} />
-            <Route path="/proveedor/modificar" component={ProvModi} />
-            <Route path="/proveedor/eliminar" component={ProvDelete} />
-            <Route path="/producto/agregar" component={ProductoAdd} />
-            <Route path="/producto/consultar" component={ProductoConsult} />
-            <Route path="/producto/modificar" component={ProductoModi} />
-            <Route path="/producto/eliminar" component={ProductoDelete} />
-            <Route path="/venta/agregar" component={SellAdd} />
-            <Route path="/venta/consultar" component={SellLog} />
-            <Route path="/compras/agregar" component={BuyAdd} />
-            <Route path="/compras/consultar" component={BuyLog} />
-        </Switch>
-    );
-}
-
-//function Login() {
-//    return (
-//        <div className="container login">
-//            <h2>Login
-//            </h2>
-//            <form>
-//                <div className="group">
-//                    <input className= "loginInput" type="text" required onChange={e => this.getNameProv(e)} />
-//                    <span className="highlightLogin"></span>
-//                    <span className="barLogin"></span>
-//                    <label>Nombre</label>
-//                </div>
-//
-//                <div className="group">
-//                    <input className= "loginInput" type="text" required onChange={e => this.getprovPhoneNum(e)} />
-//                    <span className="highlightLogin"></span>
-//                    <span className="barLogin"></span>
-//                    <label>Contraseña</label>
-//                </div>
-//            </form>
-//            <div className="footer">
-//                <button className="btn"><a className="abtn" href="/home">Confirmar</a></button>
-//            </div>
-//        </div>
-//    );
-//}
-
-function noMatch() {
-    let path = useLocation();
-    return (
-        <div>
-            <h3>No existe la ruta <code>{path.pathname}</code></h3>
-        </div>
-    );
-}
 
 export default class App extends Component {
     constructor(props) {
