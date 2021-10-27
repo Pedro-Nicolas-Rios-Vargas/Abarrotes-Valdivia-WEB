@@ -165,7 +165,7 @@ export default class SellAdd extends Component {
                     prodId: data.Barcode
                 });
                 console.log('barcode:', this.state.prodId);
-                this.agregar(this.state.nombre_C, this.state.prodId)
+                this.agregar()
             });
     }
 
