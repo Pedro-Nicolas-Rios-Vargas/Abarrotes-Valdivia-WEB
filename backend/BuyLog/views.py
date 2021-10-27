@@ -1,3 +1,4 @@
+from buyRecord.serializers import BuyRecordSerializer
 from buyRecord.models import BuyRecord
 from BuyLog.serializers import BuyLogSerializer
 from BuyLog.models import BuyLog
@@ -15,6 +16,13 @@ class BuyLogView(generics.ListAPIView):
     queryset = BuyLog.objects.all()
     serializer_class = BuyLogSerializer
 
+
+@api_view(['GET'])
+def getLatest(request, pk=None):
+    buyRecord = BuyRecord.objects.last()
+    if request.method == 'GET':
+        buyLogSerializer = BuyRecordSerializer(buyRecord)
+        return Response(buyLogSerializer.data, status=status.HTTP_200_OK)
 class CreateBuyLogView(APIView):
     serializer_class = BuyLogSerializer
 

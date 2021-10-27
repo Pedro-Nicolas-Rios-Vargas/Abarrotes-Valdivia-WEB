@@ -288,7 +288,7 @@ export default class ProductoModi extends Component {
 
                                             <div className="group">
                                                 {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
-                                                <input id='presentacion' list="tipo-presentacion" autocomplete="off" value={this.state.presentacion}
+                                                <input id='presentacion' list="tipo-presentacion" autoComplete="off" value={this.state.presentacion}
                                                     onChange={e => this.getpresentacion(e.target.value)}
                                                     type="text" required />
                                                 <datalist id="tipo-presentacion">

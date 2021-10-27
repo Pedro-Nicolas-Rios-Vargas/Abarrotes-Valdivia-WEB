@@ -60,6 +60,7 @@ def update(request, pk=None):
             return Response(client_serializer.data, status=status.HTTP_200_OK)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     return Response({'ERROR':'No existe ningun cliente con esos datos'}, status=status.HTTP_404_NOT_FOUND)
+<<<<<<< HEAD
 
 @api_view(['GET'])
 def backUp(request):
@@ -116,3 +117,5 @@ def restore(request):
     os.system(command)
     print("Restauracion completa")
     return Response({'Restore': "Complete restore"}, status=status.HTTP_200_OK)
+=======
+>>>>>>> 4bfbdd6335539edb1fcf08b67f9ab81bd651fc33
