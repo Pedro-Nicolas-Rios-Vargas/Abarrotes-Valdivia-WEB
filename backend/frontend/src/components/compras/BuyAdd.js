@@ -1,10 +1,13 @@
 import React, { Component, useState } from 'react';
 import AutoComplete from './AutoComplete';
+import makeCancelable from '../../utils/callBarcodeSocket';
+
 export default class SellAdd extends Component {
 
     constructor(props) {
         super(props);
 
+        this.fetchSocketData = null;
         this.state = {
             reset: "",
             data: [],
@@ -33,6 +36,7 @@ export default class SellAdd extends Component {
             sellDate: "",
             mandarProv: [],
             mandarProductos: [],
+            waitingBarCode: false,
         };
 
         this.getProductData = this.getProductData.bind(this);
@@ -56,6 +60,7 @@ export default class SellAdd extends Component {
         this.baseState = this.baseState.bind(this);
         this.clearInput1 = this.clearInput1.bind(this);
         this.clearInput = this.clearInput.bind(this);
+        this.barcodeHandler = this.barcodeHandler.bind(this);
     }
 
 
@@ -149,23 +154,39 @@ export default class SellAdd extends Component {
     }
 
     initSocketServer() {
-        let request = {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                mensaje: "Hoal",
-            }),
-        };
-        fetch('/socket/barcode-request', request).
-            then((response) => {
+        if (!this.state.waitingBarCode) {
+            console.log('Ejecutando fetch...');
+            this.fetchSocketData = makeCancelable();
+            this.setState({
+                waitingBarCode: true
+            });
+            this.barcodeHandler();
+        }
+    }
+
+    barcodeHandler() {
+        let fetchedData = this.fetchSocketData.promise;
+        fetchedData
+            .then((response) => {
                 return response.json();
-            }).
-            then((data) => {
-                this.setState({
-                    prodId: data.Barcode
-                });
-                console.log('barcode:', this.state.prodId);
-                this.agregar()
+            })
+            .then((data) => {
+                console.log('Fetch terminado.');
+                if (data.Barcode !== 'No barcode') {
+                    this.setState({
+                        prodId: data.Barcode,
+                        waitingBarCode: false,
+                    });
+                    console.log('barcode:', this.state.prodId);
+                    this.agregar();
+                } else {
+                    this.setState({
+                        waitingBarCode: false,
+                    })
+                }
+            })
+            .catch((err) => {
+                //console.error(err);
             });
     }
 
@@ -173,6 +194,14 @@ export default class SellAdd extends Component {
         this.getProductData();
         this.initSocketServer();
         this.getProvData();
+    }
+
+    componentDidUpdate() {
+        this.initSocketServer();
+    }
+
+    componentWillUnmount() {
+        this.fetchSocketData.cancel();
     }
 
 

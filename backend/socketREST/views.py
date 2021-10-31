@@ -3,8 +3,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from .serializers import SocketSerializer
 from BCScript.server import ServerSocket
-import socket
-import codecs
 
 
 # Create your views here.
@@ -17,14 +15,12 @@ class ServerSocketView(APIView):
         self.runServer = True
 
     def post(self, request, format=None):
-        print("\n\nHoal\n\n")
         dataEntry = self.serializer_class(data=request.data)
-
-        print(f'\n\ndataEntry: { dataEntry }\n\n')
 
         if dataEntry.is_valid():
             barcode = self.serverInstance.initServer()
-            if (barcode):
+            print(f'\n\nBarcode: { barcode }\n\n')
+            if (barcode != ''):
                 return Response(
                         {'Barcode': barcode},
                         status=status.HTTP_200_OK
@@ -32,5 +28,5 @@ class ServerSocketView(APIView):
             else:
                 return Response(
                         {'Barcode': 'No barcode'},
-                        status=status.HTTP_408_REQUEST_TIMEOUT
+                        status=status.HTTP_406_NOT_ACCEPTABLE
                         )

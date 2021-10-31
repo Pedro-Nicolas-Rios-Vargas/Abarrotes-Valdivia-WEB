@@ -60,18 +60,18 @@ def update(request, pk=None):
             return Response(client_serializer.data, status=status.HTTP_200_OK)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     return Response({'ERROR':'No existe ningun cliente con esos datos'}, status=status.HTTP_404_NOT_FOUND)
-<<<<<<< HEAD
+
 
 @api_view(['GET'])
 def backUp(request):
-    DB_HOST = 'localhost' 
+    DB_HOST = 'localhost'
     DB_USER = 'root'
     DB_USER_PASSWORD = 'Mendozarexy15'
     DB_NAME = 'abarrotesvaldiviaweb'
 
     if (platform.system() == "Linux"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps"
-    elif (platform.system() == "Windows"): 
+    elif (platform.system() == "Windows"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps"
     else:
         BACKUP_PATH = os.getcwd() + "/BackUps"
@@ -97,6 +97,7 @@ def backUp(request):
 
     return Response({'BackUp': "Your backups have been created in '" + TODAYBACKUPPATH + '/' + DATETIME + '.bak' + "' directory"}, status=status.HTTP_200_OK) 
 
+
 @api_view(['GET', 'POST'])
 def restore(request):
     DB_USER = 'root'
@@ -106,7 +107,7 @@ def restore(request):
     print(request)
     if (platform.system() == "Linux"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps"
-    elif (platform.system() == "Windows"): 
+    elif (platform.system() == "Windows"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps" + "\\" + request.data.get('fileName')
     else:
         BACKUP_PATH = os.getcwd() + "/BackUps"
@@ -117,5 +118,3 @@ def restore(request):
     os.system(command)
     print("Restauracion completa")
     return Response({'Restore': "Complete restore"}, status=status.HTTP_200_OK)
-=======
->>>>>>> 4bfbdd6335539edb1fcf08b67f9ab81bd651fc33

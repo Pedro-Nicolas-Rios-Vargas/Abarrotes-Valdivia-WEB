@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import makeCancelable from '../../utils/callBarcodeSocket'
 export default class ProductoAdd extends Component {
     defaultName = ""
     defaultSecondName = ""
@@ -8,6 +9,7 @@ export default class ProductoAdd extends Component {
     defaultId = ""
     constructor(props) {
         super(props);
+        this.fetchSocketData = null;
         this.state = {
             prodName: this.defaultName,
             existencia: this.defaultSecondName,
@@ -15,6 +17,7 @@ export default class ProductoAdd extends Component {
             presentacion: this.defaultpresentacion,
             sellPrice: this.defualtsellPrice,
             prodId: this.defaultId,
+            waitingBarCode: false,
         }
 
         this.AddClient = this.AddClient.bind(this);
@@ -25,7 +28,6 @@ export default class ProductoAdd extends Component {
         this.getsellPrice = this.getsellPrice.bind(this);
         this.getprodId = this.getprodId.bind(this);
         this.initSocketServer = this.initSocketServer.bind(this);
-        this.agregar = this.agregar.bind(this);
     }
 
     getprodId(e) {
@@ -96,7 +98,6 @@ export default class ProductoAdd extends Component {
     }
 
     AddClient() {
-        //console.log(this)
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
             this.state.presentacion !== "" && this.state.sellPrice !== "" &&
             this.state.stock !== "" && this.state.prodId !== "") {
@@ -129,33 +130,52 @@ export default class ProductoAdd extends Component {
         }
     }
 
-    agregar() {
-        this.AddClient();
-        this.initSocketServer();
+    initSocketServer() {
+        if (!this.state.waitingBarCode) {
+            console.log('Ejecutando fetch...');
+            this.fetchSocketData = makeCancelable();
+            this.setState({
+                waitingBarCode: true
+            });
+            this.barcodeHandler();
+        }
     }
 
-    initSocketServer() {
-        let request = {
-            method: 'POST',
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                mensaje: "Hoal",
-            }),
-        };
-        fetch('/socket/barcode-request', request).
-            then((response) => {
+    barcodeHandler() {
+        let fetchedData = this.fetchSocketData.promise;
+        fetchedData
+            .then((response) => {
                 return response.json();
-            }).
-            then((data) => {
-                this.setState({
-                    prodId: data.Barcode
-                });
-                console.log('barcode:', this.state.prodId);
+            })
+            .then((data) => {
+                console.log('Fetch terminado.');
+                if (data.Barcode !== 'No barcode') {
+                    this.setState({
+                        prodId: data.Barcode,
+                        waitingBarCode: false,
+                    });
+                    console.log('barcode:', this.state.prodId);
+                } else {
+                    this.setState({
+                        waitingBarCode: false,
+                    })
+                }
+            })
+            .catch((err) => {
+                //console.error(err);
             });
     }
 
     componentDidMount() {
         this.initSocketServer();
+    }
+
+    componentDidUpdate() {
+        this.initSocketServer();
+    }
+
+    componentWillUnmount() {
+        this.fetchSocketData.cancel();
     }
 
     render() {
@@ -195,7 +215,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
-                        <input type="text" list="tipo-presentacion" autocomplete="off" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
+                        <input type="text" list="tipo-presentacion" autoComplete="off" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
                         <datalist id="tipo-presentacion">
                             <option value="Unidad"></option>
                             <option value="Kilogramo"></option>
@@ -213,7 +233,7 @@ export default class ProductoAdd extends Component {
                     </div>
                 </form>
                 <div className="footer">
-                    <button className="btn" onClick={ () => this.agregar() } >Agregar</button>
+                    <button className="btn" onClick={ () => this.AddClient() } >Agregar</button>
                 </div>
             </div>
         );
