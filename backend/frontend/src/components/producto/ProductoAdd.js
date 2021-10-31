@@ -39,7 +39,7 @@ export default class ProductoAdd extends Component {
     }
 
     getNameProducto(e) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,64}$/.test(e.target.value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
             this.setState({
                 prodName: e.target.value,
             });

@@ -16,7 +16,7 @@ export default class ClienteAdd extends Component {
     }
 
     getNameProv(e) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,32}$/.test(e.target.value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
             this.setState({
                 provName: e.target.value,
             });

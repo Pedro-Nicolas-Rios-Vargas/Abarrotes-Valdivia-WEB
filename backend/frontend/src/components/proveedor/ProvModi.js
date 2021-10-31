@@ -116,18 +116,23 @@ export default class ProvModi extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.provName.toLowerCase();
-            if (str.includes(nombre)) {
-                auxData.push(element);    
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
+            this.setState({ buscador: e.target.value });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.provName.toLowerCase();
+                if (str.includes(nombre)) {
+                    auxData.push(element);    
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ buscador: this.state.buscador });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
     render() {

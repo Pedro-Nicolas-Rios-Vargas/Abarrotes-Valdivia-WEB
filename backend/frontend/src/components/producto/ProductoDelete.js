@@ -143,19 +143,26 @@ export default class ProductoDelete extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.prodName.toLowerCase();
-            const code = element.prodId.toLowerCase();
-            if (str.includes(nombre) || code.includes(nombre)) {
-                auxData.push(element);
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
+            this.setState({
+                buscador: e.target.value,
+            });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.prodName.toLowerCase();
+                const code = element.prodId.toLowerCase();
+                if (str.includes(nombre) || code.includes(nombre)) {
+                    auxData.push(element);
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ buscador: this.state.buscador });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
     render() {

@@ -350,6 +350,9 @@ input {
   border:none;
   border-bottom:1px solid #ffffff;
 }
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
 .loginInput {
   width:460px;
 }
@@ -384,6 +387,12 @@ input:disabled ~ label 		{
   color:#ff0101;
 }
 
+.labelError {
+  color: red;
+  top: 47px;
+  position: absolute;
+  font-size: 15px;
+}
 
 /* BOTTOM BARS ================================= */
 .bar{ 
@@ -518,7 +527,6 @@ Bloque de estilos de las tablas
 .table td, .table tr {
     padding: 0;
     color: #11101D;
-    text-align: center;
     font-size: 18px;
 }
 
@@ -541,6 +549,23 @@ Bloque de estilos de las tablas
              box-shadow: 0 6px 6px -6px #0E1119;
  }
 
+.head1 {
+  width: 15vh;
+}
+.head2 {
+  width: 2vh;
+}
+.head3 {
+  width: 10vh;
+}
+.child1 {
+  text-align: right;
+}
+
+.child2 {
+  text-align: center;
+}
+
  .tableVentasCompras {
   width: 100%;
   margin: 30px auto;
@@ -554,7 +579,6 @@ Bloque de estilos de las tablas
 .tableVentasCompras td, .tableVentasCompras tr {
     padding: 0;
     color: #11101D;
-    text-align: center;
     font-size: 18px;
 }
 
@@ -587,6 +611,7 @@ Bloque de estilos de las tablas
 
  .divEspaciado {
    padding-bottom: 30px;
+   text-align: center;
  }
 
  /* Modal */

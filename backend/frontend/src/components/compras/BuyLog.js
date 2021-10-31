@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import Modal from './ModalBuy'
 
-export default class ProvGet extends Component {
+export default class Buylog extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -15,6 +15,9 @@ export default class ProvGet extends Component {
             stock: 0,
             presentacion: "",
             show: false,
+            fecha: "",
+            dataBuscar: [],
+            provName: "",
         };
         this.getSellLogData = this.getSellLogData.bind(this);
         this.getSellRecordData = this.getSellRecordData.bind(this);
@@ -23,6 +26,8 @@ export default class ProvGet extends Component {
         this.componentDidMount =  this.componentDidMount.bind(this);
         this.setShow = this.setShow.bind(this);
         this.openModal = this.openModal.bind(this);
+        this.buscar = this.buscar.bind(this);
+        this.buscarFecha = this.buscarFecha.bind(this);
     }
     
     
@@ -101,64 +106,91 @@ export default class ProvGet extends Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.getSellLogData();
         this.getDataProduct();
         this.getSellRecordData();
         this.getClientData();
     }
+    
+    //Metodo para buscar por nombre de proveedor
+    buscar(e) {
+        this.setState({
+            provName: e.target.value
+        });
+    }
+
+    //metodo para buscar por fecha  
+    buscarFecha(e) {
+        this.setState({
+            fecha: e.target.value
+        });
+    }
 
 
     render() {
         const sellRecord = this.state.recordData;
-        const rowsData = [];
+        const dataBuscar = [];
         const cliente = this.state.dataProv;
-        if(cliente.length > 0){
+        if (cliente.length > 0) {
             for (let i = 0; i < sellRecord.length; i++) {
                 const element = sellRecord[i];
                 const client = cliente.find(cliente => cliente.provrId === element.provrId);
-                const aux = {
-                    buyId: element.buyId,
-                    provName: client.provName,
-                    buyDate: element.buyDate,
-                    total: element.total,
-                };
-                rowsData.push(aux);
+                if (client.provName.toLocaleLowerCase().toString().includes(this.state.provName.toLocaleLowerCase().toString())) {
+                    if (element.buyDate.includes(this.state.fecha)) {
+                        const aux = {
+                            key : i,
+                            buyId: element.buyId,
+                            provName: client.provName,
+                            buyDate: element.buyDate,
+                            total: element.total,
+                        };
+                        dataBuscar.push(aux);
+                    } 
+                } 
             }
         }
-        const rows = rowsData.map((element) =>
-            <tr key={element.buyId}>
-                <td onClick={() => this.openModal(element.buyId)}>{element.provName}</td>
-                <td onClick={() => this.openModal(element.buyId)}>{element.buyDate}</td>
-                <td onClick={() => this.openModal(element.buyId)}>{element.total}</td>
+        const rows = dataBuscar.map((element) =>
+            <tr key={element.key}>
+                <td className="child2" onClick={() => this.openModal(element.buyId)}>{element.provName}</td>
+                <td className="child2" onClick={() => this.openModal(element.buyId)}>{element.buyDate}</td>
+                <td className="child1" onClick={() => this.openModal(element.buyId)}>${element.total}</td>
             </tr>
         );
         const detalles = this.state.tablaDetallada;
         const rowsDetalles = detalles.map((element) =>
             <tr key={element.prodId}>
-                <td>{element.prodName}</td>
-                <td>{element.cantidad}</td>
-                <td>{element.sellPrice * element.cantidad}</td>
+                <td className="child2">{element.prodName}</td>
+                <td className="child2">{element.cantidad}</td>
+                <td className="child1" >${element.sellPrice * element.cantidad}</td>
             </tr>
         );
         return (
             <div className="container">
-                <h2>Registro de Venta
+                <h2>Registro de Compras
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" value={this.state.provName} onChange={e => this.buscar(e)} required />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre Proveedor</label>
                     </div>
                 </form>
+                <form>
+                    <div >
+                        <input type="date" value={this.state.fecha} onChange={e => this.buscarFecha(e)} required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Fecha</label>
+                    </div>
+                </form>
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head-table">Proveedor</th>
-                            <th className="head-table">Fecha</th>
-                            <th className="head-table">Total</th>
+                            <th className="head">Proveedor</th>
+                            <th className="head1">Fecha</th>
+                            <th className="head1">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -170,9 +202,9 @@ export default class ProvGet extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head-table">Producto</th>
-                            <th className="head-table">Cantidad</th>
-                            <th className="head-table">Subtotal</th>
+                            <th className="head">Producto</th>
+                            <th className="head2">Cantidad</th>
+                            <th className="head1">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>

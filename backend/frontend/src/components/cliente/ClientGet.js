@@ -27,6 +27,7 @@ export default class ClientGet extends Component {
         this.setShow = this.setShow.bind(this);
 
         this.movementConsult = this.movementConsult.bind(this);
+
     }
 
     getclientId(value) {
@@ -118,18 +119,23 @@ export default class ClientGet extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.nombre_C.toLowerCase();
-            if (str.includes(nombre)) {
-                auxData.push(element);    
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
+            this.setState({ nombre_C: e.target.value });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.nombre_C.toLowerCase();
+                if (str.includes(nombre)) {
+                    auxData.push(element);    
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ nombre_C: this.state.nombre_C });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
     setShow() {
@@ -182,7 +188,7 @@ export default class ClientGet extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required onChange={e => this.buscar(e)}/>
+                        <input type="text" value={this.state.nombre_C} required onChange={e => this.buscar(e)}/>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>
