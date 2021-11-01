@@ -361,7 +361,7 @@ export default class SellAdd extends Component {
             body: JSON.stringify({
                 clientId: cliente.clientId,
                 dateTransaction: fecha,
-                total: total,
+                total: total.toFixed(2),
             }),
         };
         await fetch("/cuenta/add-movement", movementClient)
@@ -376,7 +376,7 @@ export default class SellAdd extends Component {
             body: JSON.stringify({
                 clientId: cliente.clientId,
                 nombre_C: cliente.nombre_C,
-                balance: total
+                balance: total.toFixed(2),
             }),
         };
         await fetch("/cliente/update-cliente/" + cliente.clientId, requiestClient)
@@ -454,7 +454,7 @@ export default class SellAdd extends Component {
                     body: JSON.stringify({
                         clientId: cliente.clientId,
                         sellDate: fecha,
-                        total: total,
+                        total: total.toFixed(2),
                     }),
                 };
                 //console.log("Termina de ejecutarse sellRecord")
@@ -593,7 +593,7 @@ export default class SellAdd extends Component {
         const apagarCambiante = event => {
 
             if (/^(\d{0,4})([.]\d{0,2})?$/.test(event.target.value)) {
-                const cambio = parseFloat(event.target.value - this.state.total);
+                const cambio = parseFloat(event.target.value - this.state.total).toFixed(2);
                 this.setState({ cambio: cambio, aPagar: event.target.value });
             } else {
                 this.setState({ aPagar: this.state.aPagar })
@@ -635,9 +635,9 @@ export default class SellAdd extends Component {
                             <div>
                                 <div className="divEspaciado">
                                     <label className="a">Total: $</label>
-                                    <label className="b">{this.state.total}</label>
+                                    <label className="b">{this.state.total.toFixed(2)}</label>
                                     <label className="a">Cambio: $</label>
-                                    <label className="b">{this.state.cambio}</label>
+                                    <label className="b">{this.state.cambio.toFixed(2)}</label>
                                 </div>
                                 <form>
                                     <div className="group">

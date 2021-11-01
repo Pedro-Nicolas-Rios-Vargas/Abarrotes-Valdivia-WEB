@@ -98,30 +98,34 @@ export default class ProductoAdd extends Component {
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
             this.state.presentacion !== "" && this.state.sellPrice !== "" &&
             this.state.stock !== "" && this.state.prodId !== "") {
-            const requiestProducto = {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    prodId: this.state.prodId,
-                    prodName: this.state.prodName,
-                    existencia: this.state.existencia,
-                    stock: this.state.stock,
-                    presentacion: this.state.presentacion,
-                    sellPrice: this.state.sellPrice,
-                }),
-            };
-            fetch("/producto/add-producto", requiestProducto)
-                .then((response) => response.json())
-                .then((data) => console.log(data));
-            alert("Producto agregado con éxito");
-            this.setState({
-                prodName: "",
-                existencia: "",
-                stock: "",
-                presentacion: "",
-                sellPrice: "",
-                prodId: "",
-            })
+                if (this.state.presentacion === "Unidad" || this.state.presentacion === "Kilogramo") {
+                    const requiestProducto = {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            prodId: this.state.prodId,
+                            prodName: this.state.prodName,
+                            existencia: this.state.existencia,
+                            stock: this.state.stock,
+                            presentacion: this.state.presentacion,
+                            sellPrice: this.state.sellPrice,
+                        }),
+                    };
+                    fetch("/producto/add-producto", requiestProducto)
+                        .then((response) => response.json())
+                        .then((data) => console.log(data));
+                    alert("Producto agregado con éxito");
+                    this.setState({
+                        prodName: "",
+                        existencia: "",
+                        stock: "",
+                        presentacion: "",
+                        sellPrice: "",
+                        prodId: "",
+                    })
+                } else {
+                    alert("La presentación debe ser Unidad o Kilogramo");
+                }
         } else {
             alert("No se puede agregar un Producto sin nombre, existencia, stock, presentación o precio");
         }

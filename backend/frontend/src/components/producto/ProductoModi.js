@@ -153,32 +153,36 @@ export default class ProductoModi extends Component {
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
         this.state.presentacion !== "" && this.state.sellPrice !== "" &&
         this.state.stock !== "" && this.state.prodId !== "") {
-            const requiestClient = {
-                method: 'PUT',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    prodId: this.state.prodId,
-                    prodName: this.state.prodName,
-                    existencia: this.state.existencia,
-                    sellPrice: this.state.sellPrice,
-                    stock: this.state.stock,
-                    presentacion: this.state.presentacion
-                }),
-            };
-            console.log(prodId);
-            fetch("/producto/update-producto/" + prodId, requiestClient)
-                .then((response) => response.json())
-                .then((data) => {
-                    this.getProductData();
-                });
-            {
-                this.setState({
-                    show: false,
-                    buscador: "",
-                });
-    
+            if (this.state.presentacion === "Unidad" || this.state.presentacion === "Kilogramo") {
+                const requiestClient = {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        prodId: this.state.prodId,
+                        prodName: this.state.prodName,
+                        existencia: this.state.existencia,
+                        sellPrice: this.state.sellPrice,
+                        stock: this.state.stock,
+                        presentacion: this.state.presentacion
+                    }),
+                };
+                console.log(prodId);
+                fetch("/producto/update-producto/" + prodId, requiestClient)
+                    .then((response) => response.json())
+                    .then((data) => {
+                        this.getProductData();
+                    });
+                {
+                    this.setState({
+                        show: false,
+                        buscador: "",
+                    });
+        
+                }
+                alert("Datos del producto modificados con exito");
+            } else {
+                alert("La presentacion debe ser Unidad o Kilogramo");
             }
-            alert("Datos del producto modificados con exito")
         } else {
             alert("No se puede modificar un Producto sin nombre, existencia, stock, presentacion o precio");
         }

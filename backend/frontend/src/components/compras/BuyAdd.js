@@ -222,8 +222,8 @@ export default class SellAdd extends Component {
             alert("No hay dinero con el cual cobrar")
         } else {
             this.setState({
-                total: total2,
-                cambio: this.state.aPagar - total2,
+                total: total2.toFixed(2),
+                cambio: this.state.aPagar - total2.toFixed(2),
             });
         }
     }
