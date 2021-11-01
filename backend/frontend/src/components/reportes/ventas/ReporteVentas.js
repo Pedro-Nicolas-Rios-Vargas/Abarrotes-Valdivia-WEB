@@ -167,7 +167,7 @@ export default class ReporteVentas extends Component {
         let totals = [];
         if (this.flagTypeGraph == 0) {
             totals = Array
-                .apply(null, Array(fechaFinal[2] - fechaInicial[2]))
+                .apply(null, Array(fechaFinal[2] - fechaInicial[2] + 1))
                 .map(() => { return 0; });
         } else if (this.flagTypeGraph == 1) {
             totals = Array
