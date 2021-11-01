@@ -5,7 +5,10 @@ from .models import Cliente
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
+import os
+import time
+import platform
+import pipes
 
 # Create your views here.
 class ClienteView(generics.ListAPIView):
@@ -57,3 +60,59 @@ def update(request, pk=None):
             return Response(client_serializer.data, status=status.HTTP_200_OK)
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     return Response({'ERROR':'No existe ningun cliente con esos datos'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def backUp(request):
+    DB_HOST = 'localhost' 
+    DB_USER = 'root'
+    DB_USER_PASSWORD = '123another890@@'
+    DB_NAME = 'abarrotesvaldiviaWEB'
+
+    if (platform.system() == "Linux"):
+        BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps"
+    elif (platform.system() == "Windows"): 
+        BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps"
+    else:
+        BACKUP_PATH = os.getcwd() + "/BackUps"
+
+    DATETIME = time.strftime('%Y-%m-%d-h%Hm%Ms%S')
+    TODAYBACKUPPATH = BACKUP_PATH
+
+
+    try:
+        os.stat(TODAYBACKUPPATH)
+    except:
+        os.mkdir(TODAYBACKUPPATH)
+
+
+
+    if (platform.system() == "Windows"):
+        dumpcmd = "mysqldump -h " + DB_HOST + " -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + DB_NAME + " > " + TODAYBACKUPPATH + "\\" + DATETIME + ".bak"
+    else:
+        dumpcmd = "mysqldump -h " + DB_HOST + " -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + DB_NAME  + " > " + TODAYBACKUPPATH + "/" + DATETIME + ".bak"
+
+    os.system(dumpcmd)
+
+
+    return Response({'BackUp': "Your backups have been created in '" + TODAYBACKUPPATH + '/' + DATETIME + '.bak' + "' directory"}, status=status.HTTP_200_OK) 
+
+@api_view(['GET', 'POST'])
+def restore(request):
+    DB_USER = 'root'
+    DB_USER_PASSWORD = '123another890@@'
+    DB_NAME = 'abarrotesvaldiviaWEB'
+    BACKUP_PATH = ''
+    print(request)
+    if (platform.system() == "Linux"):
+        BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps/" + request.data.get('fileName')
+    elif (platform.system() == "Windows"): 
+        BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps" + "\\" + request.data.get('fileName')
+    else:
+        BACKUP_PATH = os.getcwd() + "/BackUps"
+
+    print("Pito de carro",request.data.get('fileName'))
+    command = "mysql -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + DB_NAME + " < " + BACKUP_PATH
+    print(command)
+    os.system(command)
+    print("Restauracion completa")
+    return Response({'Restore': "Complete restore"}, status=status.HTTP_200_OK)

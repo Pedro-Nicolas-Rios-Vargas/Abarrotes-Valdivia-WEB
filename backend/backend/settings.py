@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'BuyLog.apps.BuylogConfig',
     'sellRecord.apps.SellrecordConfig',
     'sellLog.apps.SelllogConfig',
+    'login.apps.LoginConfig',
+    'logout.apps.LogoutConfig',
     'cuenta.apps.CuentaConfig'
 ]
 
@@ -115,9 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-mx'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Mexico_City'
 
 USE_I18N = True
 

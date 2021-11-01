@@ -11,15 +11,21 @@ export default class Nav extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            msg: '',
             collapsed: false,
             rotulo: 'Inicio',
         };
-        
+
+        this.showingMenu = this.showingMenu.bind(this);
+        this.logout = this.logout.bind(this);
+        this.responseHandler = this.responseHandler.bind(this);
     }
-    toggleMenu = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        })
+    toggleMenu = (event) => {
+        let sidebar = document.querySelector(".sidebar");
+        sidebar.classList.toggle("close");
+        //this.setState({
+        //    collapsed: !this.state.collapsed,
+        //})
     }
 
     changeRotulo = (rotulo) => {
@@ -28,9 +34,44 @@ export default class Nav extends Component {
         });
     }
 
+    showingMenu(event) {
+        let arrowParent = event.target.parentElement.parentElement;
+        arrowParent.classList.toggle("showMenu");
+    }
+
+    logout() {
+        let request = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "Logged": false
+            }),
+        };
+        fetch('/logout/', request).
+            then((response) => {
+                return response.json();
+            }).
+            then((data) => {
+                this.setState({
+                    msg: data.Mensaje,
+                });
+            });
+    }
+
+    responseHandler() {
+        let msg = this.state.msg;
+        if (msg == 'Salir') {
+            return <Redirect to="/"/>
+        } else if (msg) {
+            return <p>Issa porra</p>
+        }
+    }
+
     render() {
+        let afterResponse = this.responseHandler();
         return (
                 <div>
+                    { afterResponse }
                     <div className="sidebar close">
                         <div className="logo-details">
                             <i className='bx bx-store' ></i>
@@ -44,7 +85,10 @@ export default class Nav extends Component {
                                         <i className='bx bx-user-circle' ></i>
                                         <span className="link_name">Clientes</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name">Clientes</a></li>
@@ -61,7 +105,10 @@ export default class Nav extends Component {
                                         <i className='bx bxs-truck' ></i>
                                         <span className="link_name">Proveedores</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Proveedores</a></li>
@@ -78,7 +125,10 @@ export default class Nav extends Component {
                                         <i className='bx bx-money' ></i>
                                         <span className="link_name">Ventas</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Ventas</a></li>
@@ -93,7 +143,10 @@ export default class Nav extends Component {
                                         <i className='bx bx-cart' ></i>
                                         <span className="link_name">Compras</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Compras</a></li>
@@ -107,7 +160,10 @@ export default class Nav extends Component {
                                         <i className='bx bx-coffee'></i>
                                         <span className="link_name">Productos</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Productos</a></li>
@@ -134,7 +190,10 @@ export default class Nav extends Component {
                                         <i className='bx bx-line-chart'></i>
                                         <span className="link_name">Reportes</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Reportes</a></li>
@@ -149,12 +208,15 @@ export default class Nav extends Component {
                                         <i className='bx bx-coffee'></i>
                                         <span className="link_name">Backups</span>
                                     </a>
-                                    <i className='bx bxs-chevron-down arrow' ></i>
+                                    <i
+                                        className='bx bxs-chevron-down arrow'
+                                        onClick={e => this.showingMenu(e) } >
+                                    </i>
                                 </div>
                                 <ul className="sub-menu">
                                     <li><a className="link_name" href="#">Backups</a></li>
-                                    <li><a href="/#">Respaldos</a></li>
-                                    <li><a href="/#">Restauraciones</a></li>
+                                    <Link to="/Backup/BackupRespaldo"><li onClick={() =>this.changeRotulo("Backups")}>Respaldos</li></Link>
+                                    <Link to="/Backup/BackupRestauracion"><li onClick={() =>this.changeRotulo("Restores")}>Restauraciones</li></Link>
                                 </ul>
                             </li>
 
@@ -167,14 +229,17 @@ export default class Nav extends Component {
                                         <div className="profile_name">Rex</div>
                                         <div className="job">Desarrollador</div>
                                     </div>
-                                    <i className='bx bx-log-out' ></i>
+                                    <i
+                                        className='bx bx-log-out'
+                                        onClick={() => this.logout()} >
+                                    </i>
                                 </div>
                             </li>
                         </ul>
                     </div>
                     <section className="home-section">
                         <div className="home-content">
-                            <i className='bx bx-menu' onClick={() => this.toggleMenu()}></i>
+                            <i className='bx bx-menu' onClick={ (e) => this.toggleMenu(e) }></i>
                             <span className="text">{this.state.rotulo}</span>
                             {/* Ver si se puede cambiar inicio dependiendo de donde este */}
                         </div>
