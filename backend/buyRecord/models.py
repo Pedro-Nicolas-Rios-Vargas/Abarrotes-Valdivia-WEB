@@ -2,6 +2,9 @@ from django.db import models
 # Create your models here.
 
 class BuyRecord(models.Model):
+    class Meta:
+        db_table = 'buyrecord_buyrecord'
+
     buyId = models.AutoField(primary_key=True)
     provrId = models.ForeignKey('proveedor.Proveedor', on_delete=models.CASCADE, null=False)
     buyDate = models.DateField(null=False)

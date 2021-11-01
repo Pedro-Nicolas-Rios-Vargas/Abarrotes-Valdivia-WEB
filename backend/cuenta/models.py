@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class Movement(models.Model):
     class Meta:
+        db_table = 'cuenta_movement'
         unique_together = (('clientId','movementId'),)
 
     movementId = models.AutoField(primary_key=True)
