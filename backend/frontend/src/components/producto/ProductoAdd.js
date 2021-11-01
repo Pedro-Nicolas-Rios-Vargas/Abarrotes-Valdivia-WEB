@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import makeCancelable from '../../utils/callBarcodeSocket'
+
 export default class ProductoAdd extends Component {
     defaultName = ""
     defaultSecondName = ""
@@ -8,6 +10,7 @@ export default class ProductoAdd extends Component {
     defaultId = ""
     constructor(props) {
         super(props);
+        this.fetchSocketData = null;
         this.state = {
             prodName: this.defaultName,
             existencia: this.defaultSecondName,
@@ -15,15 +18,17 @@ export default class ProductoAdd extends Component {
             presentacion: this.defaultpresentacion,
             sellPrice: this.defualtsellPrice,
             prodId: this.defaultId,
+            waitingBarCode: false,
         }
 
         this.AddClient = this.AddClient.bind(this);
         this.getNameProducto = this.getNameProducto.bind(this);
         this.getexistencia = this.getexistencia.bind(this);
         this.getstock = this.getstock.bind(this);
-        this.getpresentacion = this.getpresentacion.bind(this)
-        this.getsellPrice = this.getsellPrice.bind(this)
+        this.getpresentacion = this.getpresentacion.bind(this);
+        this.getsellPrice = this.getsellPrice.bind(this);
         this.getprodId = this.getprodId.bind(this);
+        this.initSocketServer = this.initSocketServer.bind(this);
     }
 
     getprodId(e) {
@@ -94,7 +99,6 @@ export default class ProductoAdd extends Component {
     }
 
     AddClient() {
-        //console.log(this)
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
             this.state.presentacion !== "" && this.state.sellPrice !== "" &&
             this.state.stock !== "" && this.state.prodId !== "") {
@@ -129,6 +133,54 @@ export default class ProductoAdd extends Component {
         } else {
             alert("No se puede agregar un Producto sin nombre, existencia, stock, presentación o precio");
         }
+    }
+
+    initSocketServer() {
+        if (!this.state.waitingBarCode) {
+            console.log('Ejecutando fetch...');
+            this.fetchSocketData = makeCancelable();
+            this.setState({
+                waitingBarCode: true
+            });
+            this.barcodeHandler();
+        }
+    }
+
+    barcodeHandler() {
+        let fetchedData = this.fetchSocketData.promise;
+        fetchedData
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Fetch terminado.');
+                if (data.Barcode !== 'No barcode') {
+                    this.setState({
+                        prodId: data.Barcode,
+                        waitingBarCode: false,
+                    });
+                    console.log('barcode:', this.state.prodId);
+                } else {
+                    this.setState({
+                        waitingBarCode: false,
+                    })
+                }
+            })
+            .catch((err) => {
+                //console.error(err);
+            });
+    }
+
+    componentDidMount() {
+        this.initSocketServer();
+    }
+
+    componentDidUpdate() {
+        this.initSocketServer();
+    }
+
+    componentWillUnmount() {
+        this.fetchSocketData.cancel();
     }
 
     render() {
@@ -168,7 +220,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
-                        <input type="text" list="tipo-presentacion" autocomplete="off" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
+                        <input type="text" list="tipo-presentacion" autoComplete="off" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
                         <datalist id="tipo-presentacion">
                             <option value="Unidad"></option>
                             <option value="Kilogramo"></option>
@@ -186,7 +238,7 @@ export default class ProductoAdd extends Component {
                     </div>
                 </form>
                 <div className="footer">
-                    <button className="btn" onClick={() => this.AddClient()} >Agregar</button>
+                    <button className="btn" onClick={ () => this.AddClient() } >Agregar</button>
                 </div>
             </div>
         );

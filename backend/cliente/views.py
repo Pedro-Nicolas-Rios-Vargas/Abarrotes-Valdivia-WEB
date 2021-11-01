@@ -63,14 +63,14 @@ def update(request, pk=None):
 
 @api_view(['GET'])
 def backUp(request):
-    DB_HOST = 'localhost' 
+    DB_HOST = 'localhost'
     DB_USER = 'root'
     DB_USER_PASSWORD = '123another890@@'
     DB_NAME = 'abarrotesvaldiviaWEB'
 
     if (platform.system() == "Linux"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps"
-    elif (platform.system() == "Windows"): 
+    elif (platform.system() == "Windows"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps"
     else:
         BACKUP_PATH = os.getcwd() + "/BackUps"
@@ -96,6 +96,7 @@ def backUp(request):
 
     return Response({'BackUp': "Your backups have been created in '" + TODAYBACKUPPATH + '/' + DATETIME + '.bak' + "' directory"}, status=status.HTTP_200_OK) 
 
+
 @api_view(['GET', 'POST'])
 def restore(request):
     DB_USER = 'root'
@@ -111,7 +112,7 @@ def restore(request):
         BACKUP_PATH = os.getcwd() + "/BackUps"
 
     print("Pito de carro",request.data.get('fileName'))
-    command = "mysql -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + DB_NAME + " < " + BACKUP_PATH
+    command = "mysql -u " + DB_USER + " -p" + DB_USER_PASSWORD + " --database " + DB_NAME + " < " + BACKUP_PATH
     print(command)
     os.system(command)
     print("Restauracion completa")
