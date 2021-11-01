@@ -21,5 +21,7 @@ urlpatterns = [
     path('', index, name='toLogin'),
     path('Backup/BackupRespaldo', index),
     path('Backup/BackupRestauracion', index),
-    path('home/', index)
+    path('home/', index),
+    path('reporte/ventas', index),
+    path('reporte/productos', index)
 ]

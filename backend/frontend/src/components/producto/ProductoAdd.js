@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import makeCancelable from '../../utils/callBarcodeSocket'
+
 export default class ProductoAdd extends Component {
     defaultName = ""
     defaultSecondName = ""

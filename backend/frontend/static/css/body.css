@@ -800,3 +800,28 @@ input[type="file"]:hover{
   text-decoration: none;
   background-color: grey;
 }
+
+section.main-content canvas {
+  margin: 10px;
+  border: 2px solid #313131;
+  width: 404px;
+  height: 404px;
+  /*background-color: #FFFFFF;*/
+}
+
+div.fechas {
+    margin-top: 20px;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+h1 {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+label.reportes-label {
+    position: static;
+}

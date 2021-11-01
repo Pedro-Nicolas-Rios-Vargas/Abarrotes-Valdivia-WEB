@@ -20,6 +20,8 @@ import BuyLog from "./compras/BuyLog";
 import Login from "./login"
 import Backup from "./Backups/Backup";
 import Restore from "./Backups/Restore";
+import ReporteVentas from './reportes/ventas/ReporteVentas';
+import ReporteProductos from './reportes/productos/ReporteProductos';
 import {
     BrowserRouter as Router,
     Switch,
@@ -189,6 +191,22 @@ export default class App extends Component {
                             <main>
                                 <Nav />
                                 <Restore/>
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/reporte/ventas">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ReporteVentas />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/reporte/productos">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <ReporteProductos />
                             </main>
                         </div>
                     </Route>
