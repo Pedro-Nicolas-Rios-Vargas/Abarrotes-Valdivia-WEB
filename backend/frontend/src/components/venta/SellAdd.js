@@ -185,7 +185,7 @@ export default class SellAdd extends Component {
                         prodId: aux.prodId,
                         prodName: aux.prodName,
                         existencia: aux.existencia,
-                        sellPrice: aux.sellPrice,
+                        sellPrice: aux.sellPrice ,
                         stock: aux.stock,
                         presentacion: aux.presentacion,
                         cantidad: aux.cantidad + 1,
@@ -201,7 +201,7 @@ export default class SellAdd extends Component {
                         prodId: nuevoProducto.prodId,
                         prodName: nuevoProducto.prodName,
                         existencia: nuevoProducto.existencia,
-                        sellPrice: nuevoProducto.sellPrice,
+                        sellPrice: (nuevoProducto.sellPrice * 1.20).toFixed(2),
                         stock: nuevoProducto.stock,
                         presentacion: nuevoProducto.presentacion,
                         cantidad: 1,
@@ -280,6 +280,7 @@ export default class SellAdd extends Component {
             together: rows,
             dataMostrar: rows2,
         });
+        this.actualizar();
     }
 
     agregar() {
@@ -497,7 +498,7 @@ export default class SellAdd extends Component {
 
                 } else {
                     if (confirm("Falta dinero por pagar\n ¿Desea agregar el dinero faltante como saldo deudor del cliente?")) {
-                        alert("El saldo deudor del cliente a aumentado.\n Ahora cuenta con un saldo de: " + (this.state.cambio).toString());
+                        alert("El saldo deudor del cliente a aumentado.\n Ahora cuenta con un saldo de: " + (parseFloat(this.state.cliente.balance) - Math.abs(parseFloat(this.state.cambio)).toFixed(2)).toString());
                         this.movement(this.state.cliente, this.state.cambio);
                         this.actualizarCliente(this.state.cliente, this.state.cliente.balance - Math.abs(this.state.cambio));
                         asyncAll(this.state.cliente, this.state.total, together);
@@ -514,7 +515,7 @@ export default class SellAdd extends Component {
                 }
             } else if (this.state.cambio > 0) {
                 if (confirm("Cambio sobrante\n ¿Desea agregar el cambio sobrante como saldo acredor del cliente?")) {
-                    alert("Se a agregado saldo acredor al cliente. \n Ahora cuenta con un saldo de: " + (this.state.cambio).toString());
+                    alert("Se a agregado saldo acredor al cliente. \n Ahora cuenta con un saldo de: " + parseFloat(parseFloat(this.state.cliente.balance) + parseFloat(this.state.cambio)).toFixed(2));
                     this.movement(this.state.cliente, parseFloat(this.state.cambio));
                     this.actualizarCliente(this.state.cliente, parseFloat(parseFloat(this.state.cliente.balance) + parseFloat(this.state.cambio)).toFixed(2));
                     asyncAll(this.state.cliente, this.state.total, together);
@@ -576,14 +577,14 @@ export default class SellAdd extends Component {
 
         const rows = tabla.map((product) =>
             <tr key={product.prodId}>
-                <td>{product.prodName}</td>
-                <td>{product.sellPrice}</td>
-                <td>
+                <td className="child2">{product.prodName}</td>
+                <td className="child2">
                     {product.cantidad}
                     <button id="upCantidad" className="btn btn_controller" onClick={() => this.upCanitdad(product.prodId)}>+</button>
                     <button id="downCantidad" className="btn btn_controller" onClick={() => this.downCanitdad(product.prodId)}>-</button>
                 </td>
-                <td>
+                <td className="child1">${product.sellPrice}</td>
+                <td className="child2">
                     <button onClick={() => this.removeRow(product.prodId)} className="btn btn_confirm">Eliminar</button>
                 </td>
             </tr>
@@ -618,9 +619,9 @@ export default class SellAdd extends Component {
                             <tr>
                                 <th className="head">Nombre</th>
                                 {/* <th className="head">Precio de compra</th> */}
-                                <th className="head">Precio de venta</th>
-                                <th className="head">Cantidad</th>
-                                <th className="head">Opciones</th>
+                                <th className="head2">Cantidad</th>
+                                <th className="head1">Subtotal</th>
+                                <th className="head3">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>

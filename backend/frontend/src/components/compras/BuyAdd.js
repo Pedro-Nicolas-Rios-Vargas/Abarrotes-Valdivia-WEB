@@ -269,6 +269,7 @@ export default class SellAdd extends Component {
             together: rows,
             dataMostrar: rows2,
         });
+        this.actualizar();
     }
 
     agregar() {
@@ -486,14 +487,14 @@ export default class SellAdd extends Component {
 
         const rows = tabla.map((product) =>
             <tr key={product.prodId}>
-                <td>{product.prodName}</td>
-                <td>{product.sellPrice}</td>
-                <td>
+                <td className="child2">{product.prodName}</td>
+                <td className="child2">
                     {product.cantidad}
                     <button id="upCantidad" className="btn btn_controller" onClick={() => this.upCanitdad(product.prodId)}>+</button>
                     <button id="downCantidad" className="btn btn_controller" onClick={() => this.downCanitdad(product.prodId)}>-</button>
                 </td>
-                <td>
+                <td className="child1">${product.sellPrice}</td>
+                <td className="child2">
                     <button onClick={() => this.removeRow(product.prodId)} className="btn btn_confirm">Eliminar</button>
                 </td>
             </tr>
@@ -528,9 +529,9 @@ export default class SellAdd extends Component {
                             <tr>
                                 <th className="head">Nombre</th>
                                 {/* <th className="head">Precio de compra</th> */}
-                                <th className="head">Precio de compra</th>
-                                <th className="head">Cantidad</th>
-                                <th className="head">Opciones</th>
+                                <th className="head2">Cantidad</th>
+                                <th className="head1">Subtotal</th>
+                                <th className="head3">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>

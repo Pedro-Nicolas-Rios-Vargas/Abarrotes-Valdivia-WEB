@@ -15,6 +15,8 @@ export default class ProvGet extends Component {
             stock: 0,
             presentacion: "",
             show: false,
+            fecha: "",
+            nombre_C: "",
         };
         this.getSellLogData = this.getSellLogData.bind(this);
         this.getSellRecordData = this.getSellRecordData.bind(this);
@@ -23,6 +25,9 @@ export default class ProvGet extends Component {
         this.componentDidMount =  this.componentDidMount.bind(this);
         this.setShow = this.setShow.bind(this);
         this.openModal = this.openModal.bind(this);
+
+        this.buscarFecha = this.buscarFecha.bind(this);
+        this.buscar = this.buscar.bind(this);
     }
     
     
@@ -110,6 +115,20 @@ export default class ProvGet extends Component {
         this.getClientData();
     }
 
+    //Metodo para buscar por nombre de cliente
+    buscar(e) {
+        this.setState({
+            nombre_C: e.target.value
+        });
+    }
+
+    //metodo para buscar por fecha  
+    buscarFecha(e) {
+        this.setState({
+            fecha: e.target.value
+        });
+    }
+
 
     render() {
         const sellRecord = this.state.recordData;
@@ -119,48 +138,69 @@ export default class ProvGet extends Component {
             for (let i = 0; i < sellRecord.length; i++) {
                 const element = sellRecord[i];
                 const client = cliente.find(cliente => cliente.clientId === element.clientId);
-                const aux = {
-                    sellId: element.sellId,
-                    clientName: client.nombre_C,
-                    sellDate: element.sellDate,
-                    total: element.total,
-                };
-                rowsData.push(aux);
+                if (client.nombre_C.toLocaleLowerCase().toString().includes(this.state.nombre_C.toLocaleLowerCase().toString())) {
+                    if (element.sellDate.includes(this.state.fecha)) {
+                        const aux = {
+                            key : i,
+                            sellId: element.sellId,
+                            clientName: client.nombre_C,
+                            sellDate: element.sellDate,
+                            total: element.total,
+                        };
+                        rowsData.push(aux);
+                    } 
+                } 
+                // const aux = {
+                //     key : i,
+                //     sellId: element.sellId,
+                //     clientName: client.nombre_C,
+                //     sellDate: element.sellDate,
+                //     total: element.total,
+                // };
+                // rowsData.push(aux);
             }
         }
         const rows = rowsData.map((element) =>
             <tr key={element.sellId}>
-                <td onClick={() => this.openModal(element.sellId)}>{element.clientName}</td>
-                <td onClick={() => this.openModal(element.sellId)}>{element.sellDate}</td>
-                <td onClick={() => this.openModal(element.sellId)}>{element.total}</td>
+                <td className="child2" onClick={() => this.openModal(element.sellId)}>{element.clientName}</td>
+                <td className="child2" onClick={() => this.openModal(element.sellId)}>{element.sellDate}</td>
+                <td className="child1" onClick={() => this.openModal(element.sellId)}>${element.total}</td>
             </tr>
         );
         const detalles = this.state.tablaDetallada;
         const rowsDetalles = detalles.map((element) =>
             <tr key={element.prodId}>
-                <td>{element.prodName}</td>
-                <td>{element.cantidad}</td>
-                <td>{element.sellPrice * element.cantidad}</td>
+                <td className="child2">{element.prodName}</td>
+                <td className="child2">{element.cantidad}</td>
+                <td className="child1">${element.sellPrice * element.cantidad}</td>
             </tr>
         );
         return (
             <div className="container">
-                <h2>Ventas
+                <h2>Registro de Ventas
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required />
+                        <input type="text" value={this.state.nombre_C} onChange={e => this.buscar(e)} required />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre Cliente</label>
                     </div>
                 </form>
+                <form>
+                    <div >
+                        <input type="date" value={this.state.fecha} onChange={e => this.buscarFecha(e)} required />
+                        <span className="highlight"></span>
+                        <span className="bar"></span>
+                        <label>Fecha</label>
+                    </div>
+                </form>
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head-table">Cliente</th>
-                            <th className="head-table">Fecha</th>
-                            <th className="head-table">Total</th>
+                            <th className="head">Cliente</th>
+                            <th className="head1">Fecha</th>
+                            <th className="head1">Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,9 +212,9 @@ export default class ProvGet extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head-table">Producto</th>
-                            <th className="head-table">Cantidad</th>
-                            <th className="head-table">Subtotal</th>
+                            <th className="head">Producto</th>
+                            <th className="head2">Cantidad</th>
+                            <th className="head1">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
