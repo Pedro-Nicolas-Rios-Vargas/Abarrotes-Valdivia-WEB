@@ -41,7 +41,7 @@ export default class ClientModi extends Component {
     }
 
     getnombre_C(value) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ]{0,16}$/.test(value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(value)) {
             this.setState({
                 nombre_C: value,
             });

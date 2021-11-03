@@ -51,7 +51,7 @@ export default class ProductoModi extends Component {
     }
 
     getprodName(value) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,64}$/.test(value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(value)) {
             this.setState({
                 prodName: value,
             });
