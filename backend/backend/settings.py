@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'logout.apps.LogoutConfig',
     'cuenta.apps.CuentaConfig',
     'socketREST.apps.SocketrestConfig',
+    'perfilUsuario.apps.PerfilusuarioConfig',
 ]
 
 MIDDLEWARE = [

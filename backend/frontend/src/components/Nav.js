@@ -74,7 +74,9 @@ export default class Nav extends Component {
                     { afterResponse }
                     <div className="sidebar close">
                         <div className="logo-details">
-                            <i className='bx bx-store' ></i>
+                            <Link to="/home">
+                                <i className='bx bx-store' ></i>
+                            </Link>
                             <span className="logo_name">Abarrotes Valdivia</span>
                         </div>
                         <ul className="nav-links">
@@ -222,9 +224,11 @@ export default class Nav extends Component {
 
                             <li>
                                 <div className="profile-details">
-                                    <div className="profile-content">
-                                        <img src="images.jpg" alt="profileImg" />
-                                    </div>
+                                    <Link to="/perfil/modificar">
+                                        <div className="profile-content">
+                                            <img src="images.jpg" alt="profileImg" />
+                                        </div>
+                                    </Link>
                                     <div className="name-job">
                                         <div className="profile_name">Rex</div>
                                         <div className="job">Desarrollador</div>

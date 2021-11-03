@@ -825,3 +825,30 @@ h1 {
 label.reportes-label {
     position: static;
 }
+
+.forgotten-pass {
+    border: none;
+    background-color: #00000000;
+    text-decoration: underline;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+
+.forgotten-pass:hover {
+    cursor: pointer;
+    color: #7a52ae;
+}
+
+.forgotten-pass:active {
+    color: #b276ff;
+}
+
+.info-msg {
+    border: 2px solid #F5F000;
+    background-color: #FFED005A;
+}
+
+label.titulo-input-perfil {
+    position: static;
+    font-size: 14px;
+}

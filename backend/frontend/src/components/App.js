@@ -22,6 +22,7 @@ import Backup from "./Backups/Backup";
 import Restore from "./Backups/Restore";
 import ReporteVentas from './reportes/ventas/ReporteVentas';
 import ReporteProductos from './reportes/productos/ReporteProductos';
+import Perfil from "./perfil";
 import {
     BrowserRouter as Router,
     Switch,
@@ -207,6 +208,14 @@ export default class App extends Component {
                             <main>
                                 <Nav />
                                 <ReporteProductos />
+                            </main>
+                        </div>
+                    </Route>
+                    <Route path="/perfil/modificar">
+                    <div className="App">
+                            <main>
+                                <Nav />
+                                <Perfil />
                             </main>
                         </div>
                     </Route>

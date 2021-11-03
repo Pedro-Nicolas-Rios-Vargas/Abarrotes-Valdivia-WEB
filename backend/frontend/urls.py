@@ -23,5 +23,6 @@ urlpatterns = [
     path('Backup/BackupRestauracion', index),
     path('home/', index),
     path('reporte/ventas', index),
-    path('reporte/productos', index)
+    path('reporte/productos', index),
+    path('perfil/modificar', index)
 ]

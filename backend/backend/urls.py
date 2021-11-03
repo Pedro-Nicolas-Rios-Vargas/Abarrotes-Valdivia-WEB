@@ -30,5 +30,6 @@ urlpatterns = [
     path('sellLog/', include('sellLog.urls')),
     path('buyLog/', include('BuyLog.urls')),
     path('cuenta/', include('cuenta.urls')),
-    path('socket/', include('socketREST.urls'))
+    path('socket/', include('socketREST.urls')),
+    path('perfil/', include('perfilUsuario.urls')),
 ]
