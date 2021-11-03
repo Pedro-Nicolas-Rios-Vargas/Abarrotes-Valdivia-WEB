@@ -27,6 +27,7 @@ export default class ReporteVentas extends Component {
         //      2           año
         this.flagTypeGraph = 0;
         this.state = {
+            msg: '',
             fechaInicial: '',
             fechaFinal: '',
             rawData: [],
@@ -77,6 +78,9 @@ export default class ReporteVentas extends Component {
         this.syncData = this.syncData.bind(this);
         this.formatingData = this.formatingData.bind(this);
         this.makingColors = this.makingColors.bind(this);
+        this.handleErrorDiv = this.handleErrorDiv.bind(this);
+        this.responseHandler = this.responseHandler.bind(this);
+        this.handleNoErrorDiv = this.handleNoErrorDiv.bind(this);
     }
 
     assignFechaInicial(event) {
@@ -94,9 +98,17 @@ export default class ReporteVentas extends Component {
     validatingDates() {
         if (this.state.fechaInicial === '') {
             // error message
+            this.setState({
+                msg: 'Proporcione una fecha inicial'
+            });
+            this.handleErrorDiv();
             return;
         } else if (this.state.fechaFinal === '') {
             // error message
+            this.setState({
+                msg: 'Proporcione una fecha final'
+            });
+            this.handleErrorDiv();
             return;
         }
 
@@ -143,9 +155,14 @@ export default class ReporteVentas extends Component {
                 this.flagTypeGraph = 2;
             }
         } else {
-            // error messsage
+            // error message
+            this.setState({
+                msg: 'La fecha inicial es mayor a la fecha final'
+            });
+            this.handleErrorDiv();
             return;
         }
+        this.handleNoErrorDiv();
         this.syncData();
 
     }
@@ -270,14 +287,39 @@ export default class ReporteVentas extends Component {
         });
     }
 
+    handleErrorDiv() {
+        let errorTag = document.querySelector(".error");
+        errorTag.classList.toggle("invisible", false);
+    }
+
+    handleNoErrorDiv() {
+        let errorTag = document.querySelector(".error");
+        errorTag.classList.toggle("invisible", true);
+    }
+
+    responseHandler() {
+        let msg = this.state.msg;
+        return (
+            <div className="error reportes-error invisible">
+                <strong>
+                    { msg }
+                </strong>
+            </div>
+        )
+    }
+
     componentDidMount() {
         //this.makingGraphics();
     }
 
     render() {
+        let afterResponse = this.responseHandler();
         return (
             <div className="container">
                 <h1>Reporte Ventas</h1>
+                <div>
+                    { afterResponse }
+                </div>
                 <div className="fechas">
                     <form action="">
                         <label htmlFor="FechaInicial" className="reportes-label">

@@ -857,3 +857,8 @@ label.titulo-input-perfil {
     border: 2px solid #023A01;
     background-color: #56FF005A;
 }
+
+.reportes-error {
+    margin-top: 25px;
+    margin-bottom: 0px;
+}
