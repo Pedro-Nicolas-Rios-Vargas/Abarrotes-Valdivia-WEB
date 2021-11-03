@@ -14,6 +14,8 @@ export default class Nav extends Component {
             msg: '',
             collapsed: false,
             rotulo: 'Inicio',
+            username: '',
+            email: '',
         };
 
         this.showingMenu = this.showingMenu.bind(this);
@@ -65,6 +67,20 @@ export default class Nav extends Component {
         } else if (msg) {
             return <p>Issa porra</p>
         }
+    }
+
+    componentDidMount() {
+        let request = {
+            method: 'POST',
+        }
+        fetch('/perfil/recover-userinfo', request)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    username: data.username,
+                    email: data.email,
+                });
+            });
     }
 
     render() {
@@ -230,8 +246,8 @@ export default class Nav extends Component {
                                         </div>
                                     </Link>
                                     <div className="name-job">
-                                        <div className="profile_name">Rex</div>
-                                        <div className="job">Desarrollador</div>
+                                        <div className="profile_name">{ this.state.username }</div>
+                                        <div className="job">{ this.state.email }</div>
                                     </div>
                                     <i
                                         className='bx bx-log-out'

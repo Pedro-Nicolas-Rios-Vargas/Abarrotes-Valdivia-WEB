@@ -9,6 +9,10 @@ class User:
 
 
 class UserSerializer(serializers.Serializer):
-    username = serializers.CharField(max_length=255)
+    username = serializers.CharField(max_length=16)
     pwd = serializers.CharField(max_length=16)
-    email = serializers.EmailField(max_length=255)
+    email = serializers.EmailField(max_length=64)
+
+
+class PwdSerializer(serializers.Serializer):
+    pwd = serializers.CharField(max_length=16)

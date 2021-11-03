@@ -877,3 +877,8 @@ label.titulo-input-perfil {
     position: static;
     font-size: 14px;
 }
+
+.accept-Valid {
+    border: 2px solid #023A01;
+    background-color: #56FF005A;
+}
