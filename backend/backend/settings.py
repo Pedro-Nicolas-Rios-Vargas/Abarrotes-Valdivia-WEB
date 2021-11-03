@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'sellLog.apps.SelllogConfig',
     'login.apps.LoginConfig',
     'logout.apps.LogoutConfig',
-    'cuenta.apps.CuentaConfig'
+    'cuenta.apps.CuentaConfig',
+    'socketREST.apps.SocketrestConfig',
+    'perfilUsuario.apps.PerfilusuarioConfig',
 ]
 
 MIDDLEWARE = [

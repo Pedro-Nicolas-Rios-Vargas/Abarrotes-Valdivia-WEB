@@ -22,6 +22,8 @@ export default class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
         this.handleErrorDiv = this.handleErrorDiv.bind(this);
+        this.handleInfoMsgDiv = this.handleInfoMsgDiv.bind(this);
+        this.recoveringAccess = this.recoveringAccess.bind(this);
     }
 
     handleUsername(event) {
@@ -39,9 +41,16 @@ export default class Login extends Component {
     handleErrorDiv() {
         let errorTag = document.querySelector(".error");
         errorTag.classList.toggle("invisible", false);
+        errorTag.classList.toggle("info-msg", false);
     }
 
-    handleSubmit(event) {
+    handleInfoMsgDiv() {
+        let errorTag = document.querySelector(".error");
+        errorTag.classList.toggle("invisible", false);
+        errorTag.classList.toggle("info-msg", true);
+    }
+
+    handleSubmit() {
         if (!this.state.username) {
             console.log('Username esta vacio')
             this.setState({
@@ -86,13 +95,38 @@ export default class Login extends Component {
             return <Redirect to="/home/"/>
         } else if (msg) {
             return (
-                <div className="error invisible">
+                <div className="error info-msg invisible">
                     <strong>
                         { msg }
                     </strong>
                 </div>
             )
         }
+    }
+
+    recoveringAccess() {
+        let request = {
+            method: 'POST',
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                msg: 'Neovim<3',
+            })
+        };
+        fetch('login/recover-pass', request)
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data.Mensaje);
+
+                if (data.Mensaje === 'Enviado') {
+                    this.setState({
+                        msg: 'Se le ha enviado un mensaje a su correo electronico.'
+                    });
+                    this.handleInfoMsgDiv();
+                }
+            });
+        // TODO: A fetch to recover the password and username.
     }
 
     render() {
@@ -133,10 +167,19 @@ export default class Login extends Component {
                         <label htmlFor="password">Contraseña</label>
                     </div>
                 </form>
+                <div>
+                    <button
+                        type="button"
+                        className="forgotten-pass"
+                        onClick={ () => this.recoveringAccess() }
+                    >
+                        Olvide mi contraseña
+                    </button>
+                </div>
                 <div className="footer">
                     <button
                         className="btn"
-                        onClick={ e => this.handleSubmit(e) }>
+                        onClick={ () => this.handleSubmit() }>
                         Confirmar
                     </button>
                 </div>

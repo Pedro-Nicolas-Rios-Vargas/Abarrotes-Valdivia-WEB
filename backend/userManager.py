@@ -13,6 +13,18 @@ class UserData:
 
         return user
 
+    def changeUserInfo(self, username, pwd, email):
+        if self.user_data['username'] != username:
+            self.user_data['username'] = username
+
+        if self.user_data['password'] != pwd:
+            self.user_data['password'] = pwd
+
+        if self.user_data['email'] != email:
+            self.user_data['email'] = email
+
+        self._register_change()
+
     def changeLoggedStatusToTrue(self):
         if self.user_data['Logged'] is False:
             self.user_data['Logged'] = True

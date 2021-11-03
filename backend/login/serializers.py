@@ -12,3 +12,7 @@ class User:
 class UserSerializer(serializers.Serializer):
     username = serializers.CharField(max_length=255)
     pwd = serializers.CharField(max_length=16)
+
+
+class RecoveringPassword(serializers.Serializer):
+    msg = serializers.CharField(max_length=255)

@@ -825,3 +825,55 @@ input[type="file"]:hover{
   text-decoration: none;
   background-color: grey;
 }
+
+section.main-content canvas {
+  margin: 10px;
+  border: 2px solid #313131;
+  width: 404px;
+  height: 404px;
+  /*background-color: #FFFFFF;*/
+}
+
+div.fechas {
+    margin-top: 20px;
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+h1 {
+    color: #FFFFFF;
+    text-align: center;
+}
+
+label.reportes-label {
+    position: static;
+}
+
+.forgotten-pass {
+    border: none;
+    background-color: #00000000;
+    text-decoration: underline;
+    color: #FFFFFF;
+    margin-bottom: 5px;
+}
+
+.forgotten-pass:hover {
+    cursor: pointer;
+    color: #7a52ae;
+}
+
+.forgotten-pass:active {
+    color: #b276ff;
+}
+
+.info-msg {
+    border: 2px solid #F5F000;
+    background-color: #FFED005A;
+}
+
+label.titulo-input-perfil {
+    position: static;
+    font-size: 14px;
+}

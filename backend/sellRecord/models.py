@@ -3,6 +3,7 @@ from django.db import models
 # Create your models here.
 class SellRecord(models.Model):
     class Meta:
+        db_table = 'sellrecord_sellrecord'
         unique_together = (('sellId','clientId'),)
     sellId = models.AutoField(primary_key=True)
     clientId = models.ForeignKey('cliente.Cliente', on_delete=models.CASCADE)

@@ -7,6 +7,9 @@ choices_type = (
 )
 
 class Producto(models.Model):
+    class Meta:
+        db_table = 'producto_producto'
+
     prodId = models.CharField(primary_key=True, max_length=128)
     prodName = models.CharField(max_length=64, null=False)
     sellPrice = models.DecimalField(max_digits=6, decimal_places=2, null=False)
