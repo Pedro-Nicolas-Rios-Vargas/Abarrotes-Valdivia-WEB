@@ -86,8 +86,8 @@ export default class ProvGet extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((prov) =>
             <tr key={prov.provrId}>
-                <td>{prov.provName}</td>
-                <td>{prov.provPhoneNum}</td>
+                <td className="child2">{prov.provName}</td>
+                <td className="child2">{prov.provPhoneNum}</td>
             </tr>
         );
 

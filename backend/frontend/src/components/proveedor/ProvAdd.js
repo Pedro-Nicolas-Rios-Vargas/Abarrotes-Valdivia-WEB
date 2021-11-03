@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LabelError from '../LabelError';
 
 export default class ClienteAdd extends Component {
     defaultName = ""
@@ -8,6 +9,9 @@ export default class ClienteAdd extends Component {
         this.state = {
             provName: this.defaultName,
             provPhoneNum: this.defaultPhoneNum,
+            errorNombre: "hidden",
+            errorTelefono: "hidden",
+            msmTelefono: "",
         }
 
         this.AddProv = this.AddProv.bind(this);
@@ -19,6 +23,7 @@ export default class ClienteAdd extends Component {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
             this.setState({
                 provName: e.target.value,
+                errorNombre: "hidden",
             });
         } else {
             this.setState({
@@ -31,6 +36,7 @@ export default class ClienteAdd extends Component {
         if (/^(\d{0,10})?$/.test(e.target.value)) {
             this.setState({
                 provPhoneNum: e.target.value,
+                errorTelefono: "hidden",
             });
         } else {
             this.setState({
@@ -62,10 +68,23 @@ export default class ClienteAdd extends Component {
                     provPhoneNum: "",
                 });
             } else {
-                alert("Número de telefono incompleto. Por favor, complételo")
+                this.setState({
+                    errorTelefono: "",
+                    msmTelefono: "Por favor, ingrese un número de teléfono de 10 dígitos",
+                });
             }
         } else {
-            alert("No se puede agregar un Proveedor sin nombre o número de teléfono")
+            if (this.state.provName === "") {
+                this.setState({
+                    errorNombre: "",
+                });
+            }
+            if (this.state.provPhoneNum === "") {
+                this.setState({
+                    errorTelefono: "",
+                    msmTelefono: "Por favor, ingrese un número de teléfono",
+                });
+            }
         }
     }
 
@@ -77,6 +96,7 @@ export default class ClienteAdd extends Component {
                 </h2>
                 <form>
                     <div className="group">
+                        <LabelError visibility={this.state.errorNombre} msm={"Por favor, ingrese el nombre del proveedor"} />
                         <input type="text" required name="provName" value={this.state.provName} onChange={e => this.getNameProv(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
@@ -84,6 +104,7 @@ export default class ClienteAdd extends Component {
                     </div>
 
                     <div className="group">
+                        <LabelError visibility={this.state.errorTelefono} msm={this.state.msmTelefono} />
                         <input type="text" required name="provPhoneNum" value={this.state.provPhoneNum} onChange={e => this.getprovPhoneNum(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>

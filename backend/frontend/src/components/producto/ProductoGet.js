@@ -119,11 +119,11 @@ export default class ProductoGet extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.prodId}>
-                <td>{clien.prodName}</td>
-                <td>{clien.existencia}</td>
-                <td>{clien.sellPrice}</td>
-                <td>{clien.stock}</td>
-                <td>{clien.presentacion}</td>
+                <td className="child2" >{clien.prodName}</td>
+                <td className="child2">{clien.existencia}</td>
+                <td className="child1">${clien.sellPrice}</td>
+                <td className="child2" >{clien.stock}</td>
+                <td className="child2">{clien.presentacion}</td>
             </tr>
         );
 

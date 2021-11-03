@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LabelError from '../LabelError';
 
 export default class ProvModi extends Component {
     constructor(props) {
@@ -10,7 +11,10 @@ export default class ProvModi extends Component {
             provrId: 0,
             provName: "",
             provPhoneNum: "",
-            buscador: ""
+            buscador: "",
+            errorNombre: "hidden",
+            errorTelefono: "hidden",
+            msmTelefono: "",
         };
         this.getProvData = this.getProvData.bind(this);
         this.modiData = this.modiData.bind(this);
@@ -27,13 +31,15 @@ export default class ProvModi extends Component {
     getBuscador(e) {
         this.setState({
             buscador: e.target.value,
+            errorNombre: "hidden",
         });
         this.buscar(e);
     }
 
     getprovrId(value) {
         this.setState({
-            provrId: value
+            provrId: value,
+            errorNombre: "hidden",
        });
     }
 
@@ -41,10 +47,12 @@ export default class ProvModi extends Component {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,32}$/.test(value)) {
             this.setState({
                 provName: value,
+                errorNombre: "hidden",
             });
         } else {
             this.setState({
                 provName: this.state.provName,
+                errorNombre: "hidden",
             })
         }
     }
@@ -53,10 +61,12 @@ export default class ProvModi extends Component {
         if (/^(\d{0,10})?$/.test(value)) {
             this.setState({
                 provPhoneNum: value,
+                errorTelefono: "hidden",
             });
         } else {
             this.setState({
                 provPhoneNum: this.state.provPhoneNum,
+                errorTelefono: "hidden",
             })
         }
     }
@@ -92,26 +102,43 @@ export default class ProvModi extends Component {
 
     applyChanges(provrId) {
         if (this.state.provName !== "" && this.state.provPhoneNum !== "") {
-            console.log(provrId)
-            const requiestClient = {
-                method: 'PUT',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    provrId: this.state.provrId,
-                    provName: this.state.provName,
-                    provPhoneNum: this.state.provPhoneNum,
-                }),
-            };
-            fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
-            .then((response) => {
-                    this.getProvData();
+            if (this.state.provPhoneNum.length == 10) {
+                console.log(provrId)
+                const requiestClient = {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        provrId: this.state.provrId,
+                        provName: this.state.provName,
+                        provPhoneNum: this.state.provPhoneNum,
+                    }),
+                };
+                fetch("/proveedor/update-proveedor/"+ provrId, requiestClient)
+                .then((response) => {
+                        this.getProvData();
+                    });
+                { this.setState({ 
+                    show: false,
+                    buscador: "", }) }
+                alert("Datos del proveedor modificados con exito");
+            } else {
+                this.setState({
+                    errorTelefono: "",
+                    msmTelefono: "Por favor, ingrese un número de teléfono de 10 dígitos",
                 });
-            { this.setState({ 
-                show: false,
-                buscador: "", }) }
-            alert("Datos del proveedor modificados con exito");
+            }
         } else  {
-            alert("No se puede modificarr un Proveedor sin nombre o numero de teléfono")
+            if (this.state.provName === "") {
+                this.setState({
+                    errorNombre: "",
+                });
+            }
+            if (this.state.provPhoneNum === "") {
+                this.setState({
+                    errorTelefono: "",
+                    msmTelefono: "Por favor, ingrese un número de teléfono",
+                });
+            }
         }
     }
 
@@ -139,8 +166,8 @@ export default class ProvModi extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((prov) =>
             <tr key={prov.provrId}>
-                <td onClick={() => this.modiData(prov.provrId)}>{prov.provName}</td>
-                <td onClick={() => this.modiData(prov.provrId)}>{prov.provPhoneNum}</td>
+                <td className="child2" onClick={() => this.modiData(prov.provrId)}>{prov.provName}</td>
+                <td className="child2" onClick={() => this.modiData(prov.provrId)}>{prov.provPhoneNum}</td>
             </tr>
         );
 
@@ -174,7 +201,7 @@ export default class ProvModi extends Component {
                                     <div>
                                         <form>
                                         <div className="group">
-                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <LabelError visibility={this.state.errorNombre} msm={"Por favor, ingrese un nombre"} />
                                             <input id='provName' value={this.state.provName}
                                                     onChange={e => this.getprovName(e.target.value)}
                                                     type="text" required />
@@ -184,7 +211,7 @@ export default class ProvModi extends Component {
                                         </div>
 
                                         <div className="group">
-                                            {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                            <LabelError visibility={this.state.errorTelefono} msm={this.state.msmTelefono} />
                                             <input id='provName' value={this.state.provPhoneNum}
                                                    onChange={e => this.getprovPhoneNum(e.target.value)}
                                                     type="text" required />

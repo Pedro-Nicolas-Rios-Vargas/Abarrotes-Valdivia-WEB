@@ -169,16 +169,16 @@ export default class ClientGet extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td onClick={() => this.movementConsult(clien.clientId, clien.nombre_C)}>{clien.nombre_C}</td>
-                <td onClick={() => this.movementConsult(clien.clientId, clien.nombre_C)}>{clien.balance}</td>
+                <td className="child2" onClick={() => this.movementConsult(clien.clientId, clien.nombre_C)}>{clien.nombre_C}</td>
+                <td className="child1" onClick={() => this.movementConsult(clien.clientId, clien.nombre_C)}>${clien.balance}</td>
             </tr>
         );
 
         const movementTable = this.state.movement;
         const tablaModal = movementTable.map((element) =>
             <tr key={element.movementId}>
-                <td>{element.dateTransaction}</td>
-                <td>{element.total}</td>
+                <td className="child2" >{element.dateTransaction}</td>
+                <td className="child1" >${element.total}</td>
             </tr>
         );
 
@@ -199,7 +199,7 @@ export default class ClientGet extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombres</th>
-                            <th className="head">Saldo</th>
+                            <th className="head1">Saldo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -211,8 +211,8 @@ export default class ClientGet extends Component {
                 <table className="table">
                     <thead>
                         <tr>
-                            <th className="head-table">Fecha</th>
-                            <th className="head-table">Cantidad</th>
+                            <th className="head1">Fecha</th>
+                            <th className="head1">Cantidad</th>
                         </tr>
                     </thead>
                     <tbody>

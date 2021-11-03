@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import LabelError from "../LabelError";
+
 
 export default class ProductoModi extends Component {
     constructor(props) {
@@ -13,7 +15,14 @@ export default class ProductoModi extends Component {
             sellPrice: 0.0,
             stock: 0,
             presentacion: 0,
-            buscador: ""
+            buscador: "",
+            errorName: "hidden",
+            errorExistencia: "hidden",
+            errorStock: "hidden",
+            errorPresentacion: "hidden",
+            errorSellPrice: "hidden",
+            errorProdId: "hidden",
+            msmPresentacion: "",
         };
         this.getProductData = this.getProductData.bind(this);
         this.deleteData = this.deleteData.bind(this);
@@ -42,10 +51,12 @@ export default class ProductoModi extends Component {
         if (/^(\d{0,15})?$/.test(value)) {
             this.setState({
                 prodId: value,
+                errorProdId: "hidden",
             });
         } else {
             this.setState({
                 prodId: this.state.prodId,
+                errorProdId: "hidden",
             })
         }
     }
@@ -54,11 +65,13 @@ export default class ProductoModi extends Component {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,64}$/.test(value)) {
             this.setState({
                 prodName: value,
+                errorName: "hidden",
             });
 
         } else {
             this.setState({
                 prodName: this.state.prodName,
+                errorName: "hidden",
             })
         }
     }
@@ -67,10 +80,12 @@ export default class ProductoModi extends Component {
         if (/^(\d{0,2})?$/.test(value)) {
             this.setState({
                 existencia: value,
+                errorExistencia: "hidden",
             });
         } else {
             this.setState({
                 existencia: this.state.existencia,
+                errorExistencia: "hidden",
             })
         }
     }
@@ -79,10 +94,12 @@ export default class ProductoModi extends Component {
         if (/^(\d{0,4})([.]\d{0,2})?$/.test(value)) {
             this.setState({
                 sellPrice: value,
+                errorSellPrice: "hidden",
             });
         } else {
             this.setState({
                 sellPrice: this.state.sellPrice,
+                errorSellPrice: "hidden",
             })
         }
     }
@@ -91,17 +108,20 @@ export default class ProductoModi extends Component {
         if (/^(\d{0,2})?$/.test(value)) {
             this.setState({
                 stock: value,
+                errorStock: "hidden",
             });
         } else {
             this.setState({
                 stock: this.state.stock,
+                errorStock: "hidden",
             })
         }
     }
 
     getpresentacion(value) {
         this.setState({
-            presentacion: value
+            presentacion: value,
+            errorPresentacion: "hidden",
         });
     }
 
@@ -151,8 +171,8 @@ export default class ProductoModi extends Component {
 
     applyChanges(prodId) {
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
-        this.state.presentacion !== "" && this.state.sellPrice !== "" &&
-        this.state.stock !== "" && this.state.prodId !== "") {
+            this.state.presentacion !== "" && this.state.sellPrice !== "" &&
+            this.state.stock !== "" && this.state.prodId !== "") {
             if (this.state.presentacion === "Unidad" || this.state.presentacion === "Kilogramo") {
                 const requiestClient = {
                     method: 'PUT',
@@ -177,14 +197,47 @@ export default class ProductoModi extends Component {
                         show: false,
                         buscador: "",
                     });
-        
+
                 }
                 alert("Datos del producto modificados con exito");
             } else {
-                alert("La presentacion debe ser Unidad o Kilogramo");
+                this.setState({
+                    errorPresentacion: "",
+                    msmPresentacion: "La presentación debe ser unidad o kilogramo",
+                });
             }
         } else {
-            alert("No se puede modificar un Producto sin nombre, existencia, stock, presentacion o precio");
+            if (this.state.prodName === "") {
+                this.setState({
+                    errorName: "",
+                });
+            }
+            if (this.state.existencia === "") {
+                this.setState({
+                    errorExistencia: "",
+                });
+            }
+            if (this.state.stock === "") {
+                this.setState({
+                    errorStock: "",
+                });
+            }
+            if (this.state.presentacion === "") {
+                this.setState({
+                    errorPresentacion: "",
+                    msmPresentacion: "Por favor, ingrese una presentación",
+                });
+            }
+            if (this.state.sellPrice === "") {
+                this.setState({
+                    errorSellPrice: "",
+                });
+            }
+            if (this.state.prodId === "") {
+                this.setState({
+                    errorProdId: "",
+                });
+            }
         }
 
     }
@@ -216,11 +269,11 @@ export default class ProductoModi extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.prodId}>
-                <td onClick={() => this.modiData(clien.prodId)}>{clien.prodName}</td>
-                <td onClick={() => this.modiData(clien.prodId)}>{clien.existencia}</td>
-                <td onClick={() => this.modiData(clien.prodId)}>{clien.sellPrice}</td>
-                <td onClick={() => this.modiData(clien.prodId)}>{clien.stock}</td>
-                <td onClick={() => this.modiData(clien.prodId)}>{clien.presentacion}</td>
+                <td className="child2" onClick={() => this.modiData(clien.prodId)}>{clien.prodName}</td>
+                <td className="child2" onClick={() => this.modiData(clien.prodId)}>{clien.existencia}</td>
+                <td className="child1" onClick={() => this.modiData(clien.prodId)}>${clien.sellPrice}</td>
+                <td className="child2" onClick={() => this.modiData(clien.prodId)}>{clien.stock}</td>
+                <td className="child2" onClick={() => this.modiData(clien.prodId)}>{clien.presentacion}</td>
             </tr>
         );
 
@@ -258,7 +311,7 @@ export default class ProductoModi extends Component {
                                     <div>
                                         <form>
                                             <div className="group">
-                                                {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                                <LabelError visibility={this.state.errorName} msm={"Por favor, ingrese un nombre"} />
                                                 <input id='prodName' value={this.state.prodName}
                                                     onChange={e => this.getprodName(e.target.value)}
                                                     type="text" required />
@@ -268,7 +321,7 @@ export default class ProductoModi extends Component {
                                             </div>
 
                                             <div className="group">
-                                                {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                                <LabelError visibility={this.state.errorExistencia} msm={"Por favor, ingrese una existencia"} />
                                                 <input id='existencia' value={this.state.existencia}
                                                     onChange={e => this.getexistencia(e.target.value)}
                                                     type="text" required />
@@ -278,7 +331,7 @@ export default class ProductoModi extends Component {
                                             </div>
 
                                             <div className="group">
-                                                {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                                <LabelError visibility={this.state.errorSellPrice} msm={"Por favor, ingrese un precio de venta"} />
                                                 <input id='sellPrice' value={this.state.sellPrice}
                                                     onChange={e => this.getsellPrice(e.target.value)}
                                                     type="text" required />
@@ -288,7 +341,7 @@ export default class ProductoModi extends Component {
                                             </div>
 
                                             <div className="group">
-                                                {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                                <LabelError visibility={this.state.errorStock} msm={"Por favor, ingrese un stock"} />
                                                 <input id='stock' value={this.state.stock}
                                                     onChange={e => this.getstock(e.target.value)}
                                                     type="text" required />
@@ -298,7 +351,7 @@ export default class ProductoModi extends Component {
                                             </div>
 
                                             <div className="group">
-                                                {/* Aqui no se si ponerle el estilo de siempre con el placeholder o que asi quede alv */}
+                                                <LabelError visibility={this.state.errorPresentacion} msm={this.state.msmPresentacion} />
                                                 <input id='presentacion' list="tipo-presentacion" autoComplete="off" value={this.state.presentacion}
                                                     onChange={e => this.getpresentacion(e.target.value)}
                                                     type="text" required />
@@ -310,7 +363,7 @@ export default class ProductoModi extends Component {
                                                 <span className="bar"></span>
                                                 <label>Presentación</label>
                                             </div>
-                                        </form> 
+                                        </form>
                                         <div className="footer">
                                             <button onClick={() => this.applyChanges(this.state.prodId)} className="btn">Guardar Cambios</button>
                                         </div>

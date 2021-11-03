@@ -169,11 +169,11 @@ export default class ProductoDelete extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((product) =>
             <tr key={product.prodId}>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.prodName}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.existencia}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.sellPrice}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.stock}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.presentacion}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.prodName}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.existencia}</td>
+                <td className="child1" onClick={() => this.deleteData(product.prodId, product.prodName)}>${product.sellPrice}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.stock}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.presentacion}</td>
             </tr>
         );
 

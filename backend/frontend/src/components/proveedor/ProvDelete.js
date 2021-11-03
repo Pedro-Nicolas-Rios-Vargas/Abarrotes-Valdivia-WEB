@@ -104,8 +104,8 @@ export default class ProvGet extends Component {
         const provData = this.state.dataTable;
         const rows = provData.map((prov) =>
             <tr key={prov.provrId}>
-                <td onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provName}</td>
-                <td onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provPhoneNum}</td>
+                <td className="child2" onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provName}</td>
+                <td className="child2" onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provPhoneNum}</td>
             </tr>
         );
 

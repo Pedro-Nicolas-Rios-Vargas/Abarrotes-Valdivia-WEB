@@ -100,7 +100,7 @@ export default class ClienteAdd extends Component {
 
                 <form>
                     <div className="group">
-                        <LabelError visibility={this.state.labelErrorVisibilityCliente} msm={"Falta el nombre del cliente"} />
+                        <LabelError visibility={this.state.labelErrorVisibilityCliente} msm={"Por favor, ingrese el nombre del cliente"} />
                         <input type="text" name="nombre_C" value={this.state.nombre_C} required onChange={e => this.getNameClient(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>

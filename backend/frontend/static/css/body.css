@@ -1,5 +1,7 @@
 .body {
-    background-image: url('https://img.wallpapersafari.com/desktop/1920/1080/87/24/RHSVd0.jpg')
+    background-image: url('https://img.wallpapersafari.com/desktop/1920/1080/87/24/RHSVd0.jpg');
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 /* Google Fonts Import Link */

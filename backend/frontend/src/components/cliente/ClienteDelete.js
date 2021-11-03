@@ -110,8 +110,8 @@ export default class ClienteDelete extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.nombre_C}</td>
-                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.balance}</td>
+                <td className="child2" onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.nombre_C}</td>
+                <td  className="child1"onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >${clien.balance}</td>
             </tr>
         );
 
@@ -131,7 +131,7 @@ export default class ClienteDelete extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombre</th>
-                            <th className="head">Saldo</th>
+                            <th className="head1">Saldo</th>
                         </tr>
                     </thead>
                     <tbody>
