@@ -121,7 +121,7 @@ export default class Login extends Component {
 
                 if (data.Mensaje === 'Enviado') {
                     this.setState({
-                        msg: 'Se le ha enviado un mensaje a su correo electronico.'
+                        msg: 'Se ha enviado un mensaje a su correo electronico.'
                     });
                     this.handleInfoMsgDiv();
                 }
