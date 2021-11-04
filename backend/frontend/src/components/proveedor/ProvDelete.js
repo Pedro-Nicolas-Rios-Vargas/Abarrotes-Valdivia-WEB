@@ -80,18 +80,23 @@ export default class ProvGet extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.provName.toLowerCase();
-            if (str.includes(nombre)) {
-                auxData.push(element);
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
+            this.setState({ buscador: e.target.value });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.provName.toLowerCase();
+                if (str.includes(nombre)) {
+                    auxData.push(element);    
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ buscador: this.state.buscador });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
 
@@ -99,8 +104,8 @@ export default class ProvGet extends Component {
         const provData = this.state.dataTable;
         const rows = provData.map((prov) =>
             <tr key={prov.provrId}>
-                <td onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provName}</td>
-                <td onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provPhoneNum}</td>
+                <td className="child2" onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provName}</td>
+                <td className="child2" onClick={() => this.deleteData(prov.provrId, prov.provName)}>{prov.provPhoneNum}</td>
             </tr>
         );
 

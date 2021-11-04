@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import makeCancelable from '../../utils/callBarcodeSocket'
+import LabelError from '../LabelError';
 
 export default class ProductoAdd extends Component {
     defaultName = ""
@@ -19,6 +20,13 @@ export default class ProductoAdd extends Component {
             sellPrice: this.defualtsellPrice,
             prodId: this.defaultId,
             waitingBarCode: false,
+            errorName: "hidden",
+            errorExistencia: "hidden",
+            errorStock: "hidden",
+            errorPresentacion: "hidden",
+            errorSellPrice: "hidden",
+            errorProdId: "hidden",
+            msmPresentacion: "",
         }
 
         this.AddClient = this.AddClient.bind(this);
@@ -35,23 +43,27 @@ export default class ProductoAdd extends Component {
         if (/^(\d{0,15})?$/.test(e.target.value)) {
             this.setState({
                 prodId: e.target.value,
+                errorProdId: "hidden",
             });
         } else {
             this.setState({
                 prodId: this.state.prodId,
+                errorProdId: "hidden",
             })
         }
     }
 
     getNameProducto(e) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,64}$/.test(e.target.value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
             this.setState({
                 prodName: e.target.value,
+                errorName: "hidden",
             });
 
         } else {
             this.setState({
                 prodName: this.state.prodName,
+                errorName: "hidden",
             })
         }
     }
@@ -60,10 +72,12 @@ export default class ProductoAdd extends Component {
         if (/^(\d{0,2})?$/.test(e.target.value)) {
             this.setState({
                 existencia: e.target.value,
+                errorExistencia: "hidden",
             });
         } else {
             this.setState({
                 existencia: this.state.existencia,
+                errorExistencia: "hidden",
             })
         }
     }
@@ -72,10 +86,12 @@ export default class ProductoAdd extends Component {
         if (/^(\d{0,2})?$/.test(e.target.value)) {
             this.setState({
                 stock: e.target.value,
+                errorStock: "hidden",
             });
         } else {
             this.setState({
                 stock: this.state.stock,
+                errorStock: "hidden",
             })
         }
     }
@@ -83,6 +99,7 @@ export default class ProductoAdd extends Component {
     getpresentacion(e) {
         this.setState({
             presentacion: e.target.value,
+            errorPresentacion: "hidden",
         });
     }
 
@@ -90,10 +107,12 @@ export default class ProductoAdd extends Component {
         if (/^(\d{0,4})([.]\d{0,2})?$/.test(e.target.value)) {
             this.setState({
                 sellPrice: e.target.value,
+                errorSellPrice: "hidden",
             });
         } else {
             this.setState({
                 sellPrice: this.state.sellPrice,
+                errorSellPrice: "hidden",
             })
         }
     }
@@ -102,32 +121,70 @@ export default class ProductoAdd extends Component {
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
             this.state.presentacion !== "" && this.state.sellPrice !== "" &&
             this.state.stock !== "" && this.state.prodId !== "") {
-            const requiestProducto = {
-                method: 'POST',
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    prodId: this.state.prodId,
-                    prodName: this.state.prodName,
-                    existencia: this.state.existencia,
-                    stock: this.state.stock,
-                    presentacion: this.state.presentacion,
-                    sellPrice: this.state.sellPrice,
-                }),
-            };
-            fetch("/producto/add-producto", requiestProducto)
-                .then((response) => response.json())
-                .then((data) => console.log(data));
-            alert("Producto agregado con éxito");
-            this.setState({
-                prodName: "",
-                existencia: "",
-                stock: "",
-                presentacion: "",
-                sellPrice: "",
-                prodId: "",
-            })
+                if (this.state.presentacion === "Unidad" || this.state.presentacion === "Kilogramo") {
+                    const requiestProducto = {
+                        method: 'POST',
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            prodId: this.state.prodId,
+                            prodName: this.state.prodName,
+                            existencia: this.state.existencia,
+                            stock: this.state.stock,
+                            presentacion: this.state.presentacion,
+                            sellPrice: this.state.sellPrice,
+                        }),
+                    };
+                    fetch("/producto/add-producto", requiestProducto)
+                        .then((response) => response.json())
+                        .then((data) => console.log(data));
+                    alert("Producto agregado con éxito");
+                    this.setState({
+                        prodName: "",
+                        existencia: "",
+                        stock: "",
+                        presentacion: "",
+                        sellPrice: "",
+                        prodId: "",
+                    })
+                } else {
+                    this.setState({
+                        errorPresentacion: "",
+                        msmPresentacion: "La presentación debe ser unidad o kilogramo",
+                    });
+                }
         } else {
-            alert("No se puede agregar un Producto sin nombre, existencia, stock, presentación o precio");
+            if (this.state.prodName === "") {
+                this.setState({
+                    errorName: "",
+                });
+            }
+            if (this.state.existencia === "") {
+                this.setState({
+                    errorExistencia: "",
+                });
+            }
+            if (this.state.stock === "") {
+                this.setState({
+                    errorStock: "",
+                });
+            }
+            if (this.state.presentacion === "") {
+                this.setState({
+                    errorPresentacion: "",
+                    msmPresentacion: "Por favor, ingrese una presentación",
+                });
+            }
+            if (this.state.sellPrice === "") {
+                this.setState({
+                    errorSellPrice: "",
+                });
+            }
+            if (this.state.prodId === "") {
+                this.setState({
+                    errorProdId: "",
+                });
+            }
+
         }
     }
 
@@ -188,6 +245,7 @@ export default class ProductoAdd extends Component {
 
                 <form>
                     <div className="group">
+                        <LabelError visibility={this.state.errorProdId} msm={"Por favor, ingrese un codigo de barrar o un id"}/>
                         <input type="text" required name="prodId" value={this.state.prodId} onChange={e => this.getprodId(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
@@ -195,6 +253,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
+                        <LabelError visibility={this.state.errorName} msm={"Por favor, ingrese un nombre"}/>
                         <input type="text" required name="prodName" value={this.state.prodName} onChange={e => this.getNameProducto(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
@@ -202,6 +261,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
+                        <LabelError visibility={this.state.errorExistencia} msm={"Por favor, ingrese una existencia"}/>
                         <input type="text" required name="existencia" value={this.state.existencia} onChange={e => this.getexistencia(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
@@ -209,6 +269,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
+                        <LabelError visibility={this.state.errorStock} msm={"Por favor, ingrese un stock"}/>
                         <input type="text" required name="stock" value={this.state.stock} onChange={e => this.getstock(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
@@ -216,6 +277,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
+                        <LabelError visibility={this.state.errorPresentacion} msm={this.state.msmPresentacion}/>
                         <input type="text" list="tipo-presentacion" autoComplete="off" required name="presentacion" value={this.state.presentacion} onChange={e => this.getpresentacion(e)} />
                         <datalist id="tipo-presentacion">
                             <option value="Unidad"></option>
@@ -227,6 +289,7 @@ export default class ProductoAdd extends Component {
                     </div>
 
                     <div className="group">
+                        <LabelError visibility={this.state.errorSellPrice} msm={"Por favor, ingrese un precio de venta"}/>
                         <input type="text" required name="sellPrice" value={this.state.sellPrice} onChange={e => this.getsellPrice(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>

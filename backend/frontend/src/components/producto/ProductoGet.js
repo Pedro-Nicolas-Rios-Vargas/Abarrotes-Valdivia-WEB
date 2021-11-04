@@ -90,21 +90,28 @@ export default class ProductoGet extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.prodName.toLowerCase();
-            const code = element.prodId.toLowerCase();
-            // Busqueda dinamica con nombre y codigo
-            if (str.includes(nombre) || code.includes(nombre)) {
-                console.log(code)
-                auxData.push(element);    
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
+            this.setState({
+                prodName: e.target.value
+            });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.prodName.toLowerCase();
+                const code = element.prodId.toLowerCase();
+                // Busqueda dinamica con nombre y codigo
+                if (str.includes(nombre) || code.includes(nombre)) {
+                    console.log(code)
+                    auxData.push(element);    
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ prodName: this.state.prodName });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
 
@@ -112,11 +119,11 @@ export default class ProductoGet extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.prodId}>
-                <td>{clien.prodName}</td>
-                <td>{clien.existencia}</td>
-                <td>{clien.sellPrice}</td>
-                <td>{clien.stock}</td>
-                <td>{clien.presentacion}</td>
+                <td className="child2" >{clien.prodName}</td>
+                <td className="child2">{clien.existencia}</td>
+                <td className="child1">${clien.sellPrice}</td>
+                <td className="child2" >{clien.stock}</td>
+                <td className="child2">{clien.presentacion}</td>
             </tr>
         );
 
@@ -126,7 +133,7 @@ export default class ProductoGet extends Component {
                 </h2>
                 <form>
                     <div className="group">
-                        <input type="text" required  onChange={e => this.buscar(e)} />
+                        <input type="text" required value={this.state.prodName}  onChange={e => this.buscar(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>

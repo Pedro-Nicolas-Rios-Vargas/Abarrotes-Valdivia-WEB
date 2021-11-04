@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LabelError from "../LabelError";
 
 export default class ClientModi extends Component {
     constructor(props) {
@@ -12,6 +13,8 @@ export default class ClientModi extends Component {
             balance: 0.0,
             buscador: "",
             balancePreModi: 0.0,
+            errorNombre: "hidden",
+            errorSaldo: "hidden",
         };
         this.getClientData = this.getClientData.bind(this);
         this.deleteData = this.deleteData.bind(this);
@@ -29,6 +32,7 @@ export default class ClientModi extends Component {
     getBuscador(e) {
         this.setState({
             buscador: e.target.value,
+            errorNombre: "hidden",
         });
         this.buscar(e);
     }
@@ -44,11 +48,13 @@ export default class ClientModi extends Component {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ]{0,16}$/.test(value)) {
             this.setState({
                 nombre_C: value,
+                errorNombre: "hidden",
             });
 
         } else {
             this.setState({
-                balance: this.state.balance,
+                nombre_C: this.state.nombre_C,
+                errorNombre: "hidden",
             })
         }
     }
@@ -58,10 +64,12 @@ export default class ClientModi extends Component {
         if (/^([-]?\d*)([.]\d{0,2})?$/.test(value)) {
             this.setState({
                 balance: value,
+                errorSaldo: "hidden",
             });
         } else {
             this.setState({
                 balance: this.state.balance,
+                errorSaldo: "hidden",
             })
         }
         if (this.state.balance.length === 1) {
@@ -154,31 +162,45 @@ export default class ClientModi extends Component {
             });
             alert("Datos del cliente modificados con exito")
         } else {
-            alert("No se puede agregar un cliente sin nombre o sin saldo")
+            if (this.state.nombre_C === "") {
+                this.setState({
+                    errorNombre: "",
+                });
+            }
+            if (this.state.balance === "") {
+                this.setState({
+                    errorSaldo: "",
+                });
+            }
         }
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.nombre_C.toLowerCase();
-            if (str.includes(nombre)) {
-                auxData.push(element);
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
+            this.setState({ buscador: e.target.value });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.nombre_C.toLowerCase();
+                if (str.includes(nombre)) {
+                    auxData.push(element);
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ buscador: this.state.buscador });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td className="tableResponse" onClick={() => this.modiData(clien.clientId)}>{clien.nombre_C}</td>
-                <td className="tableResponse" onClick={() => this.modiData(clien.clientId)}>{clien.balance}</td>
+                <td className="child2" onClick={() => this.modiData(clien.clientId)}>{clien.nombre_C}</td>
+                <td className="child1"  onClick={() => this.modiData(clien.clientId)}>${clien.balance}</td>
             </tr>
         );
 
@@ -198,7 +220,7 @@ export default class ClientModi extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombre</th>
-                            <th className="head">Saldo</th>
+                            <th className="head1">Saldo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -214,6 +236,7 @@ export default class ClientModi extends Component {
                                         <form>
                                             <div className="group">
                                                 {/* <input id='clientId' value={this.state.clientId} onChange={e => this.getclientId(e.target.value)} type="text" placeholder="ID" disabled></input> */}
+                                                <LabelError visibility={this.state.errorNombre} msm={"Por favor, ingrese el nombre del cliente"} />
                                                 <input id='nombre_C' value={this.state.nombre_C}
                                                     onChange={e => this.getnombre_C(e.target.value)}
                                                     type="text" required />
@@ -223,6 +246,7 @@ export default class ClientModi extends Component {
                                             </div>
 
                                             <div className="group">
+                                            <LabelError visibility={this.state.errorSaldo} msm={"Falta el saldo del cliente"} />
                                                 <input id='balance' value={this.state.balance}
                                                     onChange={e => this.getbalance(e.target.value)}
                                                     type="text" required></input>

@@ -60,18 +60,25 @@ export default class ProvGet extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.provName.toLowerCase();
-            if (str.includes(nombre)) {
-                auxData.push(element);    
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
+            this.setState({
+                provName: e.target.value,
+            });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.provName.toLowerCase();
+                if (str.includes(nombre)) {
+                    auxData.push(element);    
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ provName: this.state.provName });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
 
@@ -79,8 +86,8 @@ export default class ProvGet extends Component {
         const clienData = this.state.dataTable;
         const rows = clienData.map((prov) =>
             <tr key={prov.provrId}>
-                <td>{prov.provName}</td>
-                <td>{prov.provPhoneNum}</td>
+                <td className="child2">{prov.provName}</td>
+                <td className="child2">{prov.provPhoneNum}</td>
             </tr>
         );
 
@@ -89,7 +96,7 @@ export default class ProvGet extends Component {
                 <h2>Consultar Proveedor</h2>
                 <form>
                     <div className="group">
-                        <input type="text" required onChange={e => this.buscar(e)}/>
+                        <input type="text" required value={this.state.provName} onChange={e => this.buscar(e)}/>
                         <span className="highlight"></span>
                         <span className="bar"></span>
                         <label>Nombre</label>

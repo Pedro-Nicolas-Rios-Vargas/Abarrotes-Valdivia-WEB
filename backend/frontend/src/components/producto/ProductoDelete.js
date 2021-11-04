@@ -143,30 +143,37 @@ export default class ProductoDelete extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.prodName.toLowerCase();
-            const code = element.prodId.toLowerCase();
-            if (str.includes(nombre) || code.includes(nombre)) {
-                auxData.push(element);
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
+            this.setState({
+                buscador: e.target.value,
+            });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.prodName.toLowerCase();
+                const code = element.prodId.toLowerCase();
+                if (str.includes(nombre) || code.includes(nombre)) {
+                    auxData.push(element);
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ buscador: this.state.buscador });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((product) =>
             <tr key={product.prodId}>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.prodName}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.existencia}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.sellPrice}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.stock}</td>
-                <td onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.presentacion}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.prodName}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.existencia}</td>
+                <td className="child1" onClick={() => this.deleteData(product.prodId, product.prodName)}>${product.sellPrice}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.stock}</td>
+                <td className="child2" onClick={() => this.deleteData(product.prodId, product.prodName)}>{product.presentacion}</td>
             </tr>
         );
 

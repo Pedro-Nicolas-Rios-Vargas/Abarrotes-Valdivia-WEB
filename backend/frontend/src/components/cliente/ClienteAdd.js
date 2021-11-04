@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LabelError from '../LabelError';
 
 
 export default class ClienteAdd extends Component {
@@ -9,6 +10,7 @@ export default class ClienteAdd extends Component {
         this.state = {
             nombre_C: this.defaultName,
             balance: this.defualtBalance,
+            labelErrorVisibilityCliente: "hidden",
         }
 
         this.AddClient = this.AddClient.bind(this);
@@ -17,14 +19,16 @@ export default class ClienteAdd extends Component {
     }
 
     getNameClient(e) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ]{0,16}$/.test(e.target.value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
             this.setState({
                 nombre_C: e.target.value,
+                labelErrorVisibilityCliente: "hidden",
             });
 
         } else {
             this.setState({
-                balance: this.state.balance,
+                nombre_C: this.state.nombre_C,
+                labelErrorVisibilityCliente: "hidden",
             })
         }
     }
@@ -43,7 +47,7 @@ export default class ClienteAdd extends Component {
 
     AddClient() {
         //console.log(this)
-        if(this.state.nombre_C !== "" && this.state.balance !== ""){
+        if (this.state.nombre_C !== "" && this.state.balance !== "") {
             console.log(this.state.nombre_C)
             const requiestClient = {
                 method: 'POST',
@@ -57,12 +61,12 @@ export default class ClienteAdd extends Component {
                 .then((response) => response.json())
                 .then((data) => console.log(data));
             alert("Se agrego el cliente")
-            this.setState({ 
-                nombre_C:"",
-                balance:"",
+            this.setState({
+                nombre_C: "",
+                balance: "",
             })
         } else {
-            if  (this.state.nombre_C !== "") {
+            if (this.state.nombre_C !== "") {
                 const requiestClient = {
                     method: 'POST',
                     headers: { "Content-Type": "application/json" },
@@ -75,12 +79,14 @@ export default class ClienteAdd extends Component {
                     .then((response) => response.json())
                     .then((data) => console.log(data));
                 alert("Se agrego el cliente")
-                this.setState({ 
-                    nombre_C:"",
-                    balance:"",
+                this.setState({
+                    nombre_C: "",
+                    balance: "",
                 })
             } else {
-                alert("No se puede agregar un cliente sin nombre")
+                this.setState({
+                    labelErrorVisibilityCliente: "",
+                });
             }
         }
     }
@@ -94,6 +100,7 @@ export default class ClienteAdd extends Component {
 
                 <form>
                     <div className="group">
+                        <LabelError visibility={this.state.labelErrorVisibilityCliente} msm={"Por favor, ingrese el nombre del cliente"} />
                         <input type="text" name="nombre_C" value={this.state.nombre_C} required onChange={e => this.getNameClient(e)} />
                         <span className="highlight"></span>
                         <span className="bar"></span>

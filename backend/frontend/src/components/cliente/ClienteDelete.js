@@ -87,26 +87,31 @@ export default class ClienteDelete extends Component {
     }
 
     buscar(e) {
-        const nombre = e.target.value.toLowerCase();
-        const auxData = []
-        for (let i = 0; i < this.state.data.length; i++) {
-            const element = this.state.data[i];
-            const str = element.nombre_C.toLowerCase();
-            if (str.includes(nombre)) {
-                auxData.push(element);    
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
+            this.setState({ buscador: e.target.value });
+            const nombre = e.target.value.toLowerCase();
+            const auxData = []
+            for (let i = 0; i < this.state.data.length; i++) {
+                const element = this.state.data[i];
+                const str = element.nombre_C.toLowerCase();
+                if (str.includes(nombre)) {
+                    auxData.push(element);
+                }
             }
+            this.setState({
+                dataTable: auxData,
+            });
+        } else {
+            this.setState({ buscador: this.state.buscador });
         }
-        this.setState({
-            dataTable: auxData,
-        });
     }
 
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>
             <tr key={clien.clientId}>
-                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.nombre_C}</td>
-                <td onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.balance}</td>
+                <td className="child2" onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >{clien.nombre_C}</td>
+                <td  className="child1"onClick={() => this.deleteData(clien.clientId, clien.nombre_C, clien.balance)} >${clien.balance}</td>
             </tr>
         );
 
@@ -126,7 +131,7 @@ export default class ClienteDelete extends Component {
                     <thead>
                         <tr>
                             <th className="head">Nombre</th>
-                            <th className="head">Saldo</th>
+                            <th className="head1">Saldo</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -61,12 +61,11 @@ def update(request, pk=None):
         return Response({'Bad Request': 'Invalid data...'}, status=status.HTTP_400_BAD_REQUEST)
     return Response({'ERROR':'No existe ningun cliente con esos datos'}, status=status.HTTP_404_NOT_FOUND)
 
-
 @api_view(['GET'])
 def backUp(request):
     DB_HOST = 'localhost'
     DB_USER = 'root'
-    DB_USER_PASSWORD = 'JV_DB$Pr0#bl1&'
+    DB_USER_PASSWORD = '123another890@@'
     DB_NAME = 'abarrotesvaldiviaWEB'
 
     if (platform.system() == "Linux"):
@@ -101,13 +100,13 @@ def backUp(request):
 @api_view(['GET', 'POST'])
 def restore(request):
     DB_USER = 'root'
-    DB_USER_PASSWORD = "'JV_DB$Pr0#bl1&'"
+    DB_USER_PASSWORD = '123another890@@'
     DB_NAME = 'abarrotesvaldiviaWEB'
     BACKUP_PATH = ''
     print(request)
     if (platform.system() == "Linux"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps/" + request.data.get('fileName')
-    elif (platform.system() == "Windows"):
+    elif (platform.system() == "Windows"): 
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps" + "\\" + request.data.get('fileName')
     else:
         BACKUP_PATH = os.getcwd() + "/BackUps"

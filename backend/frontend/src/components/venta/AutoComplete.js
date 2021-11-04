@@ -1,4 +1,5 @@
 import React from "react";
+import LabelError from '../LabelError';
 
 export default class AutoComplete extends React.Component {
     constructor(props) {
@@ -6,9 +7,11 @@ export default class AutoComplete extends React.Component {
         this.state = {
             suggestions: [],
             text: "",
-        }
+            visibility: "",
+            msm: props.msm,
+        };
     }
-
+    
     onTextChanged = (e) => {
         const { item } = this.props;
         const value = e.target.value.toLowerCase();
@@ -26,7 +29,11 @@ export default class AutoComplete extends React.Component {
             //suggestions = item.sort().filter(v => regexp.test(v))
             // console.log(suggestions);
         }
-        this.setState(() => ({ suggestions, text: value }));
+        this.setState(() => ({ 
+            suggestions, 
+            text: value,
+            visibility: "hidden",
+        }));
     }
 
     suggestionsSelected(value) {
@@ -72,7 +79,8 @@ export default class AutoComplete extends React.Component {
     render() {
         return (
             <div className="group">
-                <input ref={input => this.input = input} value={this.state.text} required onChange={this.onTextChanged}  type="text" />
+                <LabelError visibility={this.props.visibility} msm={this.state.msm} />
+                <input ref={input => this.input = input} value={this.state.text} required onChange={this.onTextChanged} type="text" />
                 {this.renderSuggestions()}
                 <span className="highlight"></span>
                 <span className="bar"></span>

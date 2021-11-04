@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import AutoComplete from './AutoComplete';
 import makeCancelable from '../../utils/callBarcodeSocket';
 
@@ -37,6 +37,8 @@ export default class SellAdd extends Component {
             mandarProv: [],
             mandarProductos: [],
             waitingBarCode: false,
+            errorProv: "hidden",
+            errorProducto: "hidden",
         };
 
         this.getProductData = this.getProductData.bind(this);
@@ -242,7 +244,7 @@ export default class SellAdd extends Component {
                         prodId: nuevoProducto.prodId,
                         prodName: nuevoProducto.prodName,
                         existencia: nuevoProducto.existencia,
-                        sellPrice: nuevoProducto.sellPrice,
+                        sellPrice: (nuevoProducto.sellPrice),
                         stock: nuevoProducto.stock,
                         presentacion: nuevoProducto.presentacion,
                         cantidad: 1,
@@ -273,8 +275,8 @@ export default class SellAdd extends Component {
             alert("No hay dinero con el cual cobrar")
         } else {
             this.setState({
-                total: total2,
-                cambio: this.state.aPagar - total2,
+                total: total2.toFixed(2),
+                cambio: (this.state.aPagar - total2).toFixed(2),
             });
         }
     }
@@ -282,11 +284,11 @@ export default class SellAdd extends Component {
     baseState() {
         this.setState(({
             together: [],
-            total: 0,
-            cambio: 0,
+            total: 0.00,
+            cambio: 0.00,
             prov: {},
             showFeriaYmas: false,
-            aPagar: 0,
+            aPagar: 0.00,
             provName: "",
             prodName: "",
             reset: "",
@@ -320,11 +322,21 @@ export default class SellAdd extends Component {
             together: rows,
             dataMostrar: rows2,
         });
+        this.actualizar();
     }
 
     agregar() {
         if (this.state.provName === "" || this.state.prodId === "") {
-            alert("Cliente o producto no seleccionado");
+            if (this.state.provName === "") {
+                this.setState({
+                    errorProv: "",
+                });
+            }
+            if (this.state.prodId === "") {
+                this.setState({
+                    errorProducto: "",
+                });
+            }
         } else {
             this.actualizar();
             this.buscarProducto(this.state.prodId);
@@ -332,7 +344,11 @@ export default class SellAdd extends Component {
             this.setState({
                 showFeriaYmas: true,
                 inputCliente: true,
+                errorProv: "hidden",
+                errorProducto: "hidden",
+                prodId: "",
             });
+            this.clearInput();
         }
     }
 
@@ -480,13 +496,13 @@ export default class SellAdd extends Component {
 
 
         if (continuar) {
-            if (this.state.cambio === 0) {
+            if (this.state.cambio === 0.00) {
                 asyncAll(this.state.prov, this.state.total, together);
                 this.baseState();
                 //En este caso es no se agrega nada a movement y no hay cambio, es una compra normal
-            } else if (this.state.cambio < 0) {
+            } else if (this.state.cambio < 0.00) {
                 alert("No hay dinero suficiente para pagar al proveedor")
-            } else if (this.state.cambio > 0) {
+            } else if (this.state.cambio > 0.00) {
                 alert("El cambio es: " + (this.state.cambio).toString())
                 asyncAll(this.state.prov, this.state.total, together);
                 this.baseState();
@@ -537,14 +553,14 @@ export default class SellAdd extends Component {
 
         const rows = tabla.map((product) =>
             <tr key={product.prodId}>
-                <td>{product.prodName}</td>
-                <td>{product.sellPrice}</td>
-                <td>
+                <td className="child2">{product.prodName}</td>
+                <td className="child2">
                     {product.cantidad}
                     <button id="upCantidad" className="btn btn_controller" onClick={() => this.upCanitdad(product.prodId)}>+</button>
                     <button id="downCantidad" className="btn btn_controller" onClick={() => this.downCanitdad(product.prodId)}>-</button>
                 </td>
-                <td>
+                <td className="child1">${product.sellPrice}</td>
+                <td className="child2">
                     <button onClick={() => this.removeRow(product.prodId)} className="btn btn_confirm">Eliminar</button>
                 </td>
             </tr>
@@ -553,7 +569,7 @@ export default class SellAdd extends Component {
         const apagarCambiante = event => {
 
             if (/^(\d{0,4})([.]\d{0,2})?$/.test(event.target.value)) {
-                const cambio = parseFloat(event.target.value - this.state.total);
+                const cambio = parseFloat(event.target.value - this.state.total).toFixed(2);
                 this.setState({ cambio: cambio, aPagar: event.target.value });
             } else {
                 this.setState({ aPagar: this.state.aPagar })
@@ -564,9 +580,21 @@ export default class SellAdd extends Component {
             <div className="container">
                 <h2>Compras</h2>
                 <form>
-                    <AutoComplete ref={input1 => this.input1 = input1} item={this.state.mandarProv} inputName={"Nombre del Proveedor"} data={{ input: 0, retornoCliente: this.retornoCliente.bind(this) }} />
+                    <AutoComplete ref={input1 => this.input1 = input1} 
+                    item={this.state.mandarProv} 
+                    inputName={"Nombre del Proveedor"} 
+                    data={{ input: 0, retornoCliente: this.retornoCliente.bind(this) }} 
+                    visibility={this.state.errorProv}
+                    msm={"Por favor, ingrese el nombre del proveedor"}
+                    />
 
-                    <AutoComplete ref={input => this.input = input} item={this.state.mandarProductos} inputName={"ID o Nombre del producto"} data={{ input: 1, retornoProducto: this.retornoProducto.bind(this) }} />
+                    <AutoComplete ref={input => this.input = input} 
+                    item={this.state.mandarProductos} 
+                    inputName={"ID o Nombre del producto"} 
+                    data={{ input: 1, retornoProducto: this.retornoProducto.bind(this) }} 
+                    visibility={this.state.errorProducto}
+                    msm={"Por favor, ingrese el ID o el nombre del producto"}
+                    />
                 </form>
                 <div className="footer">
                     <button className="btn" onClick={() => this.agregar()}>Agregar</button>
@@ -579,9 +607,9 @@ export default class SellAdd extends Component {
                             <tr>
                                 <th className="head">Nombre</th>
                                 {/* <th className="head">Precio de compra</th> */}
-                                <th className="head">Precio de compra</th>
-                                <th className="head">Cantidad</th>
-                                <th className="head">Opciones</th>
+                                <th className="head2">Cantidad</th>
+                                <th className="head1">Subtotal</th>
+                                <th className="head3">Opciones</th>
                             </tr>
                         </thead>
                         <tbody>
