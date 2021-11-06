@@ -431,7 +431,7 @@ export default class SellAdd extends Component {
             body: JSON.stringify({
                 clientId: cliente.clientId,
                 dateTransaction: fecha,
-                total: total.toFixed(2),
+                total: total,
             }),
         };
         await fetch("/cuenta/add-movement", movementClient)
@@ -483,7 +483,7 @@ export default class SellAdd extends Component {
                                     prodId: element.prodId,
                                     prodName: element.prodName,
                                     existencia: element.existencia - element.cantidad,
-                                    sellPrice: element.sellPrice,
+                                    sellPrice: (element.sellPrice / 1.20).toFixed(2),
                                     stock: element.stock,
                                     presentacion: element.presentacion
                                 })
