@@ -115,7 +115,7 @@ export default class ReporteVentas extends Component {
         const fechaInicial = this.state.fechaInicial.split('-');
         const fechaFinal = this.state.fechaFinal.split('-');
 
-        if (fechaInicial < fechaFinal) {
+        if (fechaInicial <= fechaFinal) {
 
             if (fechaInicial[0] === fechaFinal[0]) { // Comparacion de años
 
