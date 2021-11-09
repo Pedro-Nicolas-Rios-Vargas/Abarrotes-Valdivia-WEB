@@ -70,10 +70,28 @@ def backUp(request):
 
     if (platform.system() == "Linux"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps"
+        myCNF = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/backend/backend/my.cnf"
     elif (platform.system() == "Windows"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps"
+        myCNF = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\\backend\\backend\\my.cnf"
     else:
         BACKUP_PATH = os.getcwd() + "/BackUps"
+
+    archivo = open(myCNF, "r")
+
+    for linea in archivo:
+        if linea.startswith("user"):
+            DB_USER = linea.split("=")[1]
+            DB_USER = DB_USER.replace("\n", "").strip()
+        if linea.startswith("password"):
+            DB_USER_PASSWORD = linea.split("=")[1]
+            DB_USER_PASSWORD = DB_USER_PASSWORD.replace("\n", "").strip()
+        if linea.startswith("database"):
+            DB_NAME = linea.split("=")[1]
+            DB_NAME = DB_NAME.replace("\n", "").strip()
+    archivo.close()
+
+    
 
     DATETIME = time.strftime('%Y-%m-%d-h%Hm%Ms%S')
     TODAYBACKUPPATH = BACKUP_PATH
@@ -91,6 +109,7 @@ def backUp(request):
     else:
         dumpcmd = "mysqldump -h " + DB_HOST + " -u " + DB_USER + " -p" + DB_USER_PASSWORD + " " + DB_NAME  + " > " + TODAYBACKUPPATH + "/" + DATETIME + ".bak"
 
+    print(dumpcmd)
     os.system(dumpcmd)
 
 
@@ -106,12 +125,27 @@ def restore(request):
     print(request)
     if (platform.system() == "Linux"):
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/BackUps/" + request.data.get('fileName')
+        myCNF = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/backend/backend/my.cnf"
     elif (platform.system() == "Windows"): 
         BACKUP_PATH = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\BackUps" + "\\" + request.data.get('fileName')
+        myCNF = os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "\\backend\\backend\\my.cnf"
     else:
         BACKUP_PATH = os.getcwd() + "/BackUps"
 
-    print("Pito de carro",request.data.get('fileName'))
+    archivo = open(myCNF, "r")
+
+    for linea in archivo:
+        if linea.startswith("user"):
+            DB_USER = linea.split("=")[1]
+            DB_USER = DB_USER.replace("\n", "").strip()
+        if linea.startswith("password"):
+            DB_USER_PASSWORD = linea.split("=")[1]
+            DB_USER_PASSWORD = DB_USER_PASSWORD.replace("\n", "").strip()
+        if linea.startswith("database"):
+            DB_NAME = linea.split("=")[1]
+            DB_NAME = DB_NAME.replace("\n", "").strip()
+    archivo.close()
+
     command = "mysql -u " + DB_USER + " -p" + DB_USER_PASSWORD + " --database " + DB_NAME + " < " + BACKUP_PATH
     print(command)
     os.system(command)
