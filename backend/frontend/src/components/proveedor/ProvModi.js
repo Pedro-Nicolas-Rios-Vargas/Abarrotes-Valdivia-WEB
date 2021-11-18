@@ -44,7 +44,7 @@ export default class ProvModi extends Component {
     }
 
     getprovName(value) {
-        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,32}$/.test(value)) {
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(value)) {
             this.setState({
                 provName: value,
                 errorNombre: "hidden",

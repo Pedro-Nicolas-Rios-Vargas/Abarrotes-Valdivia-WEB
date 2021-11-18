@@ -117,9 +117,18 @@ export default class ProvGet extends Component {
 
     //Metodo para buscar por nombre de cliente
     buscar(e) {
-        this.setState({
-            nombre_C: e.target.value
-        });
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
+            this.setState({
+                nombre_C: e.target.value,
+                labelErrorVisibilityCliente: "hidden",
+            });
+
+        } else {
+            this.setState({
+                nombre_C: this.state.nombre_C,
+                labelErrorVisibilityCliente: "hidden",
+            })
+        }
     }
 
     //metodo para buscar por fecha  

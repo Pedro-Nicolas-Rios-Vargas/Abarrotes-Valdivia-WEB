@@ -115,9 +115,16 @@ export default class Buylog extends Component {
     
     //Metodo para buscar por nombre de proveedor
     buscar(e) {
-        this.setState({
-            provName: e.target.value
-        });
+        if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
+            this.setState({
+                provName: e.target.value,
+                errorNombre: "hidden",
+            });
+        } else {
+            this.setState({
+                provName: this.state.provName,
+            })
+        }
     }
 
     //metodo para buscar por fecha  
