@@ -247,9 +247,9 @@ export default class ReporteVentas extends Component {
         borderColors = bgColors.slice();
 
         for (let i = 0; i < indexIter; i++) {
-            let randomRed = parseInt((Math.random() * (255 - 0))) + 0;
-            let randomGreen = parseInt((Math.random() * (255 - 0))) + 0;
-            let randomBlue = parseInt((Math.random() * (255 - 0))) + 0;
+            let randomRed = parseInt((Math.random() * (255 - 100))) + 100;
+            let randomGreen = parseInt((Math.random() * (255 - 100))) + 100;
+            let randomBlue = parseInt((Math.random() * (255 - 100))) + 100;
 
             bgColors[i] = `rgba(${ randomRed }, ${ randomGreen }, ${ randomBlue }, 0.2)`
             borderColors[i] = `rgba(${ randomRed }, ${ randomGreen }, ${ randomBlue }, 1)`
@@ -258,7 +258,7 @@ export default class ReporteVentas extends Component {
         this.setState({
             BarsBackgrounColors: bgColors,
             BarsBorderColors: borderColors,
-        })
+        });
         this.makingGraphics();
     }
 
