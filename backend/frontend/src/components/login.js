@@ -7,7 +7,9 @@ import {
     Link,
     Redirect,
 } from "react-router-dom";
-
+/**
+ * Componente Login
+ */
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -23,24 +25,36 @@ export default class Login extends Component {
         this.responseHandler = this.responseHandler.bind(this);
         this.handleErrorDiv = this.handleErrorDiv.bind(this);
     }
-
+    /**
+     * Optener nombre de usuario
+     * @param {string} event 
+     */
     handleUsername(event) {
         this.setState({
             username: event.target.value
         });
     }
-
+    /**
+     * Obtener contrasena
+     * @param {string} event 
+     */
     handlePwd(event) {
         this.setState({
             pwd: event.target.value
         });
     }
-
+    /**
+     * Mostrar mensajes de error
+     */
     handleErrorDiv() {
         let errorTag = document.querySelector(".error");
         errorTag.classList.toggle("invisible", false);
     }
-
+    /**
+     *  Mandar datos a verificar
+     * @param {???} event 
+     * @returns Puede regresar error
+     */
     handleSubmit(event) {
         if (!this.state.username) {
             console.log('Username esta vacio')
@@ -79,7 +93,10 @@ export default class Login extends Component {
                 }
             });
     }
-
+    /**
+     * Respuesta del metodo anterior para poder entrar en el programa o algo asi
+     * @returns Compoenente Principal
+     */
     responseHandler() {
         let msg = this.state.msg;
         if (msg === 'Logged In') {

@@ -3,7 +3,11 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 
-
+/**
+ * Modal para las compras detallas
+ * @param {*} props 
+ * @returns Estructura base para ser empleada
+ */
 const ModalSell = props => {
   const closeOnEscapeKeyDown = e =>{
     if ((e.charCode || e.keyCode) === 27) {

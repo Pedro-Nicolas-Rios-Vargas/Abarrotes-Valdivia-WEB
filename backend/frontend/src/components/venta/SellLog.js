@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
 import Modal from './ModalSell'
-
+/**
+ * Clase que muestra el registro de venta
+ */
 export default class ProvGet extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +32,9 @@ export default class ProvGet extends Component {
         this.buscar = this.buscar.bind(this);
     }
     
-    
+    /**
+     * Metodo que obtiene los datos de los productos
+     */
     async getDataProduct() {
         await fetch('/producto/get-producto')
         .then(response => response.json())
@@ -40,7 +44,9 @@ export default class ProvGet extends Component {
             });
         });
     }
-
+    /**
+     * Metodo que obtiene el registro de las ventas
+     */
     async getSellLogData() {
         await fetch('/sellLog/get-sellLog')
             .then(response => response.json())
@@ -50,6 +56,9 @@ export default class ProvGet extends Component {
                 });
             });
     }
+    /**
+     * Metodo que obtiene los datos de los clientes
+     */
     async getClientData() {
         await fetch('/cliente/get-client')
         .then(response => response.json())
@@ -59,7 +68,9 @@ export default class ProvGet extends Component {
             });
         });
     }
-
+    /**
+     * Metodo que recibie los datos detallados de las ventas
+     */
     async getSellRecordData() {
         await fetch('/sellRecord/get-sellRecord')
             .then(response => response.json())
@@ -69,11 +80,16 @@ export default class ProvGet extends Component {
                 });
             });
     }
-
+    /**
+     * Metodo para mostra o no el modal
+     */
     setShow(){
         this.setState({show: false,})
     }
-
+    /**
+     * Metodo para abrir el modal
+     * @param {*} sellId 
+     */
     async openModal(sellId){
         const logData = this.state.logData;
         let encontrado = false;
@@ -107,7 +123,9 @@ export default class ProvGet extends Component {
             });
         }
     }
-
+    /**
+     * Metodo que monta los compoenntes
+     */
     componentDidMount() {
         this.getSellLogData();
         this.getDataProduct();
@@ -115,7 +133,10 @@ export default class ProvGet extends Component {
         this.getClientData();
     }
 
-    //Metodo para buscar por nombre de cliente
+    /**
+     * Metodo para buscar por nombre de cliente
+     * @param {*} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
             this.setState({
@@ -131,7 +152,10 @@ export default class ProvGet extends Component {
         }
     }
 
-    //metodo para buscar por fecha  
+    /**
+     * Metodo para buscar por fecha 
+     * @param {*} e 
+     */ 
     buscarFecha(e) {
         this.setState({
             fecha: e.target.value

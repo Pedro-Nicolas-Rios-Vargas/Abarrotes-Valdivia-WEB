@@ -9,6 +9,8 @@ djangorestframework = "*"
 mysqlclient = "*"
 markdown = "*"
 django-filter = "*"
+gunicorn = "*"
+django-heroku = "*"
 
 [dev-packages]
 

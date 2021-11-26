@@ -6,7 +6,9 @@ import {
     Link,
     Redirect,
 } from "react-router-dom";
-
+/**
+ * Componenete de barra de navejacion
+ */
 export default class Nav extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +22,10 @@ export default class Nav extends Component {
         this.logout = this.logout.bind(this);
         this.responseHandler = this.responseHandler.bind(this);
     }
+    /**
+     * Metodo para expandir o retraer la barra de navegacion
+     * @param {???} event 
+     */
     toggleMenu = (event) => {
         let sidebar = document.querySelector(".sidebar");
         sidebar.classList.toggle("close");
@@ -27,18 +33,26 @@ export default class Nav extends Component {
         //    collapsed: !this.state.collapsed,
         //})
     }
-
+    /**
+     * Cambia el nombre en la barra de navegacion
+     * @param {string} rotulo 
+     */
     changeRotulo = (rotulo) => {
         this.setState({
             rotulo: rotulo,
         });
     }
-
+    /**
+     * Mo tengo ni idea
+     * @param {???} event 
+     */
     showingMenu(event) {
         let arrowParent = event.target.parentElement.parentElement;
         arrowParent.classList.toggle("showMenu");
     }
-
+    /**
+     * Cerrar seciion
+     */
     logout() {
         let request = {
             method: 'POST',
@@ -57,7 +71,10 @@ export default class Nav extends Component {
                 });
             });
     }
-
+    /**
+     * No se
+     * @returns Issa porra
+     */
     responseHandler() {
         let msg = this.state.msg;
         if (msg == 'Salir') {

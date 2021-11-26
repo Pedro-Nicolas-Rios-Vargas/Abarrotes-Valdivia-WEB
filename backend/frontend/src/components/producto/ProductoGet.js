@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-
+/**
+ * Clase para buscar productos
+ */
 export default class ProductoGet extends Component {
     constructor(props) {
         super(props);
@@ -25,43 +27,63 @@ export default class ProductoGet extends Component {
 
         this.buscar = this.buscar.bind(this);
     }
-
+    /**
+     * Metodo para obtener el id
+     * @param {*} e 
+     */
     getprodId(value) {
         this.setState({
             prodId: value
        });
     }
-
+    /**
+     * metodo para obtener el nombre del producto
+     * @param {*} e 
+     */
     getprodName(value) {
         this.setState({
             prodName: value
        });
     }
-
+    /**
+     * metodo para obtener la existencia del producto
+     * @param {*} e 
+     */
     getExistencia(value) {
         this.setState({
             existencia: value
        });
     }
-
+    /**
+     * metodo para obtener el stock del producto
+     * @param {*} e 
+     */
     getsellPrice(value) {
         this.setState({
             sellPrice: value
        });
     }
-
+    /**
+     * Metodo pra obtener la presentacion
+     * @param {*} e 
+     */
     getstock(value) {
         this.setState({
             stock: value
        });
     }
-
+    /**
+     * Metodo para obtener el precio del producto
+     * @param {*} e 
+     */
     getpresentacion(value) {
         this.setState({
             presentacion: value
        });
     }
-
+    /**
+     * Metodo para obtener los datos producto de la BD
+     */
     getProductData() {
         fetch('/producto/get-producto')
             .then(response => response.json())
@@ -72,11 +94,16 @@ export default class ProductoGet extends Component {
                 });
             });
     }
-
+    /**
+     * si
+     */
     componentDidMount() {
         this.getProductData();
     }
-
+    /**
+     * Metodo para eliminar el producto de la base de datos
+     * @param {*} prodId 
+     */
     deleteData(prodId) {
         fetch('/producto/delete-producto/' + prodId, {
             method: 'DELETE',
@@ -88,7 +115,10 @@ export default class ProductoGet extends Component {
                 }
             });
     }
-
+    /**
+     * Metodo para buscar productos
+     * @param {*} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
             this.setState({

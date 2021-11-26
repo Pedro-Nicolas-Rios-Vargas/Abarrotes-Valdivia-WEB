@@ -1,6 +1,8 @@
 import React from "react";
 import LabelError from '../LabelError';
-
+/**
+ * Componente para el automcompletado de los inputs
+ */
 export default class AutoComplete extends React.Component {
     constructor(props) {
         super(props);
@@ -11,7 +13,10 @@ export default class AutoComplete extends React.Component {
             msm: props.msm,
         }
     }
-
+    /**
+     * Evento para buscar lo escrito
+     * @param {string} e 
+     */
     onTextChanged = (e) => {
         const { item } = this.props;
         const value = e.target.value.toLowerCase();
@@ -35,7 +40,10 @@ export default class AutoComplete extends React.Component {
             visibility: "hidden",
         }));
     }
-
+    /**
+     * Evento que proporciona las sugerencias de lo buscado
+     * @param {string} value 
+     */
     suggestionsSelected(value) {
         const id = value.id;
         const nombre = value.nombre;
@@ -57,7 +65,10 @@ export default class AutoComplete extends React.Component {
             this.props.data.retornoProducto(producto);
         }
     }
-
+    /**
+     * Renderiza las sugerencias
+     * @returns Sugerencias
+     */
     renderSuggestions() {
         const { suggestions } = this.state;
         if (suggestions === 0) {
@@ -69,7 +80,9 @@ export default class AutoComplete extends React.Component {
             </ul>
         )
     }
-
+    /**
+     * Limpiar
+     */
     clear() {
         this.setState(() => ({
             text: "",

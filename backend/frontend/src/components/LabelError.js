@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-
+/**
+ * Componente de los mensajes de errores
+ */
 export default class LabelError extends Component {
     constructor(props) {
         super(props);

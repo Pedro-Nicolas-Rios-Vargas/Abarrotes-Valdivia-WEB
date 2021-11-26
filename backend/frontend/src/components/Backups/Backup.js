@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+/**
+ * Componente backup
+ */
 export default class Backup extends Component{
     respaldar() {
         console.log("working")

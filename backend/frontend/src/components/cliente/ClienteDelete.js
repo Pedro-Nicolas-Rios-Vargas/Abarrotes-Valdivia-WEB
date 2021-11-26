@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-
+/**
+ * Clase cliente eliminar
+ */
 export default class ClienteDelete extends Component {
     constructor(props) {
         super(props);
@@ -23,33 +25,47 @@ export default class ClienteDelete extends Component {
         this.buscar = this.buscar.bind(this);
         this.getBuscador = this.getBuscador.bind(this);
     }
-
+    /**
+     * Metodo que obtiene el valor deseado a buscar
+     * @param {objeto} e 
+     */
     getBuscador(e) {
         this.setState({
             buscador: e.target.value,
         });
         this.buscar(e);
     }
-
+    /**
+     *  Metodo que obtiene el id
+     * @param {objeto} value 
+     */
     getclientId(value) {
         this.setState({
             clientId: value
        });
     }
-
+    /**
+     * Metodo que obtiene el nombre
+     * @param {objeto} value 
+     */
     getnombre_C(value) {
         this.setState({
             nombre_C: value
        });
     }
-
+    /**
+     * Metodo que obtiene el balance
+     * @param {objeto} value 
+     */
     getbalance(value) {
         this.setState({
             balance: value
        });
     }
 
-
+    /**
+     * Metodo que recibe los datos de los cliente en la base de datos
+     */
     getClientData() {
         fetch('/cliente/get-client')
             .then(response => response.json())
@@ -60,11 +76,18 @@ export default class ClienteDelete extends Component {
                 });
             });
     }
-
+    /**
+     * Si
+     */
     componentDidMount() {
         this.getClientData();
     }
-
+    /**
+     * Metodo que elimina los datos de un cliente directamente en la base de datos
+     * @param {int} clientId 
+     * @param {string} nombre_C 
+     * @param {float} balance 
+     */
     deleteData(clientId, nombre_C, balance) {
         console.log(balance)
         if(balance === "0.00") {
@@ -85,7 +108,10 @@ export default class ClienteDelete extends Component {
             alert("No se puede eliminar un cliente con saldo deudor o acredor.")
         }
     }
-
+    /**
+     * Metodo que busca por el nombre
+     * @param {string} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
             this.setState({ buscador: e.target.value });
@@ -105,7 +131,10 @@ export default class ClienteDelete extends Component {
             this.setState({ buscador: this.state.buscador });
         }
     }
-
+    /**
+     * Metodo para renderizar la visa
+     * @returns View
+     */
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>

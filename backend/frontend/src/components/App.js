@@ -27,7 +27,9 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-
+/**
+ * Iniciador
+ */
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +37,10 @@ export default class App extends Component {
             sw: false,
         }
     }
-
+    /**
+     * Metodo que renderiza la vista
+     * @returns View
+     */
     render() {
         return (
             <div>

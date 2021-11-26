@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import LabelError from "../LabelError";
 
-
+/**
+ * Clase modificar producto
+ */
 export default class ProductoModi extends Component {
     constructor(props) {
         super(props);
@@ -39,14 +41,20 @@ export default class ProductoModi extends Component {
         this.buscar = this.buscar.bind(this);
         this.getBuscador = this.getBuscador.bind(this);
     }
-
+    /**
+     * Metodo para obtener el id
+     * @param {*} e 
+     */
     getBuscador(e) {
         this.setState({
             buscador: e.target.value,
         });
         this.buscar(e);
     }
-
+    /**
+     * metodo para obtener el nombre del producto
+     * @param {*} e 
+     */
     getprodId(value) {
         if (/^(\d{0,15})?$/.test(value)) {
             this.setState({
@@ -60,7 +68,10 @@ export default class ProductoModi extends Component {
             })
         }
     }
-
+    /**
+     * metodo para obtener la existencia del producto
+     * @param {*} e 
+     */
     getprodName(value) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d]{0,64}$/.test(value)) {
             this.setState({
@@ -75,7 +86,10 @@ export default class ProductoModi extends Component {
             })
         }
     }
-
+    /**
+     * metodo para obtener el stock del producto
+     * @param {*} e 
+     */
     getexistencia(value) {
         if (/^(\d{0,2})?$/.test(value)) {
             this.setState({
@@ -89,7 +103,10 @@ export default class ProductoModi extends Component {
             })
         }
     }
-
+    /**
+     * Metodo pra obtener la presentacion
+     * @param {*} e 
+     */
     getsellPrice(value) {
         if (/^(\d{0,4})([.]\d{0,2})?$/.test(value)) {
             this.setState({
@@ -103,7 +120,10 @@ export default class ProductoModi extends Component {
             })
         }
     }
-
+     /**
+     * Metodo para obtener el precio del producto
+     * @param {*} e 
+     */
     getstock(value) {
         if (/^(\d{0,2})?$/.test(value)) {
             this.setState({
@@ -117,14 +137,19 @@ export default class ProductoModi extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para Obtener la presentacion
+     * @param {*} value 
+     */
     getpresentacion(value) {
         this.setState({
             presentacion: value,
             errorPresentacion: "hidden",
         });
     }
-
+    /**
+     * Metodo para obtener los datos producto de la BD
+     */
     getProductData() {
         fetch('/producto/get-producto')
             .then(response => response.json())
@@ -135,11 +160,17 @@ export default class ProductoModi extends Component {
                 });
             });
     }
-
+    /**
+     * si
+     */
     componentDidMount() {
         this.getProductData();
     }
-
+    /**
+     * Metodo para eliminar un producto de la base de datos
+     * @param {*} prodId 
+     * @param {*} prodName 
+     */
     deleteData(prodId) {
         fetch('/producto/delete-producto/' + prodId, {
             method: 'DELETE',
@@ -151,7 +182,10 @@ export default class ProductoModi extends Component {
                 }
             });
     }
-
+    /**
+     * Metodo para modificar datos
+     * @param {*} prodId 
+     */
     modiData(prodId) {
         fetch('/producto/update-producto/' + prodId)
             .then(response => response.json())
@@ -168,7 +202,10 @@ export default class ProductoModi extends Component {
             });
         { this.setState({ show: true }) }
     }
-
+    /**
+     * Metodo para aplicar los cambios a la base de datos
+     * @param {*} prodId 
+     */
     applyChanges(prodId) {
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
             this.state.presentacion !== "" && this.state.sellPrice !== "" &&
@@ -241,7 +278,10 @@ export default class ProductoModi extends Component {
         }
 
     }
-
+    /**
+     * Metodo para buscar el nombre del producto
+     * @param {*} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
             this.setState({

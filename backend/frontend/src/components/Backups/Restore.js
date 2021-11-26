@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import Loader from './Loader';
+/**
+ * Componente de restauracion
+ */
 export default class Restore extends Component{
     fileName = ""
-    
+    /**
+     * Contructor dah
+     * @param {Si} props 
+     */
     constructor(props) {
         super(props);
         this.state = {
@@ -12,8 +18,11 @@ export default class Restore extends Component{
         this.fileInput = React.createRef();  
         
     }
-        
-        
+
+        /**
+         * Metodo para realizar la restauracion
+         * @param {*} event 
+         */
         async handleSubmit(event) {
         
         event.preventDefault();

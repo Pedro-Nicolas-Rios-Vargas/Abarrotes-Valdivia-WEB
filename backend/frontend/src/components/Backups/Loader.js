@@ -1,5 +1,9 @@
 import React from "react";
-
+/**
+ * Compnente de carga
+ * @param {boolean} props 
+ * @returns view de carga
+ */
 function Loader(props) {
   const { isBusy } = props;
   return (

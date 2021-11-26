@@ -3,7 +3,11 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 
-
+/**
+ * Modal para mostrar los datos extendidos segun el contexto usado
+ * @param {*} props 
+ * @returns view 
+ */
 const ModalSell = props => {
   const closeOnEscapeKeyDown = e =>{
     if ((e.charCode || e.keyCode) === 27) {

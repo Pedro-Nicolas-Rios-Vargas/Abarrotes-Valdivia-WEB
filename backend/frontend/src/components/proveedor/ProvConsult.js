@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-
+/**
+ * Clase para buscar proveedor
+ */
 export default class ProvGet extends Component {
     constructor(props) {
         super(props);
@@ -19,19 +21,28 @@ export default class ProvGet extends Component {
 
         this.buscar = this.buscar.bind(this);
     }
-
+    /**
+     * Metodo para conseguir el id
+     * @param {*} value 
+     */
     getprovrId(value) {
         this.setState({
             provrId: value
         });
     }
-
+    /**
+     * Metodo para conseguir el nombre
+     * @param {*} e 
+     */
     getprovName(value) {
         this.setState({
             provName: value
         });
     }
-
+    /**
+     * Metodo para conseguir numero de telefono del producto
+     * @param {*} e 
+     */
     getprovPhoneNum(value) {
         if (/^(\d{0,10})?$/.test(value)) {
             this.setState({
@@ -43,7 +54,9 @@ export default class ProvGet extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para obtener los datos de la BD
+     */
     getProvData() {
         fetch('/proveedor/get-proveedor')
             .then(response => response.json())
@@ -54,11 +67,16 @@ export default class ProvGet extends Component {
                 });
             });
     }
-
+    /**
+     * Si
+     */
     componentDidMount() {
         this.getProvData();
     }
-
+    /**
+     * Metodo para buscar y filtrar
+     * @param {*} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
             this.setState({

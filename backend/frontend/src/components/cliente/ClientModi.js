@@ -28,7 +28,10 @@ export default class ClientModi extends Component {
         this.buscar = this.buscar.bind(this);
         this.getBuscador = this.getBuscador.bind(this);
     }
-
+    /**
+     *  Metodo que obtiene el id
+     * @param {objeto} value 
+     */
     getBuscador(e) {
         this.setState({
             buscador: e.target.value,
@@ -36,14 +39,20 @@ export default class ClientModi extends Component {
         });
         this.buscar(e);
     }
-
+    /**
+     *  Metodo que obtiene el id
+     * @param {objeto} value 
+     */
     getclientId(value) {
         this.setState({
             clientId: value
         });
 
     }
-
+    /**
+     * Metodo que obtiene el nombre
+     * @param {objeto} value 
+     */
     getnombre_C(value) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ]{0,16}$/.test(value)) {
             this.setState({
@@ -59,7 +68,10 @@ export default class ClientModi extends Component {
         }
     }
 
-
+    /**
+     * Metodo que obtiene el balance
+     * @param {objeto} value 
+     */
     getbalance(value) {
         if (/^([-]?\d*)([.]\d{0,2})?$/.test(value)) {
             this.setState({
@@ -75,7 +87,9 @@ export default class ClientModi extends Component {
         if (this.state.balance.length === 1) {
         }
     }
-
+    /**
+     * Metodo que recibe los datos de los cliente en la base de datos
+     */
     getClientData() {
         fetch('/cliente/get-client')
             .then(response => response.json())
@@ -86,11 +100,16 @@ export default class ClientModi extends Component {
                 });
             });
     }
-
+    /**
+     * Si
+     */
     componentDidMount() {
         this.getClientData();
     }
-
+    /**
+     * Metodo para eliminar un usuario
+     * @param {int} clientId 
+     */
     deleteData(clientId) {
         fetch('/cliente/delete-cliente/' + clientId, {
             method: 'DELETE',
@@ -102,7 +121,10 @@ export default class ClientModi extends Component {
                 }
             });
     }
-
+    /**
+     * Metodo para modificar un usuario
+     * @param {int} clientId 
+     */
     modiData(clientId) {
         fetch('/cliente/update-cliente/' + clientId)
             .then(response => response.json())
@@ -117,7 +139,10 @@ export default class ClientModi extends Component {
             });
         { this.setState({ show: true }) }
     }
-
+    /**
+     * Metodo que aplica los cambios a la base de datos
+     * @param {int} clientId 
+     */
     applyChanges(clientId) {
         let transaction
         if (this.state.nombre_C !== "" && this.state.balance !== "") {
@@ -174,7 +199,10 @@ export default class ClientModi extends Component {
             }
         }
     }
-
+    /**
+     * Metodo para buscar
+     * @param {string} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
             this.setState({ buscador: e.target.value });
@@ -194,7 +222,11 @@ export default class ClientModi extends Component {
             this.setState({ buscador: this.state.buscador });
         }
     }
-
+    /**
+     * Metodo para consultar movimiento asincrono
+     * @param {int} clientId 
+     * @param {string} nombre_C 
+     */
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>

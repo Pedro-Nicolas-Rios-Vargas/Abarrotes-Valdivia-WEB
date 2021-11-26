@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import AutoComplete from './AutoComplete';
 import makeCancelable from '../../utils/callBarcodeSocket';
-
+/**
+ * Clase Realizas compras
+ */
 export default class SellAdd extends Component {
 
     constructor(props) {
@@ -65,13 +67,18 @@ export default class SellAdd extends Component {
         this.barcodeHandler = this.barcodeHandler.bind(this);
     }
 
-
+    /**
+     * Obtiene el nombre escrito
+     * @param {string} value 
+     */
     getProvName(value) {
         this.setState({
             provName: value
         });
     }
-
+    /**
+     * Obtiene los datos del proveedor de la base de datos
+     */
     getProvData() {
         fetch('/proveedor/get-proveedor')
             .then(response => response.json())
@@ -92,49 +99,72 @@ export default class SellAdd extends Component {
             });
 
     }
-
+    /**
+     * Obtiene el in del proveedor
+     * @param {int} value 
+     */
     getclientId(value) {
         this.setState({
             clientId: value
         });
     }
-
+    /**
+     * Obtiene el id del producto
+     * @param {int} value 
+     */
     getprodId(value) {
         this.setState({
             prodId: value
         });
     }
-
+    /**
+     * Obtiene el nombre del proveedor
+     * @param {string} value 
+     */
     getprodName(value) {
         this.setState({
             prodName: value
         });
     }
-
+    /**
+     * Obtiene la existencia
+     * @param {int} value 
+     */
     getexistencia(value) {
         this.setState({
             existencia: value
         });
     }
-
+    /**
+     * Obtiene precio de venta
+     * @param {float} value 
+     */
     getsellPrice(value) {
         this.setState({
             sellPrice: value
         });
     }
-
+    /**
+     * Obtiene el stock del proveedor
+     * @param {int} value 
+     */
     getstock(value) {
         this.setState({
             stock: value
         });
     }
-
+    /**
+     * Obtiene la presentacion
+     * @param {string} value 
+     */
     getpresentacion(value) {
         this.setState({
             presentacion: value
         });
     }
-
+    /**
+     * Metodo que obtiene los proveedores 
+     */
     async getProductData() {
         await fetch('/producto/get-producto')
             .then(response => response.json())
@@ -154,7 +184,9 @@ export default class SellAdd extends Component {
                 });
             });
     }
-
+    /**
+     * ???
+     */
     initSocketServer() {
         if (!this.state.waitingBarCode) {
             console.log('Ejecutando fetch...');
@@ -165,7 +197,9 @@ export default class SellAdd extends Component {
             this.barcodeHandler();
         }
     }
-
+    /**
+     * ???
+     */
     barcodeHandler() {
         let fetchedData = this.fetchSocketData.promise;
         fetchedData
@@ -191,22 +225,31 @@ export default class SellAdd extends Component {
                 //console.error(err);
             });
     }
-
+    /**
+     * Montador xd
+     */
     componentDidMount() {
         this.getProductData();
         this.initSocketServer();
         this.getProvData();
     }
-
+    /**
+     * So
+     */
     componentDidUpdate() {
         this.initSocketServer();
     }
-
+    /**
+     * 177013
+     */
     componentWillUnmount() {
         this.fetchSocketData.cancel();
     }
 
-
+    /**
+     * Buscador de producto
+     * @param {int} prodIdBuscar 
+     */
     buscarProducto(prodIdBuscar) {
         // Validar de alguna forma que no vuelva a poner el mismo producto, o si lo vuelve a poner que aumente el contador
         // de dicho producto.
@@ -263,7 +306,9 @@ export default class SellAdd extends Component {
             console.log('Producto no encontrado')
         }
     }
-
+    /**
+     * Actualizar la tabla cada movimiento
+     */
     actualizar() {
         const paraLaFeria = this.state.together
         let total2 = 0
@@ -280,7 +325,9 @@ export default class SellAdd extends Component {
             });
         }
     }
-
+    /**
+     * Estado base del state
+     */
     baseState() {
         this.setState(({
             together: [],
@@ -296,7 +343,10 @@ export default class SellAdd extends Component {
         this.clearInput1();
         this.clearInput();
     }
-
+    /**
+     * Buscador de proveedor por nombre xd
+     * @param {String} provName 
+     */
     buscarCliente(provName) {
         const nuevoCliente = this.state.dataProv.find(cliente => cliente.provName === provName);
         if (nuevoCliente !== undefined) {
@@ -308,7 +358,10 @@ export default class SellAdd extends Component {
         }
     }
 
-
+    /**
+     * Eliminar una dato de la tabla
+     * @param {int} index 
+     */
     removeRow(index) {
         const rows = this.state.together;
         const rows2 = this.state.dataMostrar
@@ -324,7 +377,9 @@ export default class SellAdd extends Component {
         });
         this.actualizar();
     }
-
+    /**
+     * Metodo para agregar algo a la tabla
+     */
     agregar() {
         if (this.state.provName === "" || this.state.prodId === "") {
             if (this.state.provName === "") {
@@ -353,7 +408,10 @@ export default class SellAdd extends Component {
     }
 
 
-
+    /**
+     * Disminuir la cantidad de un producto a vender
+     * @param {int} prodId 
+     */
     downCanitdad(prodId) {
         // Validar que no ponga numero negativos
         const listaProductos = this.state.together;
@@ -381,7 +439,10 @@ export default class SellAdd extends Component {
 
         this.actualizar();
     }
-
+    /**
+     * Aumenta la cantidad de un producto a vender
+     * @param {int} prodId 
+     */
     upCanitdad(prodId) {
         const listaProductos = this.state.together;
         function getIndex(listaProductos) {
@@ -408,7 +469,9 @@ export default class SellAdd extends Component {
     }
 
 
-
+    /**
+     * Metodo para finalizar la compra
+     */
     finalizar() {
 
         function pushSellLog(together) {
@@ -510,25 +573,35 @@ export default class SellAdd extends Component {
         }
 
     }
-
+    /**
+     * Metodo que regresara los valores de sugerencias para el nombre del producto
+     * @param {String} r 
+     */
     retornoCliente(r) {
         this.setState({
             provName: r,
         });
         this.buscarCliente(r);
     }
-
+    /**
+     * Metodo que regresara los valores de sugerencias para el id del producto
+     * @param {String} r 
+     */
     retornoProducto(r) {
         this.setState({
             prodId: r.id,
             prodName: r.text,
         });
     }
-
+    /**
+     * Si
+     */
     clearInput1() {
         this.input1.clear();
     }
-
+    /**
+     * Si2
+     */
     clearInput() {
         this.input.clear();
     }

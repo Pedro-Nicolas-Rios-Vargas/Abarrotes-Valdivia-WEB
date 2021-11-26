@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import AutoComplete from './AutoComplete';
 import makeCancelable from '../../utils/callBarcodeSocket';
 import LabelError from '../LabelError';
-
+/**
+ * Clase vender
+ */
 export default class SellAdd extends Component {
 
     constructor(props) {
@@ -72,20 +74,28 @@ export default class SellAdd extends Component {
 
     }
 
-
+    /**
+     * Obtener el nombre del cliente
+     * @param {*} value 
+     */
     getnombre_C(value) {
         this.setState({
             nombre_C: value,
 
         });
     }
-
+    /**
+     * Obtener el balance del cliente
+     * @param {*} value 
+     */
     getbalance(value) {
         this.setState({
             balance: value,
         });
     }
-
+    /**
+     * Obtiene los datos de todos los clientes en la base de datos
+     */
     getClientData() {
         fetch('/cliente/get-client')
             .then(response => response.json())
@@ -106,49 +116,72 @@ export default class SellAdd extends Component {
             });
 
     }
-
+    /**
+     * Obtiene el id del cliente
+     * @param {*} value 
+     */
     getclientId(value) {
         this.setState({
             clientId: value
         });
     }
-
+    /**
+     * Obtiene el id del producto
+     * @param {*} value 
+     */
     getprodId(value) {
         this.setState({
             prodId: value
         });
     }
-
+    /**
+     * Obtiene el nombre del producto
+     * @param {*} value 
+     */
     getprodName(value) {
         this.setState({
             prodName: value
         });
     }
-
+    /**
+     * Obtiene el nombre de la existencia
+     * @param {*} value 
+     */
     getexistencia(value) {
         this.setState({
             existencia: value
         });
     }
-
+    /**
+     * Obtiene el precia del producto
+     * @param {*} value 
+     */
     getsellPrice(value) {
         this.setState({
             sellPrice: value
         });
     }
-
+    /**
+     * Obtiene el stock del producto
+     * @param {*} value 
+     */
     getstock(value) {
         this.setState({
             stock: value
         });
     }
-
+    /**
+     * Obtiene la presentacion del producto
+     * @param {*} value 
+     */
     getpresentacion(value) {
         this.setState({
             presentacion: value
         });
     }
-
+    /**
+     * Obtiene los datos del producto
+     */
     async getProductData() {
         await fetch('/producto/get-producto')
             .then(response => response.json())
@@ -168,7 +201,9 @@ export default class SellAdd extends Component {
                 });
             });
     }
-
+    /**
+     * Inicia el servidor para le codigo de barras
+     */
     initSocketServer() {
         if (!this.state.waitingBarCode) {
             console.log('Ejecutando fetch...');
@@ -179,7 +214,9 @@ export default class SellAdd extends Component {
             this.barcodeHandler();
         }
     }
-
+    /**
+     * Creo que recibe los datos del codigo de barras
+     */
     barcodeHandler() {
         let fetchedData = this.fetchSocketData.promise;
         fetchedData
@@ -204,22 +241,31 @@ export default class SellAdd extends Component {
                 //console.error(err);
             });
     }
-
+    /**
+     * Monta los componenetes
+     */
     componentDidMount() {
         this.getProductData();
         this.getClientData();
         this.initSocketServer();
     }
-
+    /**
+     * Componentes que se actualizan
+     */
     componentDidUpdate() {
         this.initSocketServer();
     }
-
+    /**
+     * Componentes que se desmontan
+     */
     componentWillUnmount() {
         this.fetchSocketData.cancel();
     }
 
-
+    /**
+     * Metodo para buscar productos
+     * @param {*} prodIdBuscar 
+     */
     buscarProducto(prodIdBuscar) {
         // Validar de alguna forma que no vuelva a poner el mismo producto, o si lo vuelve a poner que aumente el contador
         // de dicho producto.
@@ -277,7 +323,9 @@ export default class SellAdd extends Component {
             console.log('Producto no encontrado')
         }
     }
-
+    /**
+     * Metodo para actualizar los datos de la tabla
+     */
     actualizar() {
         const paraLaFeria = this.state.together
         let total2 = 0
@@ -294,7 +342,9 @@ export default class SellAdd extends Component {
             });
         }
     }
-
+    /**
+     * Forma base de la clase
+     */
     baseState() {
         this.setState(({
             together: [],
@@ -310,7 +360,10 @@ export default class SellAdd extends Component {
         this.clearInput1();
         this.clearInput();
     }
-
+    /**
+     * Metodo para buscar un cliente
+     * @param {*} nombre_C 
+     */
     buscarCliente(nombre_C) {
         const nuevoCliente = this.state.dataCliente.find(cliente => cliente.nombre_C === nombre_C);
         if (nuevoCliente !== undefined) {
@@ -322,7 +375,10 @@ export default class SellAdd extends Component {
         }
     }
 
-
+    /**
+     * Metodo para eliminar un cliente de la tabla
+     * @param {*} index 
+     */
     removeRow(index) {
         const rows = this.state.together;
         const rows2 = this.state.dataMostrar
@@ -338,7 +394,9 @@ export default class SellAdd extends Component {
         });
         this.actualizar();
     }
-
+    /**
+     * Metodo para agregar un Cliente a la tabla
+     */
     agregar() {
         console.log(this.state.errorCliente);
         if (this.state.nombre_C === "" || this.state.prodId === "") {
@@ -368,7 +426,10 @@ export default class SellAdd extends Component {
     }
 
 
-
+    /**
+     * Metodo para disminuir la cantida de producto a vender
+     * @param {*} prodId 
+     */
     downCanitdad(prodId) {
         // Validar que no ponga numero negativos
         const listaProductos = this.state.together;
@@ -396,7 +457,10 @@ export default class SellAdd extends Component {
 
         this.actualizar();
     }
-
+    /**
+     * Metodo para aumentar la cantida de producto a vender
+     * @param {*} prodId 
+     */
     upCanitdad(prodId) {
         const listaProductos = this.state.together;
         function getIndex(listaProductos) {
@@ -421,7 +485,11 @@ export default class SellAdd extends Component {
         })
         this.actualizar();
     }
-
+    /**
+     * Metodo para actualizar el estado de cuenta del cliente
+     * @param {*} cliente 
+     * @param {*} total 
+     */
     async movement(cliente, total) {
         let date = new Date();
         const fecha = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -438,7 +506,11 @@ export default class SellAdd extends Component {
             .then((response) => response.json())
             .then((data) => console.log(data))
     }
-
+    /**
+     * Metodo para actualizar el saldo del cliente
+     * @param {*} cliente 
+     * @param {*} total 
+     */
     async actualizarCliente(cliente, total) {
         const requiestClient = {
             method: 'PUT',
@@ -453,7 +525,9 @@ export default class SellAdd extends Component {
             .then((response) => {
             });
     }
-
+    /**
+     * Metodo que realiza la accion de comprar
+     */
     finalizar() {
 
         function pushSellLog(together) {
@@ -587,25 +661,35 @@ export default class SellAdd extends Component {
         }
         
     }
-
+    /**
+     * Metodo que recibe la sugestion del cliente que se busca
+     * @param {*} r 
+     */
     retornoCliente(r) {
         this.setState({ 
             nombre_C: r,
          });
         this.buscarCliente(r);
     }
-
+    /**
+     * Metodo que recibe la sugestion del producto que se busca
+     * @param {*} r 
+     */
     retornoProducto(r) {
         this.setState({ 
             prodId: r.id,
             prodName: r.text,
         });
     }
-
+    /**
+     * Metodo que limpia el input
+     */
     clearInput1(){
         this.input1.clear();
     }
-
+    /**
+     * Metodo que limpia el input
+     */
     clearInput(){
         this.input.clear();
     }

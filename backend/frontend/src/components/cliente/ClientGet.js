@@ -29,26 +29,37 @@ export default class ClientGet extends Component {
         this.movementConsult = this.movementConsult.bind(this);
 
     }
-
+    /**
+     *  Metodo que obtiene el id
+     * @param {objeto} value 
+     */
     getclientId(value) {
         this.setState({
             clientId: value
         });
     }
-
+    /**
+     * Metodo que obtiene el nombre
+     * @param {objeto} value 
+     */
     getnombre_C(value) {
         this.setState({
             nombre_C: value
         });
     }
 
-
+    /**
+     * Metodo que obtiene el balance
+     * @param {objeto} value 
+     */
     getbalance(value) {
         this.setState({
             balance: value
         });
     }
-
+    /**
+     * Metodo que recibe los datos de los cliente en la base de datos
+     */
     getClientData() {
         fetch('/cliente/get-client')
             .then(response => response.json())
@@ -59,7 +70,9 @@ export default class ClientGet extends Component {
                 });
             });
     }
-
+    /**
+     * Metodo asincrono para obtener los datos movimientos de los clientes
+     */
     async getMovementClientData() {
         fetch('/cuenta/get-movement')
         .then(response => response.json())
@@ -69,12 +82,17 @@ export default class ClientGet extends Component {
             })
         });
     }
-
+    /**
+     * Si
+     */
     componentDidMount() {
         this.getClientData();
         this.getMovementClientData();
     }
-
+    /**
+     * Metodo para consultar un movimiento
+     * @param {int} clientId 
+     */
     movementConsult(clientId) {
         fetch('/cliente/delete-cliente/' + clientId, {
             method: 'DELETE',
@@ -86,7 +104,10 @@ export default class ClientGet extends Component {
                 }
             });
     }
-
+    /**
+     * Metodo para modificar un usuario
+     * @param {int} clientId 
+     */
     modiData(clientId) {
         fetch('/cliente/update-cliente/' + clientId)
             .then(response => response.json())
@@ -100,7 +121,10 @@ export default class ClientGet extends Component {
             });
         { this.setState({ show: true }) }
     }
-
+    /**
+     * Metodo que aplica los cambios a la base de datos
+     * @param {int} clientId 
+     */
     applyChanges(clientId) {
         const requiestClient = {
             method: 'PUT',
@@ -117,7 +141,10 @@ export default class ClientGet extends Component {
             .then((data) => console.log(data));
         { this.setState({ show: false }) }
     }
-
+    /**
+     * Metodo para buscar
+     * @param {string} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
             this.setState({ nombre_C: e.target.value });
@@ -136,12 +163,18 @@ export default class ClientGet extends Component {
         } else {
             this.setState({ nombre_C: this.state.nombre_C });
         }
-    }
-
+    }   
+    /**
+     * Si
+     */
     setShow() {
         this.setState({show:false,})
     }
-
+    /**
+     * Metodo para consultar movimiento asincrono
+     * @param {int} clientId 
+     * @param {string} nombre_C 
+     */
     async movementConsult(clientId, nombre_C) {
         const movementData = this.state.dataMovement;
         const movementMatch = [];
@@ -164,7 +197,10 @@ export default class ClientGet extends Component {
             cliente: nombre_C,
         })
     }
-
+    /**
+     * Metodo para renderizar la visa
+     * @returns View
+     */
     render() {
         const clienData = this.state.dataTable;
         const rows = clienData.map((clien) =>

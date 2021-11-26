@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import LabelError from '../LabelError';
-
+/**
+ * Clase de anadir proveedor
+ */
 export default class ClienteAdd extends Component {
     defaultName = ""
     defaultPhoneNum = ""
@@ -17,8 +19,11 @@ export default class ClienteAdd extends Component {
         this.AddProv = this.AddProv.bind(this);
         this.getNameProv = this.getNameProv.bind(this);
         this.getprovPhoneNum = this.getprovPhoneNum.bind(this)
-    }
-
+    }   
+    /**
+     * Metodo para conseguir el nombre
+     * @param {*} e 
+     */
     getNameProv(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
             this.setState({
@@ -31,7 +36,10 @@ export default class ClienteAdd extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para conseguir numero de telefono del producto
+     * @param {*} e 
+     */
     getprovPhoneNum(e) {
         if (/^(\d{0,10})?$/.test(e.target.value)) {
             this.setState({
@@ -44,7 +52,9 @@ export default class ClienteAdd extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para anadir proveedores en la base de datos
+     */
     AddProv() {
         //console.log(this)
         if (this.state.provName !== "" && this.state.provPhoneNum !== "") {

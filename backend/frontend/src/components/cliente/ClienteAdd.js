@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import LabelError from '../LabelError';
 
-
+/**
+ * Clase de anadir clientes
+ * 
+ */
 export default class ClienteAdd extends Component {
     defaultName = ""
     defualtBalance = ""
@@ -17,7 +20,10 @@ export default class ClienteAdd extends Component {
         this.getNameClient = this.getNameClient.bind(this);
         this.getbalance = this.getbalance.bind(this)
     }
-
+    /**
+     * Obtener el nombre introducido   
+     * @param {object} e 
+     */
     getNameClient(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ\s]{0,43}$/.test(e.target.value)) {
             this.setState({
@@ -32,7 +38,10 @@ export default class ClienteAdd extends Component {
             })
         }
     }
-
+    /**
+     * Obtener el balance introducido
+     * @param {object} e 
+     */
     getbalance(e) {
         if (/^([-]?\d{0,4})([.]\d{0,2})?$/.test(e.target.value)) {
             this.setState({
@@ -44,7 +53,9 @@ export default class ClienteAdd extends Component {
             })
         }
     }
-
+    /**
+     * Metodo que realiza la coneccion con la base de datos para introducir los datos
+     */
     AddClient() {
         //console.log(this)
         if (this.state.nombre_C !== "" && this.state.balance !== "") {
@@ -90,7 +101,10 @@ export default class ClienteAdd extends Component {
             }
         }
     }
-
+    /**
+     * Metodo para renderizar la visa
+     * @returns View
+     */
     render() {
         return (
             <div className="container">

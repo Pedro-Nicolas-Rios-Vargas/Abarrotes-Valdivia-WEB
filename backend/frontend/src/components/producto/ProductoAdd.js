@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import makeCancelable from '../../utils/callBarcodeSocket'
 import LabelError from '../LabelError';
-
+/**
+ * Clase anadir producto
+ */
 export default class ProductoAdd extends Component {
     defaultName = ""
     defaultSecondName = ""
@@ -38,7 +40,10 @@ export default class ProductoAdd extends Component {
         this.getprodId = this.getprodId.bind(this);
         this.initSocketServer = this.initSocketServer.bind(this);
     }
-
+    /**
+     * Metodo para obtener el id
+     * @param {*} e 
+     */
     getprodId(e) {
         if (/^(\d{0,15})?$/.test(e.target.value)) {
             this.setState({
@@ -52,7 +57,10 @@ export default class ProductoAdd extends Component {
             })
         }
     }
-
+    /**
+     * metodo para obtener el nombre del producto
+     * @param {*} e 
+     */
     getNameProducto(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,64}$/.test(e.target.value)) {
             this.setState({
@@ -67,7 +75,10 @@ export default class ProductoAdd extends Component {
             })
         }
     }
-
+    /**
+     * metodo para obtener la existencia del producto
+     * @param {*} e 
+     */
     getexistencia(e) {
         if (/^(\d{0,2})?$/.test(e.target.value)) {
             this.setState({
@@ -81,7 +92,10 @@ export default class ProductoAdd extends Component {
             })
         }
     }
-
+    /**
+     * metodo para obtener el stock del producto
+     * @param {*} e 
+     */
     getstock(e) {
         if (/^(\d{0,2})?$/.test(e.target.value)) {
             this.setState({
@@ -95,14 +109,20 @@ export default class ProductoAdd extends Component {
             })
         }
     }
-
+    /**
+     * Metodo pra obtener la presentacion
+     * @param {*} e 
+     */
     getpresentacion(e) {
         this.setState({
             presentacion: e.target.value,
             errorPresentacion: "hidden",
         });
     }
-
+    /**
+     * Metodo para obtener el precio del producto
+     * @param {*} e 
+     */
     getsellPrice(e) {
         if (/^(\d{0,4})([.]\d{0,2})?$/.test(e.target.value)) {
             this.setState({
@@ -116,7 +136,9 @@ export default class ProductoAdd extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para anadir un cliente a la base de datos
+     */
     AddClient() {
         if (this.state.prodName !== "" && this.state.existencia !== "" &&
             this.state.presentacion !== "" && this.state.sellPrice !== "" &&
@@ -187,7 +209,9 @@ export default class ProductoAdd extends Component {
 
         }
     }
-
+    /**
+     * Si
+     */
     initSocketServer() {
         if (!this.state.waitingBarCode) {
             console.log('Ejecutando fetch...');
@@ -198,7 +222,9 @@ export default class ProductoAdd extends Component {
             this.barcodeHandler();
         }
     }
-
+    /**
+     * Si
+     */
     barcodeHandler() {
         let fetchedData = this.fetchSocketData.promise;
         fetchedData
@@ -223,19 +249,25 @@ export default class ProductoAdd extends Component {
                 //console.error(err);
             });
     }
-
+    /**
+     * Si
+     */
     componentDidMount() {
         this.initSocketServer();
     }
-
+    /**
+     * Si
+     */
     componentDidUpdate() {
         this.initSocketServer();
     }
-
+    /**
+     * Si
+     */
     componentWillUnmount() {
         this.fetchSocketData.cancel();
     }
-
+    
     render() {
         return (
             <div className="container">

@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
 import Modal from './ModalBuy'
-
+/**
+ * Clase para el registro de compra
+ */
 export default class Buylog extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +32,9 @@ export default class Buylog extends Component {
         this.buscarFecha = this.buscarFecha.bind(this);
     }
     
-    
+    /**
+     * Obtener los datos del producto de la BD
+     */
     async getDataProduct() {
         await fetch('/producto/get-producto')
         .then(response => response.json())
@@ -40,7 +44,9 @@ export default class Buylog extends Component {
             });
         });
     }
-
+    /**
+     * Obtener los datos detallados de las compras de la BD
+     */
     async getSellLogData() {
         await fetch('/buyLog/get-buyLog')
             .then(response => response.json())
@@ -50,6 +56,9 @@ export default class Buylog extends Component {
                 });
             });
     }
+    /**
+     * Obtiene los proveedores de la base de datos
+     */
     async getClientData() {
         await fetch('/proveedor/get-proveedor')
         .then(response => response.json())
@@ -59,7 +68,10 @@ export default class Buylog extends Component {
             });
         });
     }
-
+    /**
+     * No recuerdo que hace xd
+     * A si, obtiene los datos de compra de la BD
+     */
     async getSellRecordData() {
         await fetch('/buyRecord/get-buyRecord')
             .then(response => response.json())
@@ -69,11 +81,16 @@ export default class Buylog extends Component {
                 });
             });
     }
-
+    /**
+     * Si
+     */
     setShow(){
         this.setState({show: false,})
     }
-
+    /**
+     * Metodo que inical el modal para los detalles de la compra
+     * @param {int} buyId 
+     */
     async openModal(buyId){
         const logData = this.state.logData;
         let encontrado = false;
@@ -105,15 +122,20 @@ export default class Buylog extends Component {
             });
         }
     }
-
+    /**
+     * Si
+     */
     async componentDidMount() {
         this.getSellLogData();
         this.getDataProduct();
         this.getSellRecordData();
         this.getClientData();
     }
-    
-    //Metodo para buscar por nombre de proveedor
+
+    /**
+     * Metodo para buscar por nombre de proveedor
+     * @param {string} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
             this.setState({
@@ -126,14 +148,15 @@ export default class Buylog extends Component {
             })
         }
     }
-
-    //metodo para buscar por fecha  
+    /**
+     * metodo para buscar por fecha 
+     * @param {string} e 
+     */
     buscarFecha(e) {
         this.setState({
             fecha: e.target.value
         });
     }
-
 
     render() {
         const sellRecord = this.state.recordData;

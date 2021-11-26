@@ -9,7 +9,9 @@ import {
 import { Bar } from "react-chartjs-2";
 
 Chart.register(LinearScale, BarController, BarElement, CategoryScale);
-
+/**
+ * Clase para realizar los reportes de venta
+ */
 export default class ReporteVentas extends Component {
     constructor(props) {
         super(props);
@@ -78,19 +80,28 @@ export default class ReporteVentas extends Component {
         this.formatingData = this.formatingData.bind(this);
         this.makingColors = this.makingColors.bind(this);
     }
-
+    /**
+     * Metodo que asigna la fecha inicial
+     * @param {*} event 
+     */
     assignFechaInicial(event) {
         this.setState({
             fechaInicial: event.target.value,
         });
     }
-
+    /**
+     * Metodo que asigna la fecha final
+     * @param {*} event 
+     */
     assignFechaFinal(event) {
         this.setState({
             fechaFinal: event.target.value,
         });
     }
-
+    /**
+     * Metodo para balidar las fechas
+     * @returns 
+     */
     validatingDates() {
         if (this.state.fechaInicial === '') {
             // error message
@@ -149,7 +160,9 @@ export default class ReporteVentas extends Component {
         this.syncData();
 
     }
-
+    /**
+     * Sincroniza los datos de la base de datos
+     */
     syncData() {
         fetch('/sellRecord/get-sellRecord')
             .then((response) => response.json())
@@ -160,7 +173,9 @@ export default class ReporteVentas extends Component {
                 this.formatingData();
             })
     }
-
+    /**
+     * Creo que le da formato a las fecha establesidas
+     */
     formatingData() {
         const fechaInicial = this.state.fechaInicial.split('-');
         const fechaFinal = this.state.fechaFinal.split('-');
@@ -204,7 +219,9 @@ export default class ReporteVentas extends Component {
         });
         this.makingColors();
     }
-
+    /**
+     * Le pone colorines a las graficas
+     */
     makingColors() {
         const fechaInicial = this.state.fechaInicial.split('-');
         const fechaFinal = this.state.fechaFinal.split('-');
@@ -237,14 +254,16 @@ export default class ReporteVentas extends Component {
             bgColors[i] = `rgba(${ randomRed }, ${ randomGreen }, ${ randomBlue }, 0.2)`
             borderColors[i] = `rgba(${ randomRed }, ${ randomGreen }, ${ randomBlue }, 1)`
         }
-
+        
         this.setState({
             BarsBackgrounColors: bgColors,
             BarsBorderColors: borderColors,
         })
         this.makingGraphics();
     }
-
+    /**
+     * Metodo para realizar las graficas dadas
+     */
     makingGraphics() {
         this.setState({
             data: {
@@ -269,7 +288,9 @@ export default class ReporteVentas extends Component {
             }
         });
     }
-
+    /**
+     * XD
+     */
     componentDidMount() {
         //this.makingGraphics();
     }

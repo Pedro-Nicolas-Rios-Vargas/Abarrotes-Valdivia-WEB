@@ -3,7 +3,11 @@ import ReactDOM from "react-dom";
 import { CSSTransition } from "react-transition-group";
 
 
-
+/**
+ * Clase del modal abstracto xd
+ * @param {si} props 
+ * @returns Estructura para el modal
+ */
 const ModalSell = props => {
   const closeOnEscapeKeyDown = e =>{
     if ((e.charCode || e.keyCode) === 27) {

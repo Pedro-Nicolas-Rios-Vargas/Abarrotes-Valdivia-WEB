@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import LabelError from '../LabelError';
-
+/**
+ * Clase para modificar proveedores
+ */
 export default class ProvModi extends Component {
     constructor(props) {
         super(props);
@@ -27,7 +29,10 @@ export default class ProvModi extends Component {
         this.buscar = this.buscar.bind(this);
         this.getBuscador = this.getBuscador.bind(this);
     }
-
+    /**
+     * Metodo para obtener lo que se busca en el input
+     * @param {*} e 
+     */
     getBuscador(e) {
         this.setState({
             buscador: e.target.value,
@@ -35,14 +40,20 @@ export default class ProvModi extends Component {
         });
         this.buscar(e);
     }
-
+    /**
+     * Metodo para conseguir el id
+     * @param {*} value 
+     */
     getprovrId(value) {
         this.setState({
             provrId: value,
             errorNombre: "hidden",
        });
     }
-
+    /**
+     * Metodo para conseguir el nombre
+     * @param {*} e 
+     */
     getprovName(value) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(value)) {
             this.setState({
@@ -56,7 +67,10 @@ export default class ProvModi extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para conseguir numero de telefono del producto
+     * @param {*} e 
+     */
     getprovPhoneNum(value) {
         if (/^(\d{0,10})?$/.test(value)) {
             this.setState({
@@ -70,7 +84,9 @@ export default class ProvModi extends Component {
             })
         }
     }
-
+    /**
+     * Metodo para obtener los datos de la BD
+     */
     getProvData() {
         fetch('/proveedor/get-proveedor')
             .then(response => response.json())
@@ -81,11 +97,17 @@ export default class ProvModi extends Component {
                 });
             });
     }
-
+    /**
+     * Si
+     */
     componentDidMount() {
         this.getProvData();
     }
-
+    /**
+     * Metodo para modificar los datos del proveedor de la base de datos
+     * @param {*} provrId 
+     * @param {*} provName 
+     */
     modiData(provrId) {
         fetch('/proveedor/update-proveedor/' + provrId)
         .then(response => response.json())
@@ -99,7 +121,10 @@ export default class ProvModi extends Component {
         });
         { this.setState({ show: true }) }
     }
-
+    /**
+     * Metodo para aplicar los cambios
+     * @param {*} provrId 
+     */
     applyChanges(provrId) {
         if (this.state.provName !== "" && this.state.provPhoneNum !== "") {
             if (this.state.provPhoneNum.length == 10) {
@@ -141,7 +166,10 @@ export default class ProvModi extends Component {
             }
         }
     }
-
+    /**
+     * Metodo para buscar y filtrar
+     * @param {*} e 
+     */
     buscar(e) {
         if (/^[a-zA-Z.áéíóúÁÉÍÚÓÑñ-\d\s]{0,32}$/.test(e.target.value)) {
             this.setState({ buscador: e.target.value });
