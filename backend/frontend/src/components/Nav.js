@@ -236,7 +236,7 @@ export default class Nav extends Component {
                                 <div className="profile-details">
                                     <Link to="/perfil/modificar">
                                         <div className="profile-content">
-                                            <img src="images.jpg" alt="profileImg" />
+                                            <img src={ "/static/images.jpg" } alt="profileImg" />
                                         </div>
                                     </Link>
                                     <div className="name-job">
